@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.personal.oyl.event.EventMapper">
+	<resultMap id="BaseResultMap" type="com.personal.oyl.event.Event">
+        <id column="id" property="id" jdbcType="DECIMAL" />
+        <result column="event_type" property="eventType" jdbcType="NVARCHAR" />
+        <result column="event_time" property="eventTime" jdbcType="TIMESTAMP" />
+        <result column="context" property="context" jdbcType="NVARCHAR" />
+        <result column="group" property="group" jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<sql id="Base_Column_List">
+        id, event_type, event_time, context, `group`
+	</sql>
+  
+    <insert id="insert" parameterType="com.personal.oyl.event.Event" useGeneratedKeys="true" keyProperty="id">
+        insert into event_queue_${tbNum}(
+            event_type,
+            event_time,
+            context,
+            `group`
+        ) values (
+            #{eventType,jdbcType=NVARCHAR},
+            #{eventTime,jdbcType=TIMESTAMP},
+            #{context,jdbcType=NVARCHAR},
+            #{group,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <select id="queryTopN" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select <include refid="Base_Column_List" />
+        from event_queue_${tbNum}
+        order by id
+        limit #{limit}
+    </select>
+    
+    <delete id="batchClean" parameterType="java.util.Map">
+        delete from event_queue_${tbNum}
+        where id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    
+</mapper>
