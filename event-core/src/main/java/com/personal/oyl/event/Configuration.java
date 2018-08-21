@@ -3,6 +3,7 @@ package com.personal.oyl.event;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -10,13 +11,57 @@ public class Configuration {
     public static final String SEPARATOR = "/";
     public static final String GROUP_SEPARATOR = ":";
     
-    private String namespace  = "/event-driven/";
-    private String masterNode = "master";
-    private String workerNode = "workers";
+    @Value("${event.zookeeper.namespace}")
+    private String namespace;
     
-    private String zkAddrs = "localhost:2181";
-    private int sessionTimeout = 30000;
+    @Value("${event.zookeeper.master.node}")
+    private String masterNode;
     
+    @Value("${event.zookeeper.worker.root.node}")
+    private String workerNode;
+    
+    @Value("${event.zookeeper.address}")
+    private String zkAddrs;
+    
+    @Value("${event.zookeeper.session.timeout}")
+    private int sessionTimeout;
+    
+    @Value("${event.number.event.tables}")
+    private int numOfEventTables;
+    
+    @Value("${event.kafka.broker.address}")
+    private String kafkaAddrs;
+    
+    @Value("${event.kafka.broker.topic}")
+    private String kafkaTopic;
+    
+    @Value("${event.kafka.consumer.group}")
+    private String kafkaConsumerGroup;
+    
+    public String getKafkaConsumerGroup() {
+        return kafkaConsumerGroup;
+    }
+
+    public void setKafkaConsumerGroup(String kafkaConsumerGroup) {
+        this.kafkaConsumerGroup = kafkaConsumerGroup;
+    }
+
+    public String getKafkaTopic() {
+        return kafkaTopic;
+    }
+
+    public void setKafkaTopic(String kafkaTopic) {
+        this.kafkaTopic = kafkaTopic;
+    }
+
+    public String getKafkaAddrs() {
+        return kafkaAddrs;
+    }
+
+    public void setKafkaAddrs(String kafkaAddrs) {
+        this.kafkaAddrs = kafkaAddrs;
+    }
+
     public String getZkAddrs() {
         return zkAddrs;
     }
@@ -59,7 +104,7 @@ public class Configuration {
     
     public Set<Integer> getTables() {
         Set<Integer> rlt = new HashSet<>();
-        for (int i = 0; i <= 7; i++) {
+        for (int i = 0; i < numOfEventTables; i++) {
             rlt.add(Integer.valueOf(i));
         }
         return rlt;

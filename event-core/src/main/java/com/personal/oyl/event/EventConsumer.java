@@ -18,20 +18,23 @@ public class EventConsumer implements Runnable{
     @Autowired
     private SubscriberConfig config;
     
+    @Autowired
+    private Configuration cfg;
+    
     private KafkaConsumer<String, String> consumer;
 
     @Override
     public void run() {
         Properties props = new Properties();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "EventDrivenConsumer");
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, cfg.getKafkaAddrs());
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, cfg.getKafkaConsumerGroup());
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         consumer = new KafkaConsumer<>(props);
         
         try {
-            consumer.subscribe(Arrays.asList("event-topic"));
+            consumer.subscribe(Arrays.asList(cfg.getKafkaTopic()));
             
             while (true) {
                 ConsumerRecords<String, String> records = consumer.poll(Long.MAX_VALUE);

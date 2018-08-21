@@ -29,9 +29,10 @@ public class EventSubmitter implements Runnable {
     @Override
     public void run() {
         EventMapper mapper = AppContext.getContext().getBean(EventMapper.class);
+        Configuration cfg  = AppContext.getContext().getBean(Configuration.class);
         
         Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, cfg.getKafkaAddrs());
         props.put(ProducerConfig.ACKS_CONFIG, "all");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
@@ -57,7 +58,7 @@ public class EventSubmitter implements Runnable {
                 }
                 
                 for (Event event : list) {
-                    ProducerRecord<String, String> record = new ProducerRecord<>("event-topic", 0,
+                    ProducerRecord<String, String> record = new ProducerRecord<>(cfg.getKafkaTopic(), 0,
                             event.getEventTime().getTime(), null, event.json(), null);
                     futures.add(producer.send(record));
                     eventIds.add(event.getId());

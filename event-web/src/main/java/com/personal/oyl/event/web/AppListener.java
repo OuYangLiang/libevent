@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import com.personal.oyl.event.EventConsumer;
 import com.personal.oyl.event.Master;
 import com.personal.oyl.event.SubscriberConfig;
 import com.personal.oyl.event.Worker;
@@ -28,11 +29,16 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
     @Autowired
     private Master master;
     
+    @Autowired
+    private EventConsumer consumer;
+    
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (event.getApplicationContext().getParent() == null) {
             config.addSubscriber("Event Type", new Sub1());
+            
+            new Thread(consumer).start();
             
             try {
                 log.error("start worker...");
