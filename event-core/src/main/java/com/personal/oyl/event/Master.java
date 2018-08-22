@@ -100,10 +100,10 @@ public class Master {
         for (String worker : workerList) {
             Holder holder = new Holder();
             String content = ZkUtil.getInstance().getContent(zk, cfg.getWorkerNode() + Configuration.SEPARATOR + worker, null);
-            holder.setNode(worker);
+            holder.node = worker;
             holder.setAssigned(content);
             holders.add(holder);
-            assigned.addAll(holder.getAssigned());
+            assigned.addAll(holder.assigned);
         }
         
         cfg.getTables().forEach((t) -> {
@@ -113,10 +113,24 @@ public class Master {
             }
         });
         
+        int lastIdx = holders.size() - 1;
+        while (true) {
+            Collections.sort(holders, (o1, o2) -> o1.assigned.size() - o2.assigned.size());
+            
+            if (holders.get(lastIdx).assigned.size() - holders.get(0).assigned.size() >= 2) {
+                Integer tmp = holders.get(lastIdx).removeFirstAssigned();
+                holders.get(0).addAssigned(tmp);
+                
+                continue;
+            }
+            
+            break;
+        }
+        
         for (Holder holder : holders) {
             if (holder.affected) {
                 try{
-                    ZkUtil.getInstance().setContent(zk, cfg.getWorkerNode() + Configuration.SEPARATOR + holder.getNode(), holder.assignedString());
+                    ZkUtil.getInstance().setContent(zk, cfg.getWorkerNode() + Configuration.SEPARATOR + holder.node, holder.assignedString());
                 } catch(KeeperException e){
                     if (e instanceof KeeperException.NoNodeException) {
                         // 可能发生NONODE异常，这不是问题。
@@ -134,21 +148,14 @@ public class Master {
         private List<Integer> assigned = new LinkedList<>();
         private boolean affected = false;
 
-        public String getNode() {
-            return node;
-        }
-
-        public void setNode(String node) {
-            this.node = node;
-        }
-
-        public List<Integer> getAssigned() {
-            return assigned;
-        }
-
         public void addAssigned(Integer i) {
-            this.getAssigned().add(i);
+            this.assigned.add(i);
             affected = true;
+        }
+        
+        public Integer removeFirstAssigned() {
+            affected = true;
+            return this.assigned.remove(0);
         }
 
         public void setAssigned(String nodeContent) {
@@ -167,7 +174,7 @@ public class Master {
             int size = assigned.size();
             
             for (int i = 0; i < size; i++) {
-                sb.append(this.getAssigned().get(i));
+                sb.append(this.assigned.get(i));
                 if (i < (size - 1)) {
                     sb.append(Configuration.GROUP_SEPARATOR);
                 }
