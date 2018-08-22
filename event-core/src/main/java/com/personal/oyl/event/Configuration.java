@@ -35,6 +35,9 @@ public class Configuration {
     @Value("${event.kafka.broker.topic}")
     private String kafkaTopic;
     
+    @Value("${event.kafka.broker.topic.partitions}")
+    private int kafkaPartitions;
+    
     @Value("${event.kafka.consumer.group}")
     private String kafkaConsumerGroup;
     
@@ -44,6 +47,14 @@ public class Configuration {
 
     public void setKafkaConsumerGroup(String kafkaConsumerGroup) {
         this.kafkaConsumerGroup = kafkaConsumerGroup;
+    }
+
+    public int getKafkaPartitions() {
+        return kafkaPartitions;
+    }
+
+    public void setKafkaPartitions(int kafkaPartitions) {
+        this.kafkaPartitions = kafkaPartitions;
     }
 
     public String getKafkaTopic() {
