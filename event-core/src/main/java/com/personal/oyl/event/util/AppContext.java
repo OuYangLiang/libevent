@@ -1,4 +1,4 @@
-package com.personal.oyl.event;
+package com.personal.oyl.event.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

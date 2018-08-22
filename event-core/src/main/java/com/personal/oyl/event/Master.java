@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.personal.oyl.event.util.SimpleLock;
 import com.personal.oyl.event.util.ZkUtil;
 
 @Component
@@ -72,13 +73,13 @@ public class Master {
         
         lock = new SimpleLock(zk);
         lock.lock(uuid, cfg.getMasterNode());
-        log.error("Now it is the master server...");
+        log.info("Now it is the master server...");
         // do what it should do as a master...
         
         ZkUtil.getInstance().getChildren(zk, cfg.getWorkerNode(), masterWatcher);
-        log.error("ready for listening to workers...");
+        log.info("ready for listening to workers...");
         
-        log.error("perform the first check of the assignment, invoke method onWorkerChange()...");
+        log.info("perform the first check of the assignment, invoke method onWorkerChange()...");
         this.onWorkerChange();
     }
     

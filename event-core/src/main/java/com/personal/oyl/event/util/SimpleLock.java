@@ -5,7 +5,7 @@
  * Copyright (C) 2006-2017
  */
  
-package com.personal.oyl.event;
+package com.personal.oyl.event.util;
 
 import java.util.concurrent.Semaphore;
 

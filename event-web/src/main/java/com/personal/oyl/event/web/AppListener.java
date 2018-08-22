@@ -38,7 +38,9 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
         if (event.getApplicationContext().getParent() == null) {
             config.addSubscriber("Event Type", new Sub1());
             
-            new Thread(consumer).start();
+            Thread kafkaConsumer = new Thread(consumer);
+            kafkaConsumer.start();
+            
             
             try {
                 log.error("start worker...");
@@ -53,6 +55,12 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
             } catch (IOException | InterruptedException | KeeperException e) {
                 log.error(e.getMessage(), e);
             }
+            
+            Runtime.getRuntime().addShutdownHook(new Thread(() ->  {
+                consumer.wake();
+                worker.close();
+                worker.close();
+            }));
         }
     }
 

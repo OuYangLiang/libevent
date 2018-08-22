@@ -111,7 +111,7 @@ public class Worker {
         }
     }
     
-    private void close() {
+    public void close() {
         if (null != zk) {
             try {
                 zk.close();
