@@ -36,7 +36,7 @@ public class EventConsumer implements Runnable{
         try {
             consumer.subscribe(Arrays.asList(cfg.getKafkaTopic()));
             
-            while (true) {
+            while (!Thread.currentThread().isInterrupted()) {
                 ConsumerRecords<String, String> records = consumer.poll(Long.MAX_VALUE);
                 for (ConsumerRecord<String, String> record : records) {
                     Event event = Event.fromJson(record.value());
