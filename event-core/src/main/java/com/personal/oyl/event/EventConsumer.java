@@ -9,16 +9,10 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.personal.oyl.event.util.Configuration;
 
-@Component
 public class EventConsumer implements Runnable{
-    
-    @Autowired
-    private SubscriberConfig config;
     
     private KafkaConsumer<String, String> consumer;
 
@@ -39,7 +33,7 @@ public class EventConsumer implements Runnable{
                 ConsumerRecords<String, String> records = consumer.poll(Long.MAX_VALUE);
                 for (ConsumerRecord<String, String> record : records) {
                     Event event = Event.fromJson(record.value());
-                    List<BaseSubscriber> subs = config.getSubscribers(event.getEventType());
+                    List<BaseSubscriber> subs = SubscriberConfig.instance().getSubscribers(event.getEventType());
                     for (BaseSubscriber sub : subs) {
                         sub.onEvent(event);
                     }

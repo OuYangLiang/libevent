@@ -11,6 +11,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import com.personal.oyl.event.EventConsumer;
+import com.personal.oyl.event.EventMapper;
 import com.personal.oyl.event.Master;
 import com.personal.oyl.event.SubscriberConfig;
 import com.personal.oyl.event.Worker;
@@ -21,26 +22,21 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
     private static final Logger log = LoggerFactory.getLogger(AppListener.class);
     
     @Autowired
-    private SubscriberConfig config;
-    
-    @Autowired
-    private Worker worker;
-    
-    @Autowired
-    private Master master;
-    
-    @Autowired
-    private EventConsumer consumer;
+    private EventMapper mapper;
     
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (event.getApplicationContext().getParent() == null) {
-            config.addSubscriber("Event Type", new Sub1());
+            SubscriberConfig.instance().addSubscriber("Event Type", new Sub1());
             
+            
+            EventConsumer consumer = new EventConsumer();
             Thread kafkaConsumer = new Thread(consumer);
             kafkaConsumer.start();
             
+            Master master = new Master();
+            Worker worker = new Worker(mapper);
             
             try {
                 log.error("start worker...");
@@ -58,7 +54,8 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
             
             Runtime.getRuntime().addShutdownHook(new Thread(() ->  {
                 consumer.wake();
-                worker.close();
+                kafkaConsumer.interrupt();
+                master.close();
                 worker.close();
             }));
         }

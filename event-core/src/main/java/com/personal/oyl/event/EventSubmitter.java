@@ -16,7 +16,6 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.personal.oyl.event.util.AppContext;
 import com.personal.oyl.event.util.Configuration;
 
 public class EventSubmitter implements Runnable {
@@ -24,15 +23,15 @@ public class EventSubmitter implements Runnable {
     private static final Logger log = LoggerFactory.getLogger(EventSubmitter.class);
     
     private int tbNum;
+    private EventMapper mapper;
     
-    public EventSubmitter(int tbNum) {
+    public EventSubmitter(int tbNum, EventMapper mapper) {
         this.tbNum = tbNum;
+        this.mapper = mapper;
     }
     
     @Override
     public void run() {
-        EventMapper mapper = AppContext.getContext().getBean(EventMapper.class);
-        
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, Configuration.instance().getKafkaAddrs());
         props.put(ProducerConfig.ACKS_CONFIG, "all");

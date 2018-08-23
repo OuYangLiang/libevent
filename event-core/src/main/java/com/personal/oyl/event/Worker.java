@@ -14,8 +14,6 @@ import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.personal.oyl.event.util.Configuration;
 import com.personal.oyl.event.util.ZkUtil;
@@ -24,7 +22,6 @@ import com.personal.oyl.event.util.ZkUtil;
 /**
  * @author:ouyangliang2
  */
-@Component
 public class Worker {
     
     private static final Logger log = LoggerFactory.getLogger(Worker.class);
@@ -33,8 +30,11 @@ public class Worker {
     
     private String clientId;
     
-    @Autowired
     private EventSubmitThreadUtil threadUtil;
+    
+    public Worker(EventMapper mapper) {
+        threadUtil = new EventSubmitThreadUtil(mapper);
+    }
     
     public void start() throws IOException, InterruptedException, KeeperException {
         clientId = UUID.randomUUID().toString();
@@ -111,6 +111,7 @@ public class Worker {
     }
     
     public void close() {
+        threadUtil.stopAll();
         if (null != zk) {
             try {
                 zk.close();

@@ -17,13 +17,11 @@ import org.apache.zookeeper.Watcher.Event.KeeperState;
 import org.apache.zookeeper.ZooKeeper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import com.personal.oyl.event.util.Configuration;
 import com.personal.oyl.event.util.SimpleLock;
 import com.personal.oyl.event.util.ZkUtil;
 
-@Component
 public class Master {
     
     private static final Logger log = LoggerFactory.getLogger(Master.class);
@@ -82,7 +80,7 @@ public class Master {
         this.onWorkerChange();
     }
     
-    private void close() {
+    public void close() {
         if (null != zk) {
             try {
                 zk.close();

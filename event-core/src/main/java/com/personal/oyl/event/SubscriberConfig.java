@@ -6,35 +6,43 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.springframework.stereotype.Component;
-
-@Component
-public class SubscriberConfig {
-    private Map<String, List<BaseSubscriber>> cfg = new ConcurrentHashMap<>();
-
-    public Map<String, List<BaseSubscriber>> getCfg() {
-        return cfg;
-    }
-
-    public void setCfg(Map<String, List<BaseSubscriber>> cfg) {
-        this.cfg = cfg;
+public final class SubscriberConfig {
+    private static SubscriberConfig instance;
+    
+    private SubscriberConfig () {
+        
     }
     
+    public static SubscriberConfig instance() {
+        if (null == instance) {
+            synchronized (SubscriberConfig.class) {
+                if (null == instance) {
+                    instance = new SubscriberConfig();
+                }
+            }
+        }
+        
+        return instance;
+    }
+    
+    
+    private Map<String, List<BaseSubscriber>> cfg = new ConcurrentHashMap<>();
+
     public List<BaseSubscriber> getSubscribers(String eventType) {
-        if (this.getCfg().containsKey(eventType)) {
-            return this.getCfg().get(eventType);
+        if (this.cfg.containsKey(eventType)) {
+            return this.cfg.get(eventType);
         }
         
         return Collections.emptyList();
     }
     
     public void addSubscriber(String eventType, BaseSubscriber sub) {
-        if (this.getCfg().containsKey(eventType)) {
-            this.getCfg().get(eventType).add(sub);
+        if (this.cfg.containsKey(eventType)) {
+            this.cfg.get(eventType).add(sub);
         } else {
             List<BaseSubscriber> list = new LinkedList<>();
             list.add(sub);
-            this.getCfg().put(eventType, list);
+            this.cfg.put(eventType, list);
         }
     }
 }

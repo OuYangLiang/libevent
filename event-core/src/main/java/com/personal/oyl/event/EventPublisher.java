@@ -2,14 +2,13 @@ package com.personal.oyl.event;
 
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-@Component
 public class EventPublisher {
     
-    @Autowired
     private EventMapper mapper;
+    
+    public EventPublisher(EventMapper mapper) {
+        this.mapper = mapper;
+    }
     
     public void publish(Event event) {
         this.mapper.insert(event);

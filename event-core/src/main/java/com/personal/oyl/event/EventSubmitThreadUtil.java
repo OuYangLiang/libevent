@@ -3,14 +3,16 @@ package com.personal.oyl.event;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class EventSubmitThreadUtil {
     private List<Thread> currentRunning = new LinkedList<>();
+    private EventMapper mapper;
+    
+    public EventSubmitThreadUtil(EventMapper mapper) {
+        this.mapper = mapper;
+    }
     
     public void startForN(int n) {
-        Thread submitThread = new Thread(new EventSubmitter(n));
+        Thread submitThread = new Thread(new EventSubmitter(n, mapper));
         submitThread.start();
         currentRunning.add(submitThread);
     }
