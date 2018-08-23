@@ -73,9 +73,12 @@ public class EventSubmitter implements Runnable {
                         future.get();
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
+                        failed = true;
+                        break;
                     } catch (ExecutionException e) {
                         log.error(e.getMessage(), e);
                         failed = true;
+                        break;
                     }
                 }
                 
