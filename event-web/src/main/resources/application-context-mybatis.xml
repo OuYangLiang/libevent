@@ -51,6 +51,11 @@
     <property name="dataSource" ref="dataSource" />
     <property name="mapperLocations" value="classpath*:sqlMap/**/*.xml" />
   </bean>
+  
+  <bean id="eventMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="com.personal.oyl.event.EventMapper" />
+    <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+  </bean>
 
 <!--   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
     <property name="basePackage" value="com.personal.oyl.event" />

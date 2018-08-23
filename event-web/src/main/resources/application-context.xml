@@ -26,6 +26,5 @@
     </property>
   </bean>
     
-    <import resource="classpath:application-context-event-core.xml" />
     <import resource="classpath:application-context-mybatis.xml" />
 </beans>
