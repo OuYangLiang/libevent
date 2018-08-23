@@ -17,9 +17,9 @@ import org.apache.zookeeper.Watcher.Event.KeeperState;
 import org.apache.zookeeper.ZooKeeper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.personal.oyl.event.util.Configuration;
 import com.personal.oyl.event.util.SimpleLock;
 import com.personal.oyl.event.util.ZkUtil;
 
@@ -29,8 +29,6 @@ public class Master {
     private static final Logger log = LoggerFactory.getLogger(Master.class);
     
     private ZooKeeper zk;
-    @Autowired
-    private Configuration cfg;
     private SimpleLock lock;
     
     private Watcher masterWatcher = (event) -> {
@@ -48,7 +46,8 @@ public class Master {
         
         CountDownLatch latch = new CountDownLatch(1);
         
-        zk = new ZooKeeper(cfg.getZkAddrs(), cfg.getSessionTimeout(), new Watcher() {
+        zk = new ZooKeeper(Configuration.instance().getZkAddrs(), Configuration.instance().getSessionTimeout(),
+                new Watcher() {
 
             @Override
             public void process(WatchedEvent event) {
@@ -72,11 +71,11 @@ public class Master {
         latch.await();
         
         lock = new SimpleLock(zk);
-        lock.lock(uuid, cfg.getMasterNode());
+        lock.lock(uuid, Configuration.instance().getMasterNode());
         log.info("Now it is the master server...");
         // do what it should do as a master...
         
-        ZkUtil.getInstance().getChildren(zk, cfg.getWorkerNode(), masterWatcher);
+        ZkUtil.getInstance().getChildren(zk, Configuration.instance().getWorkerNode(), masterWatcher);
         log.info("ready for listening to workers...");
         
         log.info("perform the first check of the assignment, invoke method onWorkerChange()...");
@@ -95,19 +94,19 @@ public class Master {
     }
     
     private synchronized void onWorkerChange() throws KeeperException, InterruptedException {
-        List<String> workerList = ZkUtil.getInstance().getChildren(zk, cfg.getWorkerNode(), masterWatcher);
+        List<String> workerList = ZkUtil.getInstance().getChildren(zk, Configuration.instance().getWorkerNode(), masterWatcher);
         List<Holder> holders = new LinkedList<>();
         Set<Integer> assigned = new HashSet<>();
         for (String worker : workerList) {
             Holder holder = new Holder();
-            String content = ZkUtil.getInstance().getContent(zk, cfg.getWorkerNode() + Configuration.SEPARATOR + worker, null);
+            String content = ZkUtil.getInstance().getContent(zk, Configuration.instance().getWorkerNode() + Configuration.SEPARATOR + worker, null);
             holder.node = worker;
             holder.setAssigned(content);
             holders.add(holder);
             assigned.addAll(holder.assigned);
         }
         
-        cfg.getTables().forEach((t) -> {
+        Configuration.instance().getTables().forEach((t) -> {
             if (!assigned.contains(t)) {
                 Collections.sort(holders, (o1, o2) -> o1.assigned.size() - o2.assigned.size());
                 holders.get(0).addAssigned(t);
@@ -131,7 +130,9 @@ public class Master {
         for (Holder holder : holders) {
             if (holder.affected) {
                 try{
-                    ZkUtil.getInstance().setContent(zk, cfg.getWorkerNode() + Configuration.SEPARATOR + holder.node, holder.assignedString());
+                    ZkUtil.getInstance().setContent(zk,
+                            Configuration.instance().getWorkerNode() + Configuration.SEPARATOR + holder.node,
+                            holder.assignedString());
                 } catch(KeeperException e){
                     if (e instanceof KeeperException.NoNodeException) {
                         // 可能发生NONODE异常，这不是问题。

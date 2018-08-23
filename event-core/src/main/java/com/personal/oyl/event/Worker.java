@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.personal.oyl.event.util.Configuration;
 import com.personal.oyl.event.util.ZkUtil;
 
 
@@ -30,9 +31,6 @@ public class Worker {
     
     private ZooKeeper zk;
     
-    @Autowired
-    private Configuration cfg;
-    
     private String clientId;
     
     @Autowired
@@ -43,7 +41,8 @@ public class Worker {
         
         CountDownLatch latch = new CountDownLatch(1);
         
-        zk = new ZooKeeper(cfg.getZkAddrs(), cfg.getSessionTimeout(), new Watcher() {
+        zk = new ZooKeeper(Configuration.instance().getZkAddrs(), Configuration.instance().getSessionTimeout(),
+                new Watcher() {
             @Override
             public void process(WatchedEvent event) {
                 if (event.getState().equals(KeeperState.Expired)) {
@@ -66,10 +65,10 @@ public class Worker {
         latch.await();
         // do what it should do as a worker...
         
-        this.createWorkNode(cfg.getWorkerNode() + Configuration.SEPARATOR + clientId);
+        this.createWorkNode(Configuration.instance().getWorkerNode() + Configuration.SEPARATOR + clientId);
         log.info("Id: " + clientId + " work node created...");
         
-        String source = ZkUtil.getInstance().getContent(zk, cfg.getWorkerNode() + Configuration.SEPARATOR + clientId, workWatcher);
+        String source = ZkUtil.getInstance().getContent(zk, Configuration.instance().getWorkerNode() + Configuration.SEPARATOR + clientId, workWatcher);
         this.handleSource(source);
     }
     

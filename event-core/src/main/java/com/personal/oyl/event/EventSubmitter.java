@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.personal.oyl.event.util.AppContext;
+import com.personal.oyl.event.util.Configuration;
 
 public class EventSubmitter implements Runnable {
     
@@ -31,10 +32,9 @@ public class EventSubmitter implements Runnable {
     @Override
     public void run() {
         EventMapper mapper = AppContext.getContext().getBean(EventMapper.class);
-        Configuration cfg  = AppContext.getContext().getBean(Configuration.class);
         
         Properties props = new Properties();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, cfg.getKafkaAddrs());
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, Configuration.instance().getKafkaAddrs());
         props.put(ProducerConfig.ACKS_CONFIG, "all");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
@@ -60,9 +60,10 @@ public class EventSubmitter implements Runnable {
                 }
                 
                 for (Event event : list) {
-                    ProducerRecord<String, String> record = new ProducerRecord<>(cfg.getKafkaTopic(),
-                            event.getGroup() % cfg.getKafkaPartitions(), event.getEventTime().getTime(), null,
-                            event.json(), null);
+                    ProducerRecord<String, String> record = new ProducerRecord<>(
+                            Configuration.instance().getKafkaTopic(),
+                            event.getGroup() % Configuration.instance().getKafkaPartitions(),
+                            event.getEventTime().getTime(), null, event.json(), null);
                     futures.add(producer.send(record));
                     eventIds.add(event.getId());
                 }
