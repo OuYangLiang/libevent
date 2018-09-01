@@ -44,11 +44,7 @@ public class EventSubmitter implements Runnable {
             List<Future<RecordMetadata>> futures = new LinkedList<>();
             
             while (!Thread.currentThread().isInterrupted()) {
-                Map<String, Object> param = new HashMap<>();
-                param.put("limit", Integer.valueOf(100));
-                param.put("tbNum", tbNum);
-                
-                List<Event> list = mapper.queryTopN(param);
+                List<Event> list = mapper.queryTopN(tbNum, 100);
                 
                 if (null == list || list.isEmpty()) {
                     try {
@@ -83,10 +79,7 @@ public class EventSubmitter implements Runnable {
                 }
                 
                 if (!failed) {
-                    Map<String, Object> param2 = new HashMap<>();
-                    param2.put("list", eventIds);
-                    param2.put("tbNum", tbNum);
-                    mapper.batchClean(param2);
+                    mapper.batchClean(tbNum, eventIds);
                 }
                 
             }

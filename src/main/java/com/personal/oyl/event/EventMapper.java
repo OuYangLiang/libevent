@@ -6,7 +6,7 @@ import java.util.Map;
 public interface EventMapper {
     void insert(Event event);
     
-    List<Event> queryTopN(Map<String, Object> param);
+    List<Event> queryTopN(int tbNum, int limit);
     
-    void batchClean(Map<String, Object> param);
+    void batchClean(int tbNum, List<Long> ids);
 }
