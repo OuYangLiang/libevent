@@ -1,9 +1,7 @@
 package com.personal.oyl.event;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -40,7 +38,7 @@ public class EventSubmitter implements Runnable {
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
         
         try {
-            List<Long> eventIds = new LinkedList<>();
+            List<String> eventIds = new LinkedList<>();
             List<Future<RecordMetadata>> futures = new LinkedList<>();
             
             while (!Thread.currentThread().isInterrupted()) {
@@ -60,7 +58,7 @@ public class EventSubmitter implements Runnable {
                             event.getGroup() % Configuration.instance().getKafkaPartitions(),
                             event.getEventTime().getTime(), null, event.json(), null);
                     futures.add(producer.send(record));
-                    eventIds.add(event.getId());
+                    eventIds.add(event.getEventId());
                 }
                 
                 boolean failed = false;

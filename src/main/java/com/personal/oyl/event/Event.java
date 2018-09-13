@@ -1,6 +1,7 @@
 package com.personal.oyl.event;
 
 import java.util.Date;
+import java.util.UUID;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -8,7 +9,7 @@ import com.google.gson.GsonBuilder;
 public class Event {
     private static final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
     
-    private Long id;
+    private String eventId;
     private String eventType;
     private Date eventTime;
     private String context;
@@ -24,14 +25,15 @@ public class Event {
         this.eventTime = eventTime;
         this.context = context;
         this.group = group;
+        this.eventId = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
     }
 
-    public Long getId() {
-        return id;
+    public String getEventId() {
+        return eventId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 
     public String getEventType() {
