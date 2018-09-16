@@ -81,12 +81,17 @@ public final class Configuration {
         return p.getProperty("event.kafka.broker.address");
     }
     
-    public String getKafkaTopic() {
-        return p.getProperty("event.kafka.broker.topic");
+    public String getProduceTopic() {
+        return p.getProperty("event.kafka.broker.produce.topic");
     }
     
-    public int getKafkaPartitions() {
-        return Integer.parseInt(p.getProperty("event.kafka.broker.topic.partitions"));
+    public int getProduceTopicPartitions() {
+        return Integer.parseInt(p.getProperty("event.kafka.broker.produce.topic.partitions"));
+    }
+    
+    public String[] getConsumeTopics() {
+        String val = p.getProperty("event.kafka.broker.consume.topics");
+        return val.split(",");
     }
     
     public String getKafkaConsumerGroup() {

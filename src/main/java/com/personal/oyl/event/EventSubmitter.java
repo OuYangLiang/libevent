@@ -54,8 +54,8 @@ public class EventSubmitter implements Runnable {
                 
                 for (Event event : list) {
                     ProducerRecord<String, String> record = new ProducerRecord<>(
-                            Configuration.instance().getKafkaTopic(),
-                            event.getGroup() % Configuration.instance().getKafkaPartitions(),
+                            Configuration.instance().getProduceTopic(),
+                            event.getGroup() % Configuration.instance().getProduceTopicPartitions(),
                             event.getEventTime().getTime(), null, event.json(), null);
                     futures.add(producer.send(record));
                     eventIds.add(event.getEventId());
