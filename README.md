@@ -2,13 +2,13 @@
 
 ---
 
-libevent是一个基于Kafka的一个分布式事件驱动实现，设计文档：https://ouyblog.com/2018/08/基于Kafka实现事件驱动架构.html
+libevent是一个基于Kafka的一个分布式事件驱动实现，设计文档：[https://ouyblog.com/2018/08/基于Kafka实现事件驱动架构.html](https://ouyblog.com/2018/08/基于Kafka实现事件驱动架构.html)
 
 使用libevent发布事件时，事件消息会先被存入数据库，之后异步发送到kafka，以此来解决**消息丢失**或**无效消息**的问题。为了使用libevent，需要提供一个`EventMapper`的实现来负责事件消息的持久化：
 
 ```java
 public interface EventMapper {
-    void insert(Event event);
+    void insert(int tbNum, Event event);
     
     List<Event> queryTopN(int tbNum, int limit);
     
@@ -25,7 +25,7 @@ public interface EventMapper {
 ```java
 EventMapper mapper = ... // your implementation
 EventPublisher publisher = new EventPublisher(mapper);
-publisher.publish("eventType", new Date(), order.json(), order.getUserId().intValue());
+publisher.publish("eventType", new Date(), order.json(), order.getUserId().intValue() % Configuration.instance().getNumOfEventTables());
 ```
 
 #### 消费搬运者
@@ -96,3 +96,7 @@ public void onApplicationEvent(ContextRefreshedEvent event) {
     SubscriberConfig.instance().addSubscriber("anotherType", sub2);
 }
 ```
+
+最后，libevent需要的配置信息，由event.properties文件提供，你需要在classpath下提供该文件。
+
+[https://github.com/OuYangLiang/libevent-sample](https://github.com/OuYangLiang/libevent-sample)是一个使用libevent的一个示例。

@@ -23,11 +23,12 @@ public class EventConsumer implements Runnable{
         props.put(ConsumerConfig.GROUP_ID_CONFIG, Configuration.instance().getKafkaConsumerGroup());
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
+        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
         consumer = new KafkaConsumer<>(props);
         
         try {
-            consumer.subscribe(Arrays.asList(Configuration.instance().getKafkaTopic()));
+            consumer.subscribe(Arrays.asList(Configuration.instance().getConsumeTopics()));
             
             while (!Thread.currentThread().isInterrupted()) {
                 ConsumerRecords<String, String> records = consumer.poll(Long.MAX_VALUE);
@@ -38,8 +39,13 @@ public class EventConsumer implements Runnable{
                         sub.onEvent(event);
                     }
                 }
+                
+                consumer.commitSync();
             }
+            
         } catch (WakeupException e) {
+            // ignore for shutdown
+        } catch (Exception e) {
             // ignore for shutdown
         } finally {
             consumer.close();

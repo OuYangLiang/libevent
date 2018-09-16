@@ -13,18 +13,16 @@ public class Event {
     private String eventType;
     private Date eventTime;
     private String context;
-    private int group;
 
     public Event() {
         super();
     }
 
-    public Event(String eventType, Date eventTime, String context, int group) {
+    public Event(String eventType, Date eventTime, String context) {
         super();
         this.eventType = eventType;
         this.eventTime = eventTime;
         this.context = context;
-        this.group = group;
         this.eventId = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
     }
 
@@ -60,18 +58,6 @@ public class Event {
         this.context = context;
     }
 
-    public int getGroup() {
-        return group;
-    }
-
-    public void setGroup(int group) {
-        this.group = group;
-    }
-    
-    public int getTbNum() {
-        return this.getGroup() % 8;
-    }
-    
     public String json() {
         String rlt = gson.toJson(this);
         return rlt;
