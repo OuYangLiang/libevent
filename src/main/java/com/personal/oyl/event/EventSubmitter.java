@@ -37,6 +37,8 @@ public class EventSubmitter implements Runnable {
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
         
+        int partition = tbNum % Configuration.instance().getProduceTopicPartitions();
+        
         try {
             List<String> eventIds = new LinkedList<>();
             List<Future<RecordMetadata>> futures = new LinkedList<>();
@@ -54,9 +56,7 @@ public class EventSubmitter implements Runnable {
                 
                 for (Event event : list) {
                     ProducerRecord<String, String> record = new ProducerRecord<>(
-                            Configuration.instance().getProduceTopic(),
-                            event.getGroup() % Configuration.instance().getProduceTopicPartitions(),
-                            event.getEventTime().getTime(), null, event.json(), null);
+                            Configuration.instance().getProduceTopic(), partition, event.getEventTime().getTime(), null, event.json(), null);
                     futures.add(producer.send(record));
                     eventIds.add(event.getEventId());
                 }

@@ -10,11 +10,11 @@ public class EventPublisher {
         this.mapper = mapper;
     }
     
-    public void publish(Event event) {
-        this.mapper.insert(event);
+    public void publish(int tbNum, Event event) {
+        this.mapper.insert(tbNum, event);
     }
     
-    public void publish(String eventType, Date eventTime, String context, int group) {
-        this.mapper.insert(new Event(eventType, eventTime, context, group));
+    public void publish(String eventType, Date eventTime, String context, int tbNum) {
+        this.mapper.insert(tbNum, new Event(eventType, eventTime, context));
     }
 }
