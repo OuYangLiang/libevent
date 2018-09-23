@@ -9,10 +9,14 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.personal.oyl.event.util.Configuration;
 
-public class EventConsumer implements Runnable{
+public class EventConsumer implements Runnable {
+    
+    private static final Logger log = LoggerFactory.getLogger(EventConsumer.class);
     
     private KafkaConsumer<String, String> consumer;
 
@@ -36,7 +40,11 @@ public class EventConsumer implements Runnable{
                     Event event = Event.fromJson(record.value());
                     List<BaseSubscriber> subs = SubscriberConfig.instance().getSubscribers(event.getEventType());
                     for (BaseSubscriber sub : subs) {
-                        sub.onEvent(event);
+                        try {
+                            sub.onEvent(event);
+                        } catch (Exception e) {
+                            log.error(e.getMessage(), e);
+                        }
                     }
                 }
                 
@@ -44,9 +52,7 @@ public class EventConsumer implements Runnable{
             }
             
         } catch (WakeupException e) {
-            // ignore for shutdown
-        } catch (Exception e) {
-            // ignore for shutdown
+            log.error(e.getMessage(), e);
         } finally {
             consumer.close();
         }
