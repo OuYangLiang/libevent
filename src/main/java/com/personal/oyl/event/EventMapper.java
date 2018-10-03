@@ -8,4 +8,6 @@ public interface EventMapper {
     List<Event> queryTopN(int tbNum, int limit);
     
     void batchClean(int tbNum, List<String> eventIds);
+    
+    void archive(String subscriberId, Event event);
 }

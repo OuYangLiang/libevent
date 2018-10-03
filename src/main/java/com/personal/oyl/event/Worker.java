@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
-import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.Watcher.Event.EventType;
 import org.apache.zookeeper.Watcher.Event.KeeperState;
-import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,10 +63,13 @@ public class Worker {
         latch.await();
         // do what it should do as a worker...
         
-        this.createWorkNode(Configuration.instance().getWorkerNode() + Configuration.SEPARATOR + clientId);
+        ZkUtil.getInstance().createRoot(zk, Configuration.instance().getNameSpace());
+        ZkUtil.getInstance().createRoot(zk, Configuration.instance().getWorkerNode());
+        
+        ZkUtil.getInstance().createWorkNode(zk, Configuration.instance().getWorkerNode(clientId));
         log.info("Id: " + clientId + " work node created...");
         
-        String source = ZkUtil.getInstance().getContent(zk, Configuration.instance().getWorkerNode() + Configuration.SEPARATOR + clientId, workWatcher);
+        String source = ZkUtil.getInstance().getContent(zk, Configuration.instance().getWorkerNode(clientId), workWatcher);
         this.handleSource(source);
     }
     
@@ -94,18 +95,6 @@ public class Worker {
             
             for (String part : parts) {
                 threadUtil.startForN(Integer.valueOf(part.trim()));
-            }
-        }
-    }
-    
-    private void createWorkNode(String znode) throws InterruptedException, KeeperException {
-        try{
-            zk.create(znode, "".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
-        } catch(KeeperException e) {
-            if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
-                this.createWorkNode(znode);
-            } else {
-                throw e;
             }
         }
     }

@@ -68,6 +68,8 @@ public class Master {
         
         latch.await();
         
+        ZkUtil.getInstance().createRoot(zk, Configuration.instance().getNameSpace());
+        
         lock = new SimpleLock(zk);
         lock.lock(uuid, Configuration.instance().getMasterNode());
         log.info("Now it is the master server...");

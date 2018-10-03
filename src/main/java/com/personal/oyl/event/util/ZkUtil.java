@@ -2,8 +2,10 @@ package com.personal.oyl.event.util;
 
 import java.util.List;
 
+import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
 
@@ -62,6 +64,32 @@ public final class ZkUtil {
         } catch(KeeperException e){
             if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
                 this.setContent(zk, znode, content);
+            } else {
+                throw e;
+            }
+        }
+    }
+    
+    public void createWorkNode(ZooKeeper zk, String znode) throws InterruptedException, KeeperException {
+        try{
+            zk.create(znode, "".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+        } catch(KeeperException e) {
+            if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
+                this.createWorkNode(zk, znode);
+            } else {
+                throw e;
+            }
+        }
+    }
+    
+    public void createRoot(ZooKeeper zk, String znode) throws InterruptedException, KeeperException {
+        try {
+            zk.create(znode,  "".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        } catch(KeeperException e) {
+            if (e.code().equals(KeeperException.Code.NODEEXISTS)) {
+                return;
+            } else if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
+                this.createRoot(zk, znode);
             } else {
                 throw e;
             }
