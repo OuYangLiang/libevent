@@ -58,11 +58,15 @@ public final class Configuration {
     }
     
     public String getMasterNode() {
-        return this.getNameSpace() + p.getProperty("event.zookeeper.master.node");
+        return this.getNameSpace() + SEPARATOR + p.getProperty("event.zookeeper.master.node");
     }
     
     public String getWorkerNode() {
-        return this.getNameSpace() + p.getProperty("event.zookeeper.worker.root.node");
+        return this.getNameSpace() + SEPARATOR + p.getProperty("event.zookeeper.worker.root.node");
+    }
+    
+    public String getWorkerNode(String clientId) {
+        return this.getWorkerNode() + Configuration.SEPARATOR + clientId;
     }
     
     public String getZkAddrs() {
