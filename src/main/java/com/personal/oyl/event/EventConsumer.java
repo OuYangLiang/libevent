@@ -38,8 +38,8 @@ public class EventConsumer implements Runnable {
                 ConsumerRecords<String, String> records = consumer.poll(Long.MAX_VALUE);
                 for (ConsumerRecord<String, String> record : records) {
                     Event event = Event.fromJson(record.value());
-                    List<BaseSubscriber> subs = SubscriberConfig.instance().getSubscribers(event.getEventType());
-                    for (BaseSubscriber sub : subs) {
+                    List<EventSubscriber> subs = SubscriberConfig.instance().getSubscribers(event.getEventType());
+                    for (EventSubscriber sub : subs) {
                         try {
                             sub.onEvent(event);
                         } catch (Exception e) {

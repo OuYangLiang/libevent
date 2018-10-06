@@ -1,10 +1,10 @@
 package com.personal.oyl.event;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public final class SubscriberConfig {
     private static SubscriberConfig instance;
@@ -25,10 +25,9 @@ public final class SubscriberConfig {
         return instance;
     }
     
-    
-    private Map<String, List<BaseSubscriber>> cfg = new ConcurrentHashMap<>();
+    private Map<String, List<EventSubscriber>> cfg = new HashMap<>();
 
-    public List<BaseSubscriber> getSubscribers(String eventType) {
+    public List<EventSubscriber> getSubscribers(String eventType) {
         if (this.cfg.containsKey(eventType)) {
             return this.cfg.get(eventType);
         }
@@ -36,11 +35,11 @@ public final class SubscriberConfig {
         return Collections.emptyList();
     }
     
-    public void addSubscriber(String eventType, BaseSubscriber sub) {
+    public void addSubscriber(String eventType, EventSubscriber sub) {
         if (this.cfg.containsKey(eventType)) {
             this.cfg.get(eventType).add(sub);
         } else {
-            List<BaseSubscriber> list = new LinkedList<>();
+            List<EventSubscriber> list = new LinkedList<>();
             list.add(sub);
             this.cfg.put(eventType, list);
         }

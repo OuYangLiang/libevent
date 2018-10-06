@@ -1,5 +1,7 @@
 package com.personal.oyl.event;
 
-public interface BaseSubscriber {
+public interface EventSubscriber {
     void onEvent(Event e);
+    
+    String id();
 }
