@@ -44,8 +44,10 @@ public class EventSubmitter implements Runnable {
             List<Future<RecordMetadata>> futures = new LinkedList<>();
             
             while (!Thread.currentThread().isInterrupted()) {
-                List<Event> list = mapper.queryTopN(tbNum, 100);
+                eventIds.clear();
+                futures.clear();
                 
+                List<Event> list = mapper.queryTopN(tbNum, 100);
                 if (null == list || list.isEmpty()) {
                     try {
                         TimeUnit.SECONDS.sleep(1);
@@ -79,7 +81,6 @@ public class EventSubmitter implements Runnable {
                 if (!failed) {
                     mapper.batchClean(tbNum, eventIds);
                 }
-                
             }
         } finally {
             producer.close();

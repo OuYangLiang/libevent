@@ -1,7 +1,6 @@
 package com.personal.oyl.event;
 
 import java.io.IOException;
-import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.zookeeper.KeeperException;
@@ -23,10 +22,8 @@ import com.personal.oyl.event.util.ZkUtil;
 public class Worker {
     
     private static final Logger log = LoggerFactory.getLogger(Worker.class);
-    
     private ZooKeeper zk;
     
-    private String clientId;
     
     private EventSubmitThreadUtil threadUtil;
     
@@ -35,7 +32,7 @@ public class Worker {
     }
     
     public void start() throws IOException, InterruptedException, KeeperException {
-        clientId = UUID.randomUUID().toString();
+        String serverId = Configuration.instance().uuid();
         
         CountDownLatch latch = new CountDownLatch(1);
         
@@ -66,10 +63,10 @@ public class Worker {
         ZkUtil.getInstance().createRoot(zk, Configuration.instance().getNameSpace());
         ZkUtil.getInstance().createRoot(zk, Configuration.instance().getWorkerNode());
         
-        ZkUtil.getInstance().createWorkNode(zk, Configuration.instance().getWorkerNode(clientId));
-        log.info("Id: " + clientId + " work node created...");
+        ZkUtil.getInstance().createWorkNode(zk, Configuration.instance().getWorkerNode(serverId));
+        log.info("Id: " + serverId + " work node created...");
         
-        String source = ZkUtil.getInstance().getContent(zk, Configuration.instance().getWorkerNode(clientId), workWatcher);
+        String source = ZkUtil.getInstance().getContent(zk, Configuration.instance().getWorkerNode(serverId), workWatcher);
         this.handleSource(source);
     }
     

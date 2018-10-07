@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.zookeeper.KeeperException;
@@ -40,7 +39,7 @@ public class Master {
     };
     
     public void start() throws IOException, InterruptedException, KeeperException {
-        String uuid = UUID.randomUUID().toString();
+        String serverId = Configuration.instance().uuid();
         
         CountDownLatch latch = new CountDownLatch(1);
         
@@ -71,7 +70,7 @@ public class Master {
         ZkUtil.getInstance().createRoot(zk, Configuration.instance().getNameSpace());
         
         lock = new SimpleLock(zk);
-        lock.lock(uuid, Configuration.instance().getMasterNode());
+        lock.lock(serverId, Configuration.instance().getMasterNode());
         log.info("Now it is the master server...");
         // do what it should do as a master...
         
