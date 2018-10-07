@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ public final class Configuration {
     private static final Logger log = LoggerFactory.getLogger(Configuration.class);
     private static Configuration instance;
     private static Properties p;
+    private static final String uuid = UUID.randomUUID().toString();
     
     private Configuration () {
         
@@ -52,6 +54,10 @@ public final class Configuration {
     
     public static final String SEPARATOR = "/";
     public static final String GROUP_SEPARATOR = ":";
+    
+    public String uuid() {
+        return Configuration.uuid;
+    }
     
     public String getNameSpace() {
         return p.getProperty("event.zookeeper.namespace");
