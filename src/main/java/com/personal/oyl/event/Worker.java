@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.Watcher.Event.EventType;
 import org.apache.zookeeper.Watcher.Event.KeeperState;
@@ -17,7 +16,7 @@ import com.personal.oyl.event.util.ZkUtil;
 
 
 /**
- * @author:ouyangliang2
+ * @author ouyangliang2
  */
 public class Worker {
     
@@ -37,25 +36,21 @@ public class Worker {
         CountDownLatch latch = new CountDownLatch(1);
         
         zk = new ZooKeeper(Configuration.instance().getZkAddrs(), Configuration.instance().getSessionTimeout(),
-                new Watcher() {
-            @Override
-            public void process(WatchedEvent event) {
-                if (event.getState().equals(KeeperState.Expired)) {
-                    try {
-                        Worker.this.close();
-                        Worker.this.start();
-                    } catch (Exception e) {
-                        log.error(e.getMessage(), e);
+                (event) -> {
+                    if (event.getState().equals(KeeperState.Expired)) {
+                        try {
+                            Worker.this.close();
+                            Worker.this.start();
+                        } catch (Exception e) {
+                            log.error(e.getMessage(), e);
+                        }
+
                     }
-                    
-                }
-                
-                if (event.getState().equals(KeeperState.SyncConnected)) {
-                    latch.countDown();
-                }
-            }
-            
-        });
+
+                    if (event.getState().equals(KeeperState.SyncConnected)) {
+                        latch.countDown();
+                    }
+                });
         
         latch.await();
         // do what it should do as a worker...
@@ -91,7 +86,7 @@ public class Worker {
             String[] parts = source.split(Configuration.GROUP_SEPARATOR);
             
             for (String part : parts) {
-                threadUtil.startForN(Integer.valueOf(part.trim()));
+                threadUtil.startForN(Integer.parseInt(part.trim()));
             }
         }
     }

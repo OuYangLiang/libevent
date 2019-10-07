@@ -26,7 +26,7 @@ public final class Configuration {
                 if (null == instance) {
                     instance = new Configuration();
                     try {
-                        instance.load();
+                        load();
                     } catch (IOException e) {
                         log.error(e.getMessage(), e);
                         System.exit(1);
@@ -38,17 +38,10 @@ public final class Configuration {
         return instance;
     }
     
-    private void load() throws IOException {
-        InputStream is = null;
-        try {
-            is = this.getClass().getClassLoader().getResourceAsStream("event.properties");
+    private static void load() throws IOException {
+        try (InputStream is = Configuration.class.getClassLoader().getResourceAsStream("event.properties")) {
             p = new Properties();
             p.load(is);
-        } finally {
-            if (null != is) {
-                is.close();
-                is = null;
-            }
         }
     }
     
@@ -111,7 +104,7 @@ public final class Configuration {
     public Set<Integer> getTables() {
         Set<Integer> rlt = new HashSet<>();
         for (int i = 0; i < this.getNumOfEventTables(); i++) {
-            rlt.add(Integer.valueOf(i));
+            rlt.add(i);
         }
         return rlt;
     }

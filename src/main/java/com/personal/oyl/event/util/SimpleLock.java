@@ -7,19 +7,18 @@
  
 package com.personal.oyl.event.util;
 
+import java.nio.charset.Charset;
 import java.util.concurrent.Semaphore;
 
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.WatchedEvent;
-import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.Watcher.Event.EventType;
 import org.apache.zookeeper.data.Stat;
 
 /**
- * @author:ouyangliang2
+ * @author ouyangliang2
  */
 public class SimpleLock {
     private ZooKeeper zk;
@@ -31,7 +30,7 @@ public class SimpleLock {
     public boolean tryLock(String clientId, String resource) 
             throws KeeperException, InterruptedException {
         try{
-            zk.create(resource, clientId.getBytes(), 
+            zk.create(resource, clientId.getBytes(Charset.forName("utf-8")),
                     ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
             
             return true;
@@ -50,7 +49,7 @@ public class SimpleLock {
             throws KeeperException, InterruptedException {
         
         try{
-            zk.create(resource, clientId.getBytes(), 
+            zk.create(resource, clientId.getBytes(Charset.forName("utf-8")),
                     ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
             
             return true;
@@ -69,11 +68,7 @@ public class SimpleLock {
         try {
             Stat stat = new Stat();
             byte[] data = zk.getData(resource, false, stat);
-            if (clientId.equals(new String(data))) {
-                return true;
-            }
-            
-            return false;
+            return clientId.equals(new String(data, Charset.forName("utf-8")));
         } catch(KeeperException e){
             if (e.code().equals(KeeperException.Code.NONODE)) {
                 return this.tryLock(clientId, resource);
@@ -101,13 +96,11 @@ public class SimpleLock {
         try {
             Stat stat = new Stat();
             byte[] data = zk.getData(resource, false, stat);
-            if (clientId.equals(new String(data))) {
+            if (clientId.equals(new String(data, Charset.forName("utf-8")))) {
                 this.release(clientId, resource);
             }
         } catch(KeeperException e){
-            if (e.code().equals(KeeperException.Code.NONODE)) {
-                return;
-            } else if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
+            if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
                 this.checkRelease(clientId, resource);
             } else {
                 throw e;
@@ -129,12 +122,9 @@ public class SimpleLock {
         Semaphore s = new Semaphore(0);
         
         try {
-            Stat stat = zk.exists(resource, new Watcher() {
-                @Override
-                public void process(WatchedEvent event) {
-                    if (event.getType().equals(EventType.NodeDeleted)) {
-                        s.release();
-                    }
+            Stat stat = zk.exists(resource, (event) -> {
+                if (event.getType().equals(EventType.NodeDeleted)) {
+                    s.release();
                 }
             });
             
@@ -145,7 +135,6 @@ public class SimpleLock {
         } catch (KeeperException e) {
             if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
                 this.listenLock(resource);
-                return;
             } else {
                 throw e;
             }

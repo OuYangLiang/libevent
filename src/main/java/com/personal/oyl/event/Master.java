@@ -1,15 +1,10 @@
 package com.personal.oyl.event;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.Watcher.Event.EventType;
 import org.apache.zookeeper.Watcher.Event.KeeperState;
@@ -26,8 +21,7 @@ public class Master {
     private static final Logger log = LoggerFactory.getLogger(Master.class);
     
     private ZooKeeper zk;
-    private SimpleLock lock;
-    
+
     private Watcher masterWatcher = (event) -> {
         if (event.getType().equals(EventType.NodeChildrenChanged)) {
             try {
@@ -44,32 +38,27 @@ public class Master {
         CountDownLatch latch = new CountDownLatch(1);
         
         zk = new ZooKeeper(Configuration.instance().getZkAddrs(), Configuration.instance().getSessionTimeout(),
-                new Watcher() {
+                (event) -> {
+                    if (event.getState().equals(KeeperState.Expired)) {
+                        try {
+                            Master.this.close();
+                            Master.this.start();
+                        } catch (Exception e) {
+                            log.error(e.getMessage(), e);
+                        }
 
-            @Override
-            public void process(WatchedEvent event) {
-                if (event.getState().equals(KeeperState.Expired)) {
-                    try {
-                        Master.this.close();
-                        Master.this.start();
-                    } catch (Exception e) {
-                        log.error(e.getMessage(), e);
                     }
-                    
-                }
-                
-                if (event.getState().equals(KeeperState.SyncConnected)) {
-                    latch.countDown();
-                }
-            }
-            
-        });
+
+                    if (event.getState().equals(KeeperState.SyncConnected)) {
+                        latch.countDown();
+                    }
+                });
         
         latch.await();
         
         ZkUtil.getInstance().createRoot(zk, Configuration.instance().getNameSpace());
         
-        lock = new SimpleLock(zk);
+        SimpleLock lock = new SimpleLock(zk);
         lock.lock(serverId, Configuration.instance().getMasterNode());
         log.info("Now it is the master server...");
         // do what it should do as a master...
@@ -107,14 +96,14 @@ public class Master {
         
         Configuration.instance().getTables().forEach((t) -> {
             if (!assigned.contains(t)) {
-                Collections.sort(holders, (o1, o2) -> o1.assigned.size() - o2.assigned.size());
+                holders.sort(Comparator.comparing(Holder::payload));
                 holders.get(0).addAssigned(t);
             }
         });
         
         int lastIdx = holders.size() - 1;
         while (true) {
-            Collections.sort(holders, (o1, o2) -> o1.assigned.size() - o2.assigned.size());
+            holders.sort(Comparator.comparing(Holder::payload));
             
             if (holders.get(lastIdx).assigned.size() - holders.get(0).assigned.size() >= 2) {
                 Integer tmp = holders.get(lastIdx).removeFirstAssigned();
@@ -153,7 +142,11 @@ public class Master {
             this.assigned.add(i);
             affected = true;
         }
-        
+
+        public int payload() {
+            return this.assigned.size();
+        }
+
         public Integer removeFirstAssigned() {
             affected = true;
             return this.assigned.remove(0);

@@ -21,7 +21,7 @@ public class Event {
     public Event(String eventType, Date eventTime, String context) {
         super();
         this.eventType = eventType;
-        this.eventTime = eventTime;
+        this.eventTime = new Date(eventTime.getTime());
         this.context = context;
         this.eventId = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
     }
@@ -43,11 +43,11 @@ public class Event {
     }
 
     public Date getEventTime() {
-        return eventTime;
+        return new Date(eventTime.getTime());
     }
 
     public void setEventTime(Date eventTime) {
-        this.eventTime = eventTime;
+        this.eventTime = new Date(eventTime.getTime());
     }
 
     public String getContext() {
@@ -59,8 +59,7 @@ public class Event {
     }
 
     public String json() {
-        String rlt = gson.toJson(this);
-        return rlt;
+        return gson.toJson(this);
     }
     
     public static Event fromJson(String json) {

@@ -35,11 +35,11 @@ public class EventSubmitter implements Runnable {
         props.put(ProducerConfig.ACKS_CONFIG, "all");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
-        KafkaProducer<String, String> producer = new KafkaProducer<>(props);
+
         
         int partition = tbNum % Configuration.instance().getProduceTopicPartitions();
         
-        try {
+        try (KafkaProducer<String, String> producer = new KafkaProducer<>(props)) {
             List<String> eventIds = new LinkedList<>();
             List<Future<RecordMetadata>> futures = new LinkedList<>();
             
@@ -52,6 +52,7 @@ public class EventSubmitter implements Runnable {
                     try {
                         TimeUnit.SECONDS.sleep(1);
                     } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
                     }
                     continue;
                 }
@@ -82,10 +83,7 @@ public class EventSubmitter implements Runnable {
                     mapper.batchClean(tbNum, eventIds);
                 }
             }
-        } finally {
-            producer.close();
         }
-        
     }
     
 }

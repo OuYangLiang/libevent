@@ -1,5 +1,6 @@
 package com.personal.oyl.event.util;
 
+import java.nio.charset.Charset;
 import java.util.List;
 
 import org.apache.zookeeper.CreateMode;
@@ -32,7 +33,7 @@ public final class ZkUtil {
         Stat stat = new Stat();
         try{
             byte[] source = zk.getData(znode, watcher, stat);
-            return null == source ? null : new String(source);
+            return null == source ? null : new String(source, Charset.forName("utf-8"));
         } catch(KeeperException e){
             if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
                 return this.getContent(zk, znode, watcher);
@@ -60,7 +61,7 @@ public final class ZkUtil {
     
     public void setContent(ZooKeeper zk, String znode, String content) throws KeeperException, InterruptedException {
         try{
-            zk.setData(znode, content.getBytes(), -1);
+            zk.setData(znode, content.getBytes(Charset.forName("utf-8")), -1);
         } catch(KeeperException e){
             if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
                 this.setContent(zk, znode, content);
@@ -72,7 +73,7 @@ public final class ZkUtil {
     
     public void createWorkNode(ZooKeeper zk, String znode) throws InterruptedException, KeeperException {
         try{
-            zk.create(znode, "".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+            zk.create(znode, "".getBytes(Charset.forName("utf-8")), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
         } catch(KeeperException e) {
             if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
                 this.createWorkNode(zk, znode);
@@ -84,11 +85,9 @@ public final class ZkUtil {
     
     public void createRoot(ZooKeeper zk, String znode) throws InterruptedException, KeeperException {
         try {
-            zk.create(znode,  "".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+            zk.create(znode,  "".getBytes(Charset.forName("utf-8")), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
         } catch(KeeperException e) {
-            if (e.code().equals(KeeperException.Code.NODEEXISTS)) {
-                return;
-            } else if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
+            if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
                 this.createRoot(zk, znode);
             } else {
                 throw e;

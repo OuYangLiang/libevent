@@ -4,3 +4,6 @@ build
 .project
 .settings
 .DS_Store
+*.iws
+*.iml
+*.ipr
