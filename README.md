@@ -100,3 +100,5 @@ public void onApplicationEvent(ContextRefreshedEvent event) {
 最后，libevent需要的配置信息，由event.properties文件提供，你需要在classpath下提供该文件。
 
 [https://github.com/OuYangLiang/libevent-sample](https://github.com/OuYangLiang/libevent-sample)是一个使用libevent的一个示例。
+
+![JET BRAINS](https://github.com/OuYangLiang/libevent/blob/master/.svg) Support by [JET BRAINS](https://www.jetbrains.com/?from=libevent)jetbrains
