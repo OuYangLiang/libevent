@@ -101,4 +101,4 @@ public void onApplicationEvent(ContextRefreshedEvent event) {
 
 [https://github.com/OuYangLiang/libevent-sample](https://github.com/OuYangLiang/libevent-sample)是一个使用libevent的一个示例。
 
-![JET BRAINS](https://github.com/OuYangLiang/libevent/blob/master/jetbrains.svg) Support by [JET BRAINS](https://www.jetbrains.com/?from=libevent)jetbrains
+![JET BRAINS](https://github.com/OuYangLiang/libevent/blob/master/jetbrains.svg) Support by [JET BRAINS](https://www.jetbrains.com/?from=libevent)
