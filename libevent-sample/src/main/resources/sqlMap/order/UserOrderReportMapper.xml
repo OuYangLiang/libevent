@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.personal.oyl.event.sample.order.UserOrderReportDao">
+	<resultMap id="BaseResultMap" type="com.personal.oyl.event.sample.order.UserOrderReport">
+        <result column="user_id" property="userId" jdbcType="DECIMAL" />
+        <result column="order_num" property="orderNum" jdbcType="DECIMAL" />
+        <result column="order_total" property="orderTotal" jdbcType="DECIMAL" />
+	</resultMap>
+  
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT user_id, order_num, order_total
+        from `user_order_report`
+    </select>
+  
+    <select id="selectByKey" resultMap="BaseResultMap">
+        SELECT user_id, order_num, order_total
+        from `user_order_report`
+        where user_id = #{userId,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insert" parameterType="com.personal.oyl.event.sample.order.UserOrderReport">
+        insert into `user_order_report`(
+            user_id,
+            order_num,
+            order_total
+        ) values (
+            #{userId,jdbcType=DECIMAL},
+            #{orderNum,jdbcType=DECIMAL},
+            #{orderTotal,jdbcType=DECIMAL}
+        )
+    </insert>
+    
+    <update id="update" parameterType="com.personal.oyl.event.sample.order.UserOrderReport">
+        update `user_order_report` set
+        order_num = #{orderNum,jdbcType=DECIMAL},
+        order_total =  #{orderTotal,jdbcType=DECIMAL}
+        where user_id = #{userId,jdbcType=DECIMAL}
+    </update>
+
+</mapper>

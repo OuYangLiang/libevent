@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.personal.oyl.event.sample.order.DailyOrderReportDao">
+	<resultMap id="BaseResultMap" type="com.personal.oyl.event.sample.order.DailyOrderReport">
+        <result column="id" property="id" jdbcType="DECIMAL" />
+        <result column="day" property="day" jdbcType="DATE" />
+        <result column="order_num" property="orderNum" jdbcType="DECIMAL" />
+        <result column="order_total" property="orderTotal" jdbcType="DECIMAL" />
+	</resultMap>
+  
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT id, day, order_num, order_total
+        from `daily_order_report`
+    </select>
+  
+    <select id="selectByKey" resultMap="BaseResultMap">
+        SELECT id, day, order_num, order_total
+        from `daily_order_report`
+        where day = #{day,jdbcType=DATE}
+    </select>
+
+    <insert id="insert" parameterType="com.personal.oyl.event.sample.order.DailyOrderReport" useGeneratedKeys="true" keyProperty="id">
+        insert into `daily_order_report`(
+            day,
+            order_num,
+            order_total
+        ) values (
+            #{day,jdbcType=DATE},
+            #{orderNum,jdbcType=DECIMAL},
+            #{orderTotal,jdbcType=DECIMAL}
+        )
+    </insert>
+    
+    <update id="update" parameterType="com.personal.oyl.event.sample.order.DailyOrderReport">
+        update `daily_order_report` set
+        order_num = #{orderNum,jdbcType=DECIMAL},
+        order_total =  #{orderTotal,jdbcType=DECIMAL}
+        where id = #{id,jdbcType=DECIMAL}
+    </update>
+
+</mapper>
