@@ -5,7 +5,6 @@ import com.personal.oyl.event.EventPublisher;
 import com.personal.oyl.event.EventPusher;
 import com.personal.oyl.event.EventSerde;
 import com.personal.oyl.event.jupiter.AssignmentListener;
-import com.personal.oyl.event.jupiter.DefaultAssignmentListener;
 import com.personal.oyl.event.jupiter.EventTransportMgr;
 import com.personal.oyl.event.kafka.KafkaEventPusher;
 import com.personal.oyl.event.sample.order.*;
@@ -50,7 +49,7 @@ public class AppConfiguration {
 
     @Bean
     public AssignmentListener assignmentListener(EventTransportMgr eventTransportMgr) {
-        return new DefaultAssignmentListener(eventTransportMgr);
+        return new AssignmentListener(eventTransportMgr);
     }
 
     @Bean

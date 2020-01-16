@@ -27,9 +27,6 @@ public class Instance {
         ZkUtil.getInstance().initConnection(this, manager);
         log.info("Connection to zookeeper created successfully ......");
 
-        AssignmentListener assignmentListener = new DefaultAssignmentListener(manager);
-        InstanceListener instanceListener = new DefaultInstanceListener();
-
         try {
             ZkUtil.getInstance().createRoot(JupiterConfiguration.instance().getNameSpace());
         } catch (KeeperException e) {
@@ -53,10 +50,10 @@ public class Instance {
             this.assignmentListener.onChange(assignment);
         }
 
-
         ZkUtil.getInstance().lock(instanceId, JupiterConfiguration.instance().getMasterNode());
         log.info("Now it is the master server...");
         log.info("perform the first check of the assignment, invoke method onChange()...");
+        InstanceListener instanceListener = new InstanceListener();
         instanceListener.onChange();
     }
 
