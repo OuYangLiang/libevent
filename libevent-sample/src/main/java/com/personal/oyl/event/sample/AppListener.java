@@ -1,5 +1,6 @@
 package com.personal.oyl.event.sample;
 
+import com.personal.oyl.event.EventSerde;
 import com.personal.oyl.event.EventSubscriber;
 import com.personal.oyl.event.SubscriberConfig;
 import com.personal.oyl.event.jupiter.AssignmentListener;
@@ -35,6 +36,9 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
     @Resource
     private EventTransportMgr eventTransportMgr;
 
+    @Resource
+    private EventSerde eventSerde;
+
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -44,18 +48,14 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
             SubscriberConfig.instance().addSubscriber("o_c", dailyOrderReportSubscriber);
             SubscriberConfig.instance().addSubscriber("o_c", userOrderReportSubscriber);
 
-            Thread consumeThread = new Thread(new KafkaEventConsumer());
+            Thread consumeThread = new Thread(new KafkaEventConsumer(eventSerde));
             consumeThread.start();
 
             Instance instance = new Instance(assignmentListener);
             try {
                 instance.go(eventTransportMgr);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (KeeperException e) {
-                e.printStackTrace();
+            } catch (IOException | KeeperException | InterruptedException e) {
+                log.error(e.getMessage(), e);
             }
 
         }

@@ -1,5 +1,6 @@
 package com.personal.oyl.event.sample.subscribers;
 
+import com.personal.oyl.event.EventSerde;
 import com.personal.oyl.event.sample.order.DailyOrderReport;
 import com.personal.oyl.event.sample.order.Order;
 import com.personal.oyl.event.sample.order.OrderRepos;
@@ -30,6 +31,9 @@ public class DailyOrderReportSubscriber implements EventSubscriber {
     
     @Resource
     private EventMapper eventMapper;
+
+    @Resource
+    private EventSerde eventSerde;
     
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     @Override
@@ -55,7 +59,7 @@ public class DailyOrderReportSubscriber implements EventSubscriber {
             
             eventMapper.archive(this.id(), e);
         } catch (DuplicateKeyException ex) {
-            log.warn("Duplicated message " + e.json());
+            log.warn("Duplicated message " + eventSerde.toJson(e));
         }
         
     }

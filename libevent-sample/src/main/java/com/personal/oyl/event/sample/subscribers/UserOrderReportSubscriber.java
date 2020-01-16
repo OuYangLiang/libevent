@@ -1,5 +1,6 @@
 package com.personal.oyl.event.sample.subscribers;
 
+import com.personal.oyl.event.EventSerde;
 import com.personal.oyl.event.sample.order.Order;
 import com.personal.oyl.event.sample.order.OrderRepos;
 import com.personal.oyl.event.sample.order.UserOrderReport;
@@ -26,10 +27,13 @@ public class UserOrderReportSubscriber implements EventSubscriber {
     private static final Logger log = LoggerFactory.getLogger(UserOrderReportSubscriber.class);
     
     @Resource
-    private OrderRepos repos;
+    private OrderRepos orderRepos;
     
     @Resource
     private EventMapper eventMapper;
+
+    @Resource
+    private EventSerde eventSerde;
     
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     @Override
@@ -37,25 +41,25 @@ public class UserOrderReportSubscriber implements EventSubscriber {
         
         try {
             Order order = Order.fromJson(e.getContext());
-            UserOrderReport report = repos.selectUserOrderReportByKey(order.getUserId());
+            UserOrderReport report = orderRepos.selectUserOrderReportByKey(order.getUserId());
             
             if (null == report) {
                 report = new UserOrderReport();
                 report.setUserId(order.getUserId());
                 report.setOrderNum(1L);
                 report.setOrderTotal(new Long(order.getOrderAmount()));
-                
-                repos.createUserOrderReport(report);
+
+                orderRepos.createUserOrderReport(report);
             } else {
                 report.setOrderNum(report.getOrderNum() + 1);
                 report.setOrderTotal(report.getOrderTotal() + order.getOrderAmount());
-                
-                repos.updateUserOrderReport(report);
+
+                orderRepos.updateUserOrderReport(report);
             }
             
             eventMapper.archive(this.id(), e);
         } catch (DuplicateKeyException ex) {
-            log.warn("Duplicated message " + e.json());
+            log.warn("Duplicated message " + eventSerde.toJson(e));
         }
         
     }

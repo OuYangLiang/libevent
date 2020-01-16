@@ -1,8 +1,5 @@
 package com.personal.oyl.event;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.util.Date;
 import java.util.UUID;
 
@@ -10,9 +7,6 @@ import java.util.UUID;
  * @author OuYang Liang
  */
 public class Event {
-
-    private static final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-
     private String eventId;
     private String eventType;
     private Date eventTime;
@@ -60,14 +54,6 @@ public class Event {
 
     public void setContext(String context) {
         this.context = context;
-    }
-
-    public String json() {
-        return gson.toJson(this);
-    }
-
-    public static Event fromJson(String json) {
-        return gson.fromJson(json, Event.class);
     }
 
 }

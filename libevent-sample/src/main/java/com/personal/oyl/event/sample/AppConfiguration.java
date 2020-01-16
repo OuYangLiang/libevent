@@ -3,6 +3,7 @@ package com.personal.oyl.event.sample;
 import com.personal.oyl.event.EventMapper;
 import com.personal.oyl.event.EventPublisher;
 import com.personal.oyl.event.EventPusher;
+import com.personal.oyl.event.EventSerde;
 import com.personal.oyl.event.jupiter.AssignmentListener;
 import com.personal.oyl.event.jupiter.DefaultAssignmentListener;
 import com.personal.oyl.event.jupiter.EventTransportMgr;
@@ -20,6 +21,11 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfiguration {
 
     @Bean
+    public EventSerde eventSerde() {
+        return new GsonEventSerde();
+    }
+
+    @Bean
     public EventMapper eventMapper(SqlSessionFactory sqlSessionFactory) throws Exception {
         MapperFactoryBean<EventMapper> factory = new MapperFactoryBean<>();
         factory.setSqlSessionFactory(sqlSessionFactory);
@@ -33,8 +39,8 @@ public class AppConfiguration {
     }
 
     @Bean
-    public EventPusher eventPusher() {
-        return new KafkaEventPusher();
+    public EventPusher eventPusher(EventSerde eventSerde) {
+        return new KafkaEventPusher(eventSerde);
     }
 
     @Bean

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.personal.oyl.event.Event;
+import com.personal.oyl.event.EventSerde;
 import com.personal.oyl.event.EventSubscriber;
 import com.personal.oyl.event.SubscriberConfig;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -21,6 +22,11 @@ import org.slf4j.LoggerFactory;
 public class KafkaEventConsumer implements Runnable {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaEventConsumer.class);
+    private EventSerde eventSerde;
+
+    public KafkaEventConsumer(EventSerde eventSerde) {
+        this.eventSerde = eventSerde;
+    }
 
     private KafkaConsumer<String, String> consumer;
 
@@ -43,7 +49,7 @@ public class KafkaEventConsumer implements Runnable {
                 for (ConsumerRecord<String, String> record : records) {
                     Event event = null;
                     try {
-                        event = Event.fromJson(record.value());
+                        event = eventSerde.fromJson(record.value());
                     } catch (Exception e) {
                         log.error(e.getMessage(), e);
                     }

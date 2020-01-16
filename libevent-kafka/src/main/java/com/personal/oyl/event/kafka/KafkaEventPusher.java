@@ -2,6 +2,7 @@ package com.personal.oyl.event.kafka;
 
 import com.personal.oyl.event.Event;
 import com.personal.oyl.event.EventPusher;
+import com.personal.oyl.event.EventSerde;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -18,8 +19,11 @@ import java.util.concurrent.Future;
  */
 public class KafkaEventPusher implements EventPusher {
 
+    private EventSerde eventSerde;
     private KafkaProducer<String, String> producer;
-    public KafkaEventPusher() {
+    public KafkaEventPusher(EventSerde eventSerde) {
+        this.eventSerde = eventSerde;
+
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaConfiguration.instance().getKafkaAddrs());
         props.put(ProducerConfig.ACKS_CONFIG, "all");
@@ -40,7 +44,7 @@ public class KafkaEventPusher implements EventPusher {
 
         for (Event event : events) {
             ProducerRecord<String, String> record = new ProducerRecord<>(
-                    KafkaConfiguration.instance().getProduceTopic(), partition, event.getEventTime().getTime(), null, event.json(), null);
+                    KafkaConfiguration.instance().getProduceTopic(), partition, event.getEventTime().getTime(), null, eventSerde.toJson(event), null);
             futures.add(producer.send(record));
             eventIds.add(event.getEventId());
         }
