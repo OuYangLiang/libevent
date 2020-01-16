@@ -8,7 +8,6 @@ import java.util.List;
 
 /**
  * @author OuYang Liang
- * @since 2020-01-15
  */
 public class EventTransportMgr {
 

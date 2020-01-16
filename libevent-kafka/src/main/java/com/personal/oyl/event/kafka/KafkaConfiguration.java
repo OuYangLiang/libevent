@@ -10,7 +10,6 @@ import java.util.UUID;
 
 /**
  * @author OuYang Liang
- * @since 2020-01-15
  */
 public class KafkaConfiguration {
     private static final Logger log = LoggerFactory.getLogger(KafkaConfiguration.class);

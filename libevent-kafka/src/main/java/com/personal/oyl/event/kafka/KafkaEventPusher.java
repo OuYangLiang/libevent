@@ -15,7 +15,6 @@ import java.util.concurrent.Future;
 
 /**
  * @author OuYang Liang
- * @since 2020-01-15
  */
 public class KafkaEventPusher implements EventPusher {
 

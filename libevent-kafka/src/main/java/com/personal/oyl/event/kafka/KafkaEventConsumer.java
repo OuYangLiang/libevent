@@ -15,6 +15,9 @@ import org.apache.kafka.common.errors.WakeupException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author OuYang Liang
+ */
 public class KafkaEventConsumer implements Runnable {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaEventConsumer.class);

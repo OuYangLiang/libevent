@@ -15,6 +15,9 @@ import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author OuYang Liang
+ */
 public final class ZkUtil {
 
     private static final Logger log = LoggerFactory.getLogger(ZkUtil.class);

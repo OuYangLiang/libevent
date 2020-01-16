@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author OuYang Liang
- * @since 2020-01-15
  */
 public class EventTransport implements Runnable {
 

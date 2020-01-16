@@ -1,5 +1,8 @@
 package com.personal.oyl.event.sample.order;
 
+/**
+ * @author OuYang Liang
+ */
 public class UserOrderReport {
     private Long userId;
     private Long orderNum;

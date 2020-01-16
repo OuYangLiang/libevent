@@ -9,7 +9,6 @@ import java.io.IOException;
 
 /**
  * @author OuYang Liang
- * @since 2020-01-15
  */
 public class Instance {
     private static final Logger log = LoggerFactory.getLogger(Instance.class);
@@ -31,9 +30,20 @@ public class Instance {
         AssignmentListener assignmentListener = new DefaultAssignmentListener(manager);
         InstanceListener instanceListener = new DefaultInstanceListener();
 
-        ZkUtil.getInstance().createRoot(JupiterConfiguration.instance().getNameSpace());
-        ZkUtil.getInstance().createRoot(JupiterConfiguration.instance().getWorkerNode());
-
+        try {
+            ZkUtil.getInstance().createRoot(JupiterConfiguration.instance().getNameSpace());
+        } catch (KeeperException e) {
+            if (!e.code().equals(KeeperException.Code.NODEEXISTS)) {
+                throw e;
+            }
+        }
+        try {
+            ZkUtil.getInstance().createRoot(JupiterConfiguration.instance().getWorkerNode());
+        } catch (KeeperException e) {
+            if (!e.code().equals(KeeperException.Code.NODEEXISTS)) {
+                throw e;
+            }
+        }
 
         ZkUtil.getInstance().createWorkNode(JupiterConfiguration.instance().getWorkerNode(instanceId));
         log.info("Worker znode created successfully ......");

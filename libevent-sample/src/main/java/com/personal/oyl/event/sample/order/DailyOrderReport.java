@@ -2,6 +2,9 @@ package com.personal.oyl.event.sample.order;
 
 import java.sql.Date;
 
+/**
+ * @author OuYang Liang
+ */
 public class DailyOrderReport {
     private Long id;
     private Date day;

@@ -10,6 +10,9 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author OuYang Liang
+ */
 public final class JupiterConfiguration {
     private static final Logger log = LoggerFactory.getLogger(JupiterConfiguration.class);
     private static JupiterConfiguration instance;

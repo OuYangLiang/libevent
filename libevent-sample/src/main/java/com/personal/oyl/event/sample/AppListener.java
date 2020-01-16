@@ -18,7 +18,6 @@ import java.io.IOException;
 
 /**
  * @author OuYang Liang
- * @since 2020-01-15
  */
 @Component
 public class AppListener implements ApplicationListener<ContextRefreshedEvent> {

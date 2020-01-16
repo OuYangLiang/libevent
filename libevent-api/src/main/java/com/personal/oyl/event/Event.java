@@ -6,6 +6,9 @@ import com.google.gson.GsonBuilder;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * @author OuYang Liang
+ */
 public class Event {
 
     private static final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();

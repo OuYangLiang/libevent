@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author OuYang Liang
- * @since 2020-01-15
  */
 @Configuration
 public class AppConfiguration {

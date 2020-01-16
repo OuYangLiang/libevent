@@ -17,6 +17,9 @@ import com.personal.oyl.event.EventMapper;
 
 import javax.annotation.Resource;
 
+/**
+ * @author OuYang Liang
+ */
 @Component("userOrderReportSubscriber")
 public class UserOrderReportSubscriber implements EventSubscriber {
 

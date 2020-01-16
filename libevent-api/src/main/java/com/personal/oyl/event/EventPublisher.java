@@ -2,6 +2,9 @@ package com.personal.oyl.event;
 
 import java.util.Date;
 
+/**
+ * @author OuYang Liang
+ */
 public class EventPublisher {
     
     private EventMapper mapper;

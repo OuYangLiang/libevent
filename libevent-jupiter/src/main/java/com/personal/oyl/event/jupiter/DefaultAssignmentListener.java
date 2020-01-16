@@ -3,7 +3,6 @@ package com.personal.oyl.event.jupiter;
 
 /**
  * @author OuYang Liang
- * @since 2020-01-15
  */
 public class DefaultAssignmentListener implements AssignmentListener {
 

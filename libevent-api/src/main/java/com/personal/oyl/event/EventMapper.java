@@ -2,6 +2,9 @@ package com.personal.oyl.event;
 
 import java.util.List;
 
+/**
+ * @author OuYang Liang
+ */
 public interface EventMapper {
     void insert(int tbNum, Event event);
     

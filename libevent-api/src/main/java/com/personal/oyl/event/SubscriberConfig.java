@@ -6,8 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author OuYang Liang
+ */
 public final class SubscriberConfig {
-    private static SubscriberConfig instance;
+    private static volatile SubscriberConfig instance;
     
     private SubscriberConfig () {
         

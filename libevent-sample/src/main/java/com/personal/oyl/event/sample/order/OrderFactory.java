@@ -5,6 +5,9 @@ import java.util.Random;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * @author OuYang Liang
+ */
 @Component
 public class OrderFactory {
     static Random r = new Random();

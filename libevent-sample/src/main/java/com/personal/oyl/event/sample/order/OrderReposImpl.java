@@ -13,6 +13,9 @@ import com.personal.oyl.event.EventPublisher;
 
 import javax.annotation.Resource;
 
+/**
+ * @author OuYang Liang
+ */
 @Component("orderRepos")
 public class OrderReposImpl implements OrderRepos {
     
