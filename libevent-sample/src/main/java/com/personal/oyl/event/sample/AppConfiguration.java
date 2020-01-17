@@ -48,11 +48,6 @@ public class AppConfiguration {
     }
 
     @Bean
-    public AssignmentListener assignmentListener(EventTransportMgr eventTransportMgr) {
-        return new AssignmentListener(eventTransportMgr);
-    }
-
-    @Bean
     public OrderDao orderDao(SqlSessionFactory sqlSessionFactory) throws Exception {
         MapperFactoryBean<OrderDao> factory = new MapperFactoryBean<>();
         factory.setSqlSessionFactory(sqlSessionFactory);

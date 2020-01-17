@@ -20,13 +20,13 @@ public class EventTransportMgr {
         this.pusher = pusher;
     }
 
-    public void start(int n) {
+    void start(int n) {
         Thread submitThread = new Thread(new EventTransport(n, this));
         submitThread.start();
         currentRunning.add(submitThread);
     }
 
-    public void stopAll() {
+    void stopAll() {
         for (Thread t : currentRunning) {
             t.interrupt();
         }

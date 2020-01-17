@@ -42,12 +42,12 @@ public final class ZkUtil {
 
     private ZooKeeper zk;
 
-    public void initConnection(Instance instance, EventTransportMgr manager) throws InterruptedException, IOException {
+    public void initConnection(Instance instance) throws InterruptedException, IOException {
         CountDownLatch latch = new CountDownLatch(1);
         zk = new ZooKeeper(JupiterConfiguration.instance().getZkAddrs(), JupiterConfiguration.instance().getSessionTimeout(),
                 (event) -> {
                     if (event.getState().equals(Watcher.Event.KeeperState.Expired)) {
-                        manager.stopAll();
+                        instance.stopAll();
 
                         if (null != zk) {
                             try {
@@ -59,7 +59,7 @@ public final class ZkUtil {
                         }
 
                         try {
-                            instance.go(manager);
+                            instance.go();
                         } catch (Exception e) {
                             log.error(e.getMessage(), e);
                         }
