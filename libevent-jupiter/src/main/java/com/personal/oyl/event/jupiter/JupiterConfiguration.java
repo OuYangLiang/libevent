@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class JupiterConfiguration {
     private static final Logger log = LoggerFactory.getLogger(JupiterConfiguration.class);
-    private static JupiterConfiguration instance;
+    private static volatile JupiterConfiguration instance;
     private static Properties p;
     private static final String uuid = UUID.randomUUID().toString();
     

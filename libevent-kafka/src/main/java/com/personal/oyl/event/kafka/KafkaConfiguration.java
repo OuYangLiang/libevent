@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 public class KafkaConfiguration {
     private static final Logger log = LoggerFactory.getLogger(KafkaConfiguration.class);
-    private static KafkaConfiguration instance;
+    private static volatile KafkaConfiguration instance;
     private static Properties p;
     private static final String uuid = UUID.randomUUID().toString();
 

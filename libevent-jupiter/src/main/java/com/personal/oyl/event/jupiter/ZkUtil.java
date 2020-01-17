@@ -22,7 +22,7 @@ public final class ZkUtil {
 
     private static final Logger log = LoggerFactory.getLogger(ZkUtil.class);
 
-    private static ZkUtil instance;
+    private static volatile ZkUtil instance;
 
     private ZkUtil () {
 
