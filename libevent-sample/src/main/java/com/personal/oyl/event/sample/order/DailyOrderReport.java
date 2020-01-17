@@ -20,11 +20,11 @@ public class DailyOrderReport {
     }
 
     public Date getDay() {
-        return day;
+        return null == day ? null : (Date) day.clone();
     }
 
     public void setDay(Date day) {
-        this.day = day;
+        this.day = (null == day ? null : (Date) day.clone());
     }
 
     public Long getOrderNum() {

@@ -33,11 +33,11 @@ public class Order {
     }
 
     public Date getOrderTime() {
-        return orderTime;
+        return null == orderTime ? null : (Date) orderTime.clone();
     }
 
     public void setOrderTime(Date orderTime) {
-        this.orderTime = orderTime;
+        this.orderTime = (null == orderTime ? null : (Date) orderTime.clone());
     }
 
     public Integer getOrderAmount() {
@@ -49,8 +49,7 @@ public class Order {
     }
     
     public String json() {
-        String rlt = gson.toJson(this);
-        return rlt;
+        return gson.toJson(this);
     }
     
     public static Order fromJson(String json) {

@@ -47,7 +47,7 @@ public class DailyOrderReportSubscriber implements EventSubscriber {
                 report = new DailyOrderReport();
                 report.setDay(new java.sql.Date(order.getOrderTime().getTime()));
                 report.setOrderNum(1L);
-                report.setOrderTotal(new Long(order.getOrderAmount()));
+                report.setOrderTotal(Long.valueOf(order.getOrderAmount()));
                 
                 repos.createDailyOrderReport(report);
             } else {

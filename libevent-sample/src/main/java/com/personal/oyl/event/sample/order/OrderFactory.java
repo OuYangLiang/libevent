@@ -16,7 +16,7 @@ public class OrderFactory {
         Order order = new Order();
         order.setOrderAmount(r.nextInt(1000));
         order.setOrderTime(new Date());
-        order.setUserId(new Long(r.nextInt(10)));
+        order.setUserId(Long.valueOf(r.nextInt(10)));
         
         return order;
     }

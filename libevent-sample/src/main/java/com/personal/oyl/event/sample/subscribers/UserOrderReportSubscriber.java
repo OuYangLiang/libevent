@@ -47,7 +47,7 @@ public class UserOrderReportSubscriber implements EventSubscriber {
                 report = new UserOrderReport();
                 report.setUserId(order.getUserId());
                 report.setOrderNum(1L);
-                report.setOrderTotal(new Long(order.getOrderAmount()));
+                report.setOrderTotal(Long.valueOf(order.getOrderAmount()));
 
                 orderRepos.createUserOrderReport(report);
             } else {
