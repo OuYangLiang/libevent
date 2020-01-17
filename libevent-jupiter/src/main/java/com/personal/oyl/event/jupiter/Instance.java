@@ -13,18 +13,20 @@ import java.io.IOException;
 public class Instance {
     private static final Logger log = LoggerFactory.getLogger(Instance.class);
 
+    private EventTransportMgr eventTransportMgr;
     private AssignmentListener assignmentListener;
 
-    public Instance(AssignmentListener assignmentListener) {
-        this.assignmentListener = assignmentListener;
+    public Instance(EventTransportMgr eventTransportMgr) {
+        this.eventTransportMgr = eventTransportMgr;
+        this.assignmentListener = new AssignmentListener(eventTransportMgr);
     }
 
-    public void go(EventTransportMgr manager) throws InterruptedException, IOException, KeeperException {
+    public void go() throws InterruptedException, IOException, KeeperException {
 
         String instanceId = JupiterConfiguration.instance().uuid();
         log.info("Instance with id [" + instanceId + "] ready to start ......");
 
-        ZkUtil.getInstance().initConnection(this, manager);
+        ZkUtil.getInstance().initConnection(this);
         log.info("Connection to zookeeper created successfully ......");
 
         try {
@@ -55,6 +57,10 @@ public class Instance {
         log.info("perform the first check of the assignment, invoke method onChange()...");
         InstanceListener instanceListener = new InstanceListener();
         instanceListener.onChange();
+    }
+
+    void stopAll() {
+        this.eventTransportMgr.stopAll();
     }
 
     private Watcher workWatcher = (event) -> {
