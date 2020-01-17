@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.personal.oyl.event.EventMapper">
+	<resultMap id="BaseResultMap" type="com.personal.oyl.event.Event">
+        <result column="event_id" property="eventId" jdbcType="VARCHAR" />
+        <result column="event_type" property="eventType" jdbcType="VARCHAR" />
+        <result column="event_time" property="eventTime" jdbcType="TIMESTAMP" />
+        <result column="context" property="context" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<sql id="Base_Column_List">
+        event_id, event_type, event_time, context
+	</sql>
+  
+    <insert id="insert">
+        insert into event_queue_${param1}(
+            event_id,
+            event_type,
+            event_time,
+            context
+        ) values (
+            #{param2.eventId,jdbcType=VARCHAR},
+            #{param2.eventType,jdbcType=VARCHAR},
+            #{param2.eventTime,jdbcType=TIMESTAMP},
+            #{param2.context,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <select id="queryTopN" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from event_queue_${param1}
+        order by id
+        limit #{param2}
+    </select>
+    
+    <delete id="batchClean">
+        delete from event_queue_${param1}
+        where event_id in
+        <foreach item="item" index="index" collection="param2" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    
+    <insert id="archive">
+        insert into event_history(
+            event_id,
+            subscriber_id,
+            event_type,
+            event_time,
+            context
+        ) values (
+            #{param2.eventId,jdbcType=VARCHAR},
+            #{param1,jdbcType=VARCHAR},
+            #{param2.eventType,jdbcType=VARCHAR},
+            #{param2.eventTime,jdbcType=TIMESTAMP},
+            #{param2.context,jdbcType=VARCHAR}
+        )
+    </insert>
+    
+</mapper>
