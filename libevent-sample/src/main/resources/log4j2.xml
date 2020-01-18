@@ -8,7 +8,9 @@
     </appenders>
 
     <Loggers>
-        <root level="INFO">
+        <logger name="com.personal" level="INFO"></logger>
+
+        <root level="ERROR">
             <appender-ref ref="Console" />
         </root>
     </Loggers>

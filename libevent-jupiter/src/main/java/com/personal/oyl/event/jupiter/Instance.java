@@ -16,9 +16,16 @@ public class Instance {
     private EventTransportMgr eventTransportMgr;
     private AssignmentListener assignmentListener;
 
+    private ZkInstance zkInstance;
+
     public Instance(EventTransportMgr eventTransportMgr) {
         this.eventTransportMgr = eventTransportMgr;
         this.assignmentListener = new AssignmentListener(eventTransportMgr);
+        zkInstance = new ZkInstance();
+    }
+
+    EventTransportMgr getEventTransportMgr() {
+        return eventTransportMgr;
     }
 
     public void go() throws InterruptedException, IOException, KeeperException {
@@ -26,37 +33,42 @@ public class Instance {
         String instanceId = JupiterConfiguration.instance().uuid();
         log.info("Instance with id [" + instanceId + "] ready to start ......");
 
-        ZkUtil.getInstance().initConnection(this);
+
+        zkInstance.initConnection(this);
         log.info("Connection to zookeeper created successfully ......");
 
         try {
-            ZkUtil.getInstance().createRoot(JupiterConfiguration.instance().getNameSpace());
+            zkInstance.createRoot(JupiterConfiguration.instance().getNameSpace());
         } catch (KeeperException e) {
             if (!e.code().equals(KeeperException.Code.NODEEXISTS)) {
                 throw e;
             }
         }
         try {
-            ZkUtil.getInstance().createRoot(JupiterConfiguration.instance().getWorkerNode());
+            zkInstance.createRoot(JupiterConfiguration.instance().getWorkerNode());
         } catch (KeeperException e) {
             if (!e.code().equals(KeeperException.Code.NODEEXISTS)) {
                 throw e;
             }
         }
 
-        ZkUtil.getInstance().createWorkNode(JupiterConfiguration.instance().getWorkerNode(instanceId));
+        zkInstance.createWorkNode(JupiterConfiguration.instance().getWorkerNode(instanceId));
         log.info("Worker znode created successfully ......");
 
-        String assignment = ZkUtil.getInstance().getContent(JupiterConfiguration.instance().getWorkerNode(instanceId), workWatcher);
+        String assignment = zkInstance.getContent(JupiterConfiguration.instance().getWorkerNode(instanceId), workWatcher);
         if (null != assignment && !assignment.trim().isEmpty()) {
             this.assignmentListener.onChange(assignment);
         }
 
-        ZkUtil.getInstance().lock(instanceId, JupiterConfiguration.instance().getMasterNode());
-        log.info("Now it is the master server...");
-        log.info("perform the first check of the assignment, invoke method onChange()...");
-        InstanceListener instanceListener = new InstanceListener();
-        instanceListener.onChange();
+        // blocking operation
+        if (zkInstance.lock(instanceId, JupiterConfiguration.instance().getMasterNode())) {
+            log.info("Now it is the master server...");
+            log.info("perform the first check of the assignment, invoke method onChange()...");
+            InstanceListener instanceListener = new InstanceListener(zkInstance);
+            instanceListener.onChange();
+        } else {
+            log.warn("Zookeeper Session has expired, will start another instance to continue ...");
+        }
     }
 
     void stopAll() {
@@ -66,7 +78,7 @@ public class Instance {
     private Watcher workWatcher = (event) -> {
         try {
             if (event.getType().equals(Watcher.Event.EventType.NodeDataChanged)) {
-                String source = ZkUtil.getInstance().getContent(event.getPath(), this.workWatcher);
+                String source = zkInstance.getContent(event.getPath(), this.workWatcher);
                 this.assignmentListener.onChange(source);
             }
         } catch (Exception e) {

@@ -18,35 +18,25 @@ import org.slf4j.LoggerFactory;
 /**
  * @author OuYang Liang
  */
-public final class ZkUtil {
+public class ZkInstance {
 
-    private static final Logger log = LoggerFactory.getLogger(ZkUtil.class);
+    protected static final Logger log = LoggerFactory.getLogger(ZkInstance.class);
 
-    private static volatile ZkUtil instance;
+    protected ZooKeeper zk;
+    protected volatile boolean expired = false;
 
-    private ZkUtil () {
-
-    }
-
-    public static ZkUtil getInstance() {
-        if (null == instance) {
-            synchronized (ZkUtil.class) {
-                if (null == instance) {
-                    instance = new ZkUtil();
-                }
-            }
-        }
-
-        return instance;
-    }
-
-    private ZooKeeper zk;
+    protected Semaphore s = null;
 
     public void initConnection(Instance instance) throws InterruptedException, IOException {
         CountDownLatch latch = new CountDownLatch(1);
         zk = new ZooKeeper(JupiterConfiguration.instance().getZkAddrs(), JupiterConfiguration.instance().getSessionTimeout(),
                 (event) -> {
                     if (event.getState().equals(Watcher.Event.KeeperState.Expired)) {
+                        expired = true;
+                        if (null != s) {
+                            s.release();
+                        }
+
                         instance.stopAll();
 
                         if (null != zk) {
@@ -59,7 +49,8 @@ public final class ZkUtil {
                         }
 
                         try {
-                            instance.go();
+                            Instance newInst = new Instance(instance.getEventTransportMgr());
+                            newInst.go();
                         } catch (Exception e) {
                             log.error(e.getMessage(), e);
                         }
@@ -140,13 +131,16 @@ public final class ZkUtil {
         }
     }
 
-    public void lock(String clientId, String resource) throws KeeperException, InterruptedException {
+    public boolean lock(String clientId, String resource) throws KeeperException, InterruptedException {
         while (true) {
             if (this.tryLock(clientId, resource)) {
-                return;
+                return true;
             }
 
-            this.listenLock(resource);
+            // blocking operation, return false if session expired.
+            if (!listenLock(resource)) {
+                return false;
+            }
         }
     }
 
@@ -203,8 +197,8 @@ public final class ZkUtil {
         }
     }
 
-    private void listenLock(String resource) throws InterruptedException, KeeperException {
-        Semaphore s = new Semaphore(0);
+    private boolean listenLock(String resource) throws InterruptedException, KeeperException {
+        s = new Semaphore(0);
 
         try {
             Stat stat = zk.exists(resource, (event) -> {
@@ -217,9 +211,10 @@ public final class ZkUtil {
                 s.acquire();
             }
 
+            return !expired;
         } catch (KeeperException e) {
             if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
-                this.listenLock(resource);
+                return this.listenLock(resource);
             } else {
                 throw e;
             }

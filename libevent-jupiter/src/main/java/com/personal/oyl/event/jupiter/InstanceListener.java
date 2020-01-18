@@ -10,8 +10,14 @@ import java.util.*;
  */
 public class InstanceListener {
 
+    private ZkInstance zkInstance;
+
+    public InstanceListener(ZkInstance zkInstance) {
+        this.zkInstance = zkInstance;
+    }
+
     public void onChange() throws InterruptedException, KeeperException {
-        List<String> workerList = ZkUtil.getInstance().getChildren(JupiterConfiguration.instance().getWorkerNode(), (event) -> {
+        List<String> workerList = zkInstance.getChildren(JupiterConfiguration.instance().getWorkerNode(), (event) -> {
             if (event.getType().equals(Watcher.Event.EventType.NodeChildrenChanged)) {
                 try {
                     this.onChange();
@@ -24,7 +30,7 @@ public class InstanceListener {
         Set<Integer> assigned = new HashSet<>();
         for (String worker : workerList) {
             Holder holder = new Holder();
-            String content = ZkUtil.getInstance().getContent(JupiterConfiguration.instance().getWorkerNode() + JupiterConfiguration.SEPARATOR + worker, null);
+            String content = zkInstance.getContent(JupiterConfiguration.instance().getWorkerNode() + JupiterConfiguration.SEPARATOR + worker, null);
             holder.node = worker;
             holder.setAssigned(content);
             holders.add(holder);
@@ -55,7 +61,7 @@ public class InstanceListener {
         for (Holder holder : holders) {
             if (holder.affected) {
                 try{
-                    ZkUtil.getInstance().setContent(JupiterConfiguration.instance().getWorkerNode() + JupiterConfiguration.SEPARATOR + holder.node,
+                    zkInstance.setContent(JupiterConfiguration.instance().getWorkerNode() + JupiterConfiguration.SEPARATOR + holder.node,
                             holder.assignedString());
                 } catch(KeeperException e){
                     if (e instanceof KeeperException.NoNodeException) {
