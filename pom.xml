@@ -12,6 +12,8 @@
         <module>libevent-jupiter</module>
         <module>libevent-kafka</module>
         <module>libevent-sample</module>
+        <module>libevent-rocketmq</module>
+        <module>libevent-sample-rocketmq</module>
     </modules>
     <packaging>pom</packaging>
 
