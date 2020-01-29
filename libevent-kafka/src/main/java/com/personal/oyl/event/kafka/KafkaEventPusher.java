@@ -7,6 +7,8 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +20,8 @@ import java.util.concurrent.Future;
  * @author OuYang Liang
  */
 public class KafkaEventPusher implements EventPusher {
+
+    private static final Logger log = LoggerFactory.getLogger(KafkaEventPusher.class);
 
     private EventSerde eventSerde;
     private KafkaProducer<String, String> producer;
@@ -34,13 +38,11 @@ public class KafkaEventPusher implements EventPusher {
     }
 
     @Override
-    public List<String> push(int tbNum, List<Event> events) throws ExecutionException, InterruptedException {
-
+    public List<String> push(int tbNum, List<Event> events) {
         int partition = tbNum % KafkaConfiguration.instance().getProduceTopicPartitions();
 
         List<String> eventIds = new LinkedList<>();
         List<Future<RecordMetadata>> futures = new LinkedList<>();
-
 
         for (Event event : events) {
             ProducerRecord<String, String> record = new ProducerRecord<>(
@@ -50,7 +52,16 @@ public class KafkaEventPusher implements EventPusher {
         }
 
         for (Future<RecordMetadata> future : futures) {
-            future.get();
+            try {
+                future.get();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                log.error(e.getMessage(), e);
+                throw new RuntimeException(e);
+            } catch (ExecutionException e) {
+                log.error(e.getMessage(), e);
+                throw new RuntimeException(e);
+            }
         }
 
         return eventIds;

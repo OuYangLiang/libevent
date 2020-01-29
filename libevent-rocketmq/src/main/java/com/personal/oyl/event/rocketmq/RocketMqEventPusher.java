@@ -52,14 +52,14 @@ public class RocketMqEventPusher implements EventPusher {
             try {
                 msg = new Message(topic, tag, eventSerde.toJson(event).getBytes(RemotingHelper.DEFAULT_CHARSET));
             } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(), e);
             }
 
             SendResult sendResult;
             try {
                 sendResult = producer.send(msg, (mqs, m, arg) -> mqs.get((int)arg) ,partition);
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e.getMessage(), e);
                 break;
             }
 
