@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.personal.oyl.event.sample.order.OrderDao">
+	<resultMap id="BaseResultMap" type="com.personal.oyl.event.sample.order.Order">
+        <id column="order_id" property="order_id" jdbcType="DECIMAL" />
+        <result column="user_id" property="userId" jdbcType="DECIMAL" />
+        <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+        <result column="order_amount" property="orderAmount" jdbcType="INTEGER" />
+	</resultMap>
+
+
+	<sql id="Base_Column_List">
+        id, user_id, order_time, order_amount
+	</sql>
+  
+    <insert id="insert" parameterType="com.personal.oyl.event.sample.order.Order" useGeneratedKeys="true" keyProperty="orderId">
+        insert into `order`(
+            user_id,
+            order_time,
+            order_amount
+        ) values (
+            #{userId,jdbcType=DECIMAL},
+            now(),
+            #{orderAmount,jdbcType=INTEGER}
+        )
+    </insert>
+
+</mapper>
