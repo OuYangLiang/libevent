@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>libevent-sample</artifactId>
+    <artifactId>libevent-sample-db</artifactId>
 
     <name>libevent-sample</name>
     <url>http://www.example.com</url>
@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>com.personal.oyl</groupId>
-            <artifactId>libevent-kafka</artifactId>
+            <artifactId>libevent-jupiter</artifactId>
             <version>1.0.0</version>
         </dependency>
 
