@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -27,7 +26,12 @@ public class EventTransport implements Runnable {
     @Override
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
-            List<Event> events = this.manager.getMapper().queryTopN(tbNum, 100);
+            List<Event> events = null;
+            try {
+                events = this.manager.getMapper().queryTopN(tbNum, 100);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
 
             if (null == events || events.isEmpty()) {
                 try {
@@ -35,18 +39,22 @@ public class EventTransport implements Runnable {
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
-                continue;
-            }
+            } else {
+                List<String> successIds = null;
+                try {
+                    successIds = this.manager.getPusher().push(tbNum, events);
+                } catch (Exception e) {
+                    log.error(e.getMessage(), e);
+                }
 
-            try {
-                List<String> successIds = this.manager.getPusher().push(tbNum, events);
-                this.manager.getMapper().batchClean(tbNum, successIds);
-            } catch (ExecutionException e) {
-                log.error(e.getMessage(), e);
-            } catch (InterruptedException e) {
-                log.error(e.getMessage(), e);
+                if (null != successIds && !successIds.isEmpty()) {
+                    try {
+                        this.manager.getMapper().batchClean(tbNum, successIds);
+                    } catch (Exception e) {
+                        log.error(e.getMessage(), e);
+                    }
+                }
             }
-
         }
     }
 }

@@ -1,13 +1,9 @@
 package com.personal.oyl.event.kafka;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Properties;
 
-import com.personal.oyl.event.Event;
-import com.personal.oyl.event.EventSerde;
-import com.personal.oyl.event.EventSubscriber;
-import com.personal.oyl.event.SubscriberConfig;
+import com.personal.oyl.event.*;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -55,16 +51,7 @@ public class KafkaEventConsumer implements Runnable {
                     }
 
                     if (null != event) {
-                        List<EventSubscriber> subs = SubscriberConfig.instance().getSubscribers(event.getEventType());
-                        if (null != subs && !subs.isEmpty()) {
-                            for (EventSubscriber sub : subs) {
-                                try {
-                                    sub.onEvent(event);
-                                } catch (Exception e) {
-                                    log.error(e.getMessage(), e);
-                                }
-                            }
-                        }
+                        EventReceiver.instance().onEvent(event);
                     }
                 }
 

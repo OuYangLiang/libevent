@@ -1,9 +1,6 @@
 package com.personal.oyl.event.rocketmq;
 
-import com.personal.oyl.event.Event;
-import com.personal.oyl.event.EventSerde;
-import com.personal.oyl.event.EventSubscriber;
-import com.personal.oyl.event.SubscriberConfig;
+import com.personal.oyl.event.*;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyStatus;
@@ -45,24 +42,24 @@ public class RocketMqEventConsumer {
         consumer.registerMessageListener(
             (List<MessageExt> msgs, ConsumeOrderlyContext context) -> {
                 for (MessageExt msg : msgs) {
+                    String message = null;
                     try {
-                        String message = new String(msg.getBody(), RemotingHelper.DEFAULT_CHARSET);
-                        Event event = eventSerde.fromJson(message);
-
-                        if (null != event) {
-                            List<EventSubscriber> subs = SubscriberConfig.instance().getSubscribers(event.getEventType());
-                            if (null != subs && !subs.isEmpty()) {
-                                for (EventSubscriber sub : subs) {
-                                    try {
-                                        sub.onEvent(event);
-                                    } catch (Exception e) {
-                                        log.error(e.getMessage(), e);
-                                    }
-                                }
-                            }
-                        }
+                        message = new String(msg.getBody(), RemotingHelper.DEFAULT_CHARSET);
                     } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
+                        log.error(e.getMessage(), e);
+                    }
+
+                    Event event = null;
+                    if (null != message) {
+                        try {
+                            event = eventSerde.fromJson(message);
+                        } catch (Exception e) {
+                            log.error(e.getMessage(), e);
+                        }
+                    }
+
+                    if (null != event) {
+                        EventReceiver.instance().onEvent(event);
                     }
                 }
 
