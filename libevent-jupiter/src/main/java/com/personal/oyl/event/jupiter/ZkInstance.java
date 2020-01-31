@@ -37,7 +37,7 @@ public class ZkInstance {
                             s.release();
                         }
 
-                        instance.stopAll();
+                        instance.shutdown();
 
                         if (null != zk) {
                             try {
