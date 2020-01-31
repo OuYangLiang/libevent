@@ -44,7 +44,8 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
             SubscriberConfig.instance().addSubscriber("o_c", dailyOrderReportSubscriber);
             SubscriberConfig.instance().addSubscriber("o_c", userOrderReportSubscriber);
 
-            Thread consumeThread = new Thread(new KafkaEventConsumer(eventSerde));
+            KafkaEventConsumer kafkaEventConsumer = new KafkaEventConsumer(eventSerde);
+            Thread consumeThread = new Thread(kafkaEventConsumer);
             consumeThread.start();
 
             Instance instance = new Instance(eventTransportMgr);
@@ -54,6 +55,11 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
                 log.error(e.getMessage(), e);
             }
 
+            Runtime.getRuntime().addShutdownHook(new Thread(() ->  {
+                instance.shutdown();
+                kafkaEventConsumer.wake();
+                consumeThread.interrupt();
+            }));
         }
     }
 

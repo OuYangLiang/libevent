@@ -71,7 +71,7 @@ public class Instance {
         }
     }
 
-    void stopAll() {
+    public void shutdown() {
         this.eventTransportMgr.stopAll();
     }
 

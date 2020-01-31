@@ -45,6 +45,7 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
                 log.error(e.getMessage(), e);
             }
 
+            Runtime.getRuntime().addShutdownHook(new Thread(instance::shutdown));
         }
     }
 
