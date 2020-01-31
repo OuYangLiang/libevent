@@ -18,7 +18,6 @@ public class TestInstance {
         TestZkInstance zkInstance = new TestZkInstance();
         log.info("Start to connect to zookeeper ......");
         zkInstance.initConnection(null);
-        log.info("Connected to zookeeper ......");
 
         try {
             log.info("Create root znode ...");
@@ -35,12 +34,7 @@ public class TestInstance {
         if (zkInstance.lock("testId", JupiterConfiguration.instance().getMasterNode())) {
             log.info("Master locked successfully ....");
             log.info("To work as master ............");
-        } else {
-            log.info("Session expired, will start another instance to continue ..........");
-
-            TimeUnit.SECONDS.sleep(100);
         }
-
     }
 
 

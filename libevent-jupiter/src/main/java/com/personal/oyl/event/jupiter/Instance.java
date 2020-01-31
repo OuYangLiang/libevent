@@ -14,13 +14,11 @@ public class Instance {
     private static final Logger log = LoggerFactory.getLogger(Instance.class);
 
     private EventTransportMgr eventTransportMgr;
-    private AssignmentListener assignmentListener;
 
     private ZkInstance zkInstance;
 
     public Instance(EventTransportMgr eventTransportMgr) {
         this.eventTransportMgr = eventTransportMgr;
-        this.assignmentListener = new AssignmentListener(eventTransportMgr);
         zkInstance = new ZkInstance();
     }
 
@@ -35,7 +33,6 @@ public class Instance {
 
 
         zkInstance.initConnection(this);
-        log.info("Connection to zookeeper created successfully ......");
 
         try {
             zkInstance.createRoot(JupiterConfiguration.instance().getNameSpace());
@@ -44,6 +41,7 @@ public class Instance {
                 throw e;
             }
         }
+
         try {
             zkInstance.createRoot(JupiterConfiguration.instance().getWorkerNode());
         } catch (KeeperException e) {
@@ -57,17 +55,16 @@ public class Instance {
 
         String assignment = zkInstance.getContent(JupiterConfiguration.instance().getWorkerNode(instanceId), workWatcher);
         if (null != assignment && !assignment.trim().isEmpty()) {
-            this.assignmentListener.onChange(assignment);
+            this.eventTransportMgr.assign(assignment.trim());
         }
 
         // blocking operation
+        log.info("Start to lock master ....");
         if (zkInstance.lock(instanceId, JupiterConfiguration.instance().getMasterNode())) {
             log.info("Now it is the master server...");
             log.info("perform the first check of the assignment, invoke method onChange()...");
             InstanceListener instanceListener = new InstanceListener(zkInstance);
             instanceListener.onChange();
-        } else {
-            log.warn("Zookeeper Session has expired, will start another instance to continue ...");
         }
     }
 
@@ -75,11 +72,19 @@ public class Instance {
         this.eventTransportMgr.stopAll();
     }
 
+    void pause() {
+        this.eventTransportMgr.stopAll();
+    }
+
+    void resume() {
+        this.eventTransportMgr.restartAll();
+    }
+
     private Watcher workWatcher = (event) -> {
         try {
             if (event.getType().equals(Watcher.Event.EventType.NodeDataChanged)) {
-                String source = zkInstance.getContent(event.getPath(), this.workWatcher);
-                this.assignmentListener.onChange(source);
+                String assignment = zkInstance.getContent(event.getPath(), this.workWatcher);
+                this.eventTransportMgr.assign(assignment.trim());
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);

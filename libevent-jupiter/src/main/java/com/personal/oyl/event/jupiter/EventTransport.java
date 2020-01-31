@@ -25,6 +25,7 @@ public class EventTransport implements Runnable {
 
     @Override
     public void run() {
+        log.info("EventTransport thread for table {} started ...", tbNum);
         while (!Thread.currentThread().isInterrupted()) {
             List<Event> events = null;
             try {
@@ -56,5 +57,6 @@ public class EventTransport implements Runnable {
                 }
             }
         }
+        log.warn("EventTransport thread for table {} stopped ...", tbNum);
     }
 }

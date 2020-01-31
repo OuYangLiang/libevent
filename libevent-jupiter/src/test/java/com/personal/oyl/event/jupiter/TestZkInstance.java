@@ -17,6 +17,7 @@ public class TestZkInstance extends ZkInstance {
         zk = new ZooKeeper(JupiterConfiguration.instance().getZkAddrs(), JupiterConfiguration.instance().getSessionTimeout(),
                 (event) -> {
                     if (event.getState().equals(Watcher.Event.KeeperState.Expired)) {
+                        log.warn("Zookeeper session expired ...");
                         expired = true;
                         if (null != s) {
                             s.release();
@@ -39,8 +40,19 @@ public class TestZkInstance extends ZkInstance {
                         }
                     }
 
+                    if (event.getState().equals(Watcher.Event.KeeperState.Disconnected)) {
+                        log.warn("Disconnected from zookeeper...");
+                        log.warn("Pause instance ...");
+                    }
+
                     if (event.getState().equals(Watcher.Event.KeeperState.SyncConnected)) {
-                        latch.countDown();
+                        if (firstTimeToZk) {
+                            latch.countDown();
+                            firstTimeToZk = false;
+                            log.info("Connection to zookeeper created successfully ...");
+                        } else {
+                            log.warn("Resume instance ...");
+                        }
                     }
                 });
 
