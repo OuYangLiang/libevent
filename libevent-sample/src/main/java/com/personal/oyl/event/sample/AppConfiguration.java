@@ -4,7 +4,6 @@ import com.personal.oyl.event.EventMapper;
 import com.personal.oyl.event.EventPublisher;
 import com.personal.oyl.event.EventPusher;
 import com.personal.oyl.event.EventSerde;
-import com.personal.oyl.event.jupiter.AssignmentListener;
 import com.personal.oyl.event.jupiter.EventTransportMgr;
 import com.personal.oyl.event.kafka.KafkaEventPusher;
 import com.personal.oyl.event.sample.order.*;
