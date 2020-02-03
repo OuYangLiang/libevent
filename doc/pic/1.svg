@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="72 410 475 250" width="475" height="250">
+  <defs>
+    <font-face font-family="PingFang SC" font-size="13" panose-1="2 11 4 0 0 0 0 0 0 0" units-per-em="1000" underline-position="-150" underline-thickness="58" slope="0" x-height="600" cap-height="860" ascent="1060.0021" descent="-340.0007" font-weight="400">
+      <font-face-src>
+        <font-face-name name="PingFangSC-Regular"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Avenir Next" font-size="12" panose-1="2 11 5 3 2 2 2 2 2 4" units-per-em="1000" underline-position="-75" underline-thickness="50" slope="0" x-height="468" cap-height="708" ascent="1e3" descent="-365.9973" font-weight="400">
+      <font-face-src>
+        <font-face-name name="AvenirNext-Regular"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <font-face font-family="Avenir Next" font-size="18" panose-1="2 11 8 3 2 2 2 2 2 4" units-per-em="1000" underline-position="-75" underline-thickness="50" slope="0" x-height="498" cap-height="708" ascent="1e3" descent="-365.9973" font-weight="700">
+      <font-face-src>
+        <font-face-name name="AvenirNext-Bold"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.10.2 
+    <dc:date>2020-02-01 15:48:49 +0000</dc:date>
+  </metadata>
+  <g id="Canvas_2" stroke-dasharray="none" stroke-opacity="1" fill="none" fill-opacity="1" stroke="none">
+    <title>Canvas 2</title>
+    <rect fill="white" x="72" y="410" width="475" height="250"/>
+    <g id="Canvas_2: Layer 1">
+      <title>Layer 1</title>
+      <g id="Graphic_3">
+        <title>Rectangle : Base3 background</title>
+        <path d="M 142 597.5 L 142 561.5 C 142 559.016 168.208 557 200.5 557 C 232.792 557 259 559.016 259 561.5 L 259 597.5 C 259 599.984 232.792 602 200.5 602 C 168.208 602 142 599.984 142 597.5" fill="#dc322f"/>
+        <path d="M 142 597.5 L 142 561.5 C 142 559.016 168.208 557 200.5 557 C 232.792 557 259 559.016 259 561.5 L 259 597.5 C 259 599.984 232.792 602 200.5 602 C 168.208 602 142 599.984 142 597.5 M 142 561.5 C 142 563.984 168.208 566 200.5 566 C 232.792 566 259 563.984 259 561.5" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(147 570)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="25.004" y="14">Database</tspan>
+        </text>
+      </g>
+      <g id="Graphic_5">
+        <title>Rectangle : Blue</title>
+        <path d="M 147 445.25 L 254 445.25 C 256.76142 445.25 259 447.4886 259 450.25 L 259 485.25 C 259 488.0114 256.76142 490.25 254 490.25 L 147 490.25 C 144.23858 490.25 142 488.0114 142 485.25 L 142 450.25 C 142 447.4886 144.23858 445.25 147 445.25 Z" fill="#268bd2"/>
+        <path d="M 147 445.25 L 254 445.25 C 256.76142 445.25 259 447.4886 259 450.25 L 259 485.25 C 259 488.0114 256.76142 490.25 254 490.25 L 147 490.25 C 144.23858 490.25 142 488.0114 142 485.25 L 142 450.25 C 142 447.4886 144.23858 445.25 147 445.25 Z" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(147 458.25)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="31.413" y="14">System</tspan>
+        </text>
+      </g>
+      <g id="Graphic_7">
+        <title>Rectangle : Base3 background</title>
+        <path d="M 427.7 445.25 L 525.3 445.25 C 532.0344 445.25 537.5 455.33 537.5 467.75 C 537.5 480.17 532.0344 490.25 525.3 490.25 L 427.7 490.25 C 420.9656 490.25 415.5 480.17 415.5 467.75 C 415.5 455.33 420.9656 445.25 427.7 445.25" fill="#dc322f"/>
+        <path d="M 427.7 445.25 L 525.3 445.25 C 532.0344 445.25 537.5 455.33 537.5 467.75 C 537.5 480.17 532.0344 490.25 525.3 490.25 L 427.7 490.25 C 420.9656 490.25 415.5 480.17 415.5 467.75 C 415.5 455.33 420.9656 445.25 427.7 445.25 M 525.3 445.25 C 518.5656 445.25 513.1 455.33 513.1 467.75 C 513.1 480.17 518.5656 490.25 525.3 490.25" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(454 458.25)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="3.0195" y="14">Queue</tspan>
+        </text>
+      </g>
+      <g id="Graphic_9">
+        <title>Accent Text : Violet</title>
+        <text transform="translate(268.5 450.25)" fill="#6c71c4">
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="12">publish event messages</tspan>
+        </text>
+      </g>
+      <g id="Graphic_10">
+        <title>Accent Text : Violet</title>
+        <text transform="translate(152.5 500)" fill="#6c71c4">
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="12">persist</tspan>
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="28">business logic</tspan>
+        </text>
+      </g>
+      <g id="Line_11">
+        <line x1="200.5" y1="490.25" x2="200.5" y2="547.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_12">
+        <line x1="259" y1="467.75" x2="405.6" y2="467.75" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_14">
+        <title>Heading : Body text</title>
+        <text transform="translate(86.592 503.5)" fill="#657b83">
+          <tspan font-family="Avenir Next" font-size="18" font-weight="700" fill="#657b83" x="0" y="18">Step 1</tspan>
+        </text>
+      </g>
+      <g id="Graphic_15">
+        <title>Heading : Body text</title>
+        <text transform="translate(268.5 424)" fill="#657b83">
+          <tspan font-family="Avenir Next" font-size="18" font-weight="700" fill="#657b83" x="0" y="18">Step </tspan>
+          <tspan font-family="Avenir Next" font-size="18" font-weight="700" fill="#657b83" y="18">2</tspan>
+        </text>
+      </g>
+      <g id="Graphic_16">
+        <title>Accent Text : Red</title>
+        <text transform="translate(192 614)" fill="#dc322f">
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#dc322f" x="0" y="12">The Problem: Step 1 &amp; Step 2 are not atomic, </tspan>
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#dc322f" x="0" y="28">you can’t make sure they both succeed, or both failed.</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>
