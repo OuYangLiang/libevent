@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="654 793 818 304" width="818" height="304">
+  <defs>
+    <font-face font-family="PingFang SC" font-size="13" panose-1="2 11 4 0 0 0 0 0 0 0" units-per-em="1000" underline-position="-150" underline-thickness="58" slope="0" x-height="600" cap-height="860" ascent="1060.0021" descent="-340.0007" font-weight="400">
+      <font-face-src>
+        <font-face-name name="PingFangSC-Regular"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="Arrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="none" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <font-face font-family="PingFang SC" font-size="12" panose-1="2 11 4 0 0 0 0 0 0 0" units-per-em="1000" underline-position="-150" underline-thickness="58" slope="0" x-height="600" cap-height="860" ascent="1060.0021" descent="-340.0007" font-weight="400">
+      <font-face-src>
+        <font-face-name name="PingFangSC-Regular"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.10.2 
+    <dc:date>2020-02-01 17:14:01 +0000</dc:date>
+  </metadata>
+  <g id="5" stroke-dasharray="none" stroke-opacity="1" fill="none" fill-opacity="1" stroke="none">
+    <title>5</title>
+    <rect fill="white" x="654" y="793" width="818" height="304"/>
+    <g id="5: Layer 1">
+      <title>Layer 1</title>
+      <g id="Graphic_2">
+        <title>Rectangle : Blue</title>
+        <path d="M 669 900.5 L 740 900.5 C 742.7614 900.5 745 902.7386 745 905.5 L 745 936.8855 C 745 939.647 742.7614 941.8855 740 941.8855 L 669 941.8855 C 666.2386 941.8855 664 939.647 664 936.8855 L 664 905.5 C 664 902.7386 666.2386 900.5 669 900.5 Z" fill="#268bd2"/>
+        <path d="M 669 900.5 L 740 900.5 C 742.7614 900.5 745 902.7386 745 905.5 L 745 936.8855 C 745 939.647 742.7614 941.8855 740 941.8855 L 669 941.8855 C 666.2386 941.8855 664 939.647 664 936.8855 L 664 905.5 C 664 902.7386 666.2386 900.5 669 900.5 Z" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(669 911.6928)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="3" y="14">任务台服务</tspan>
+        </text>
+      </g>
+      <g id="Graphic_3">
+        <title>Rectangle : Blue</title>
+        <path d="M 836.75 898.6928 L 907.75 898.6928 C 910.5114 898.6928 912.75 900.9313 912.75 903.6928 L 912.75 938.6928 C 912.75 941.4542 910.5114 943.6928 907.75 943.6928 L 836.75 943.6928 C 833.9886 943.6928 831.75 941.4542 831.75 938.6928 L 831.75 903.6928 C 831.75 900.9313 833.9886 898.6928 836.75 898.6928 Z" fill="#268bd2"/>
+        <path d="M 836.75 898.6928 L 907.75 898.6928 C 910.5114 898.6928 912.75 900.9313 912.75 903.6928 L 912.75 938.6928 C 912.75 941.4542 910.5114 943.6928 907.75 943.6928 L 836.75 943.6928 C 833.9886 943.6928 831.75 941.4542 831.75 938.6928 L 831.75 903.6928 C 831.75 900.9313 833.9886 898.6928 836.75 898.6928 Z" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(836.75 911.6928)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="3" y="14">小结单服务</tspan>
+        </text>
+      </g>
+      <g id="Graphic_4">
+        <title>Rectangle : Base3 background</title>
+        <path d="M 999.2 898.6928 L 1096.8 898.6928 C 1103.5344 898.6928 1109 908.7728 1109 921.1928 C 1109 933.6128 1103.5344 943.6928 1096.8 943.6928 L 999.2 943.6928 C 992.4656 943.6928 987 933.6128 987 921.1928 C 987 908.7728 992.4656 898.6928 999.2 898.6928" fill="#dc322f"/>
+        <path d="M 999.2 898.6928 L 1096.8 898.6928 C 1103.5344 898.6928 1109 908.7728 1109 921.1928 C 1109 933.6128 1103.5344 943.6928 1096.8 943.6928 L 999.2 943.6928 C 992.4656 943.6928 987 933.6128 987 921.1928 C 987 908.7728 992.4656 898.6928 999.2 898.6928 M 1096.8 898.6928 C 1090.0656 898.6928 1084.6 908.7728 1084.6 921.1928 C 1084.6 933.6128 1090.0656 943.6928 1096.8 943.6928" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(1025.5 911.6928)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="3.0195" y="14">Queue</tspan>
+        </text>
+      </g>
+      <g id="Line_5">
+        <line x1="745" y1="921.1928" x2="821.85" y2="921.1928" marker-end="url(#Arrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_6">
+        <title>Accent Text : Violet</title>
+        <text transform="translate(753 882)" fill="#6c71c4">
+          <tspan font-family="PingFang SC" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="13">rpc调用</tspan>
+          <tspan font-family="PingFang SC" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="30">增加沟通记录</tspan>
+        </text>
+      </g>
+      <g id="Line_7">
+        <line x1="912.75" y1="921.1928" x2="977.1" y2="921.1928" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_8">
+        <title>Accent Text : Violet</title>
+        <text transform="translate(919.5 903.6928)" fill="#6c71c4">
+          <tspan font-family="PingFang SC" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="13">发布事件</tspan>
+        </text>
+      </g>
+      <g id="Graphic_9">
+        <title>Rectangle : Blue</title>
+        <path d="M 1173.5 802.5 L 1244.5 802.5 C 1247.2614 802.5 1249.5 804.7386 1249.5 807.5 L 1249.5 838.8855 C 1249.5 841.647 1247.2614 843.8855 1244.5 843.8855 L 1173.5 843.8855 C 1170.7386 843.8855 1168.5 841.647 1168.5 838.8855 L 1168.5 807.5 C 1168.5 804.7386 1170.7386 802.5 1173.5 802.5 Z" fill="#268bd2"/>
+        <path d="M 1173.5 802.5 L 1244.5 802.5 C 1247.2614 802.5 1249.5 804.7386 1249.5 807.5 L 1249.5 838.8855 C 1249.5 841.647 1247.2614 843.8855 1244.5 843.8855 L 1173.5 843.8855 C 1170.7386 843.8855 1168.5 841.647 1168.5 838.8855 L 1168.5 807.5 C 1168.5 804.7386 1170.7386 802.5 1173.5 802.5 Z" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(1173.5 813.6928)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="3" y="14">任务台</tspan>
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" y="14">服务</tspan>
+        </text>
+      </g>
+      <g id="Graphic_10">
+        <title>Rectangle : Blue</title>
+        <path d="M 1173.5 978.5 L 1244.5 978.5 C 1247.2614 978.5 1249.5 980.7386 1249.5 983.5 L 1249.5 1014.8855 C 1249.5 1017.647 1247.2614 1019.8855 1244.5 1019.8855 L 1173.5 1019.8855 C 1170.7386 1019.8855 1168.5 1017.647 1168.5 1014.8855 L 1168.5 983.5 C 1168.5 980.7386 1170.7386 978.5 1173.5 978.5 Z" fill="#268bd2"/>
+        <path d="M 1173.5 978.5 L 1244.5 978.5 C 1247.2614 978.5 1249.5 980.7386 1249.5 983.5 L 1249.5 1014.8855 C 1249.5 1017.647 1247.2614 1019.8855 1244.5 1019.8855 L 1173.5 1019.8855 C 1170.7386 1019.8855 1168.5 1017.647 1168.5 1014.8855 L 1168.5 983.5 C 1168.5 980.7386 1170.7386 978.5 1173.5 978.5 Z" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(1173.5 989.6928)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="9.5" y="14">报单服务</tspan>
+        </text>
+      </g>
+      <g id="Line_11">
+        <line x1="1075.6658" y1="898.6928" x2="1160.8194" y2="829.4392" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Line_12">
+        <line x1="1082.7596" y1="943.6928" x2="1160.1892" y2="993.8132" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_13">
+        <title>Rectangle : Base3 background</title>
+        <path d="M 1345 890 L 1345 854 C 1345 851.516 1371.208 849.5 1403.5 849.5 C 1435.792 849.5 1462 851.516 1462 854 L 1462 890 C 1462 892.484 1435.792 894.5 1403.5 894.5 C 1371.208 894.5 1345 892.484 1345 890" fill="#dc322f"/>
+        <path d="M 1345 890 L 1345 854 C 1345 851.516 1371.208 849.5 1403.5 849.5 C 1435.792 849.5 1462 851.516 1462 854 L 1462 890 C 1462 892.484 1435.792 894.5 1403.5 894.5 C 1371.208 894.5 1345 892.484 1345 890 M 1345 854 C 1345 856.484 1371.208 858.5 1403.5 858.5 C 1435.792 858.5 1462 856.484 1462 854" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(1350 862.5)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="25.004" y="14">Database</tspan>
+        </text>
+      </g>
+      <g id="Line_14">
+        <path d="M 1209 843.8855 L 1209 872 L 1335.1 872" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_15">
+        <title>Rectangle : Base3 background</title>
+        <path d="M 1345 941 L 1345 905 C 1345 902.516 1371.208 900.5 1403.5 900.5 C 1435.792 900.5 1462 902.516 1462 905 L 1462 941 C 1462 943.484 1435.792 945.5 1403.5 945.5 C 1371.208 945.5 1345 943.484 1345 941" fill="#dc322f"/>
+        <path d="M 1345 941 L 1345 905 C 1345 902.516 1371.208 900.5 1403.5 900.5 C 1435.792 900.5 1462 902.516 1462 905 L 1462 941 C 1462 943.484 1435.792 945.5 1403.5 945.5 C 1371.208 945.5 1345 943.484 1345 941 M 1345 905 C 1345 907.484 1371.208 909.5 1403.5 909.5 C 1435.792 909.5 1462 907.484 1462 905" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(1350 913.5)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="45.2515" y="14">ES</tspan>
+        </text>
+      </g>
+      <g id="Graphic_16">
+        <title>Accent Text : Violet</title>
+        <text transform="translate(1223 854.5)" fill="#6c71c4">
+          <tspan font-family="PingFang SC" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="13">更新任务项状态</tspan>
+        </text>
+      </g>
+      <g id="Line_17">
+        <path d="M 1209 843.8855 L 1209 923 L 1335.1 923" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_18">
+        <title>Accent Text : Violet</title>
+        <text transform="translate(1223 902.1928)" fill="#6c71c4">
+          <tspan font-family="PingFang SC" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="13">更</tspan>
+          <tspan font-family="PingFang SC" font-size="12" font-weight="400" fill="#6c71c4" y="13">新任务项检索条件</tspan>
+        </text>
+      </g>
+      <g id="Graphic_19">
+        <title>Rectangle : Base3 background</title>
+        <path d="M 1345 1082.5 L 1345 1046.5 C 1345 1044.016 1371.208 1042 1403.5 1042 C 1435.792 1042 1462 1044.016 1462 1046.5 L 1462 1082.5 C 1462 1084.984 1435.792 1087 1403.5 1087 C 1371.208 1087 1345 1084.984 1345 1082.5" fill="#dc322f"/>
+        <path d="M 1345 1082.5 L 1345 1046.5 C 1345 1044.016 1371.208 1042 1403.5 1042 C 1435.792 1042 1462 1044.016 1462 1046.5 L 1462 1082.5 C 1462 1084.984 1435.792 1087 1403.5 1087 C 1371.208 1087 1345 1084.984 1345 1082.5 M 1345 1046.5 C 1345 1048.984 1371.208 1051 1403.5 1051 C 1435.792 1051 1462 1048.984 1462 1046.5" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(1350 1055)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="25.004" y="14">Database</tspan>
+        </text>
+      </g>
+      <g id="Line_20">
+        <path d="M 1209 1019.8855 L 1209 1064.5 L 1335.1 1064.5" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_21">
+        <title>Accent Text : Violet</title>
+        <text transform="translate(1223 1047)" fill="#6c71c4">
+          <tspan font-family="PingFang SC" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="13">自动生成报单</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

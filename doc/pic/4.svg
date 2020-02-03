@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="515 667 591 265" width="591" height="265">
+  <defs>
+    <font-face font-family="Helvetica Neue" font-size="10" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="PingFang SC" font-size="13" panose-1="2 11 4 0 0 0 0 0 0 0" units-per-em="1000" underline-position="-150" underline-thickness="58" slope="0" x-height="600" cap-height="860" ascent="1060.0021" descent="-340.0007" font-weight="400">
+      <font-face-src>
+        <font-face-name name="PingFangSC-Regular"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="PingFang SC" font-size="10" panose-1="2 11 4 0 0 0 0 0 0 0" units-per-em="1000" underline-position="-150" underline-thickness="58" slope="0" x-height="600" cap-height="860" ascent="1060.0021" descent="-340.0007" font-weight="400">
+      <font-face-src>
+        <font-face-name name="PingFangSC-Regular"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="StickArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 0 M 0 -3 L 8 0 L 0 3" fill="none" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <font-face font-family="Avenir Next" font-size="12" panose-1="2 11 5 3 2 2 2 2 2 4" units-per-em="1000" underline-position="-75" underline-thickness="50" slope="0" x-height="468" cap-height="708" ascent="1e3" descent="-365.9973" font-weight="400">
+      <font-face-src>
+        <font-face-name name="AvenirNext-Regular"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.10.2 
+    <dc:date>2020-02-01 16:56:14 +0000</dc:date>
+  </metadata>
+  <g id="4" stroke-dasharray="none" stroke-opacity="1" fill="none" fill-opacity="1" stroke="none">
+    <title>4</title>
+    <rect fill="white" x="515" y="667" width="591" height="265"/>
+    <g id="4: Layer 1">
+      <title>Layer 1</title>
+      <g id="Graphic_8">
+        <title>Rectangle : Blue</title>
+        <path d="M 800.1446 702.11315 C 778.6122 699.6772 787.1988 679.1702 821.5477 682.6693 C 824.7345 675.84845 864.6777 676.95555 864.4166 682.6693 C 889.4622 675.36135 921.469 689.9332 900.0005 697.2412 C 925.7616 700.7843 899.6755 719.8739 878.5335 716.685 C 876.8415 722.0001 839.0459 723.8601 835.7285 716.685 C 814.3267 724.34765 769.7006 712.566 800.1446 702.11315 Z" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(807.7598 693.1772)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="10" font-weight="400" fill="black" x="17.55492" y="10">Zookeeper</tspan>
+        </text>
+      </g>
+      <g id="Graphic_32">
+        <title>Rectangle : Base3 background</title>
+        <path d="M 661.5 900.3332 L 661.5 724.33325 C 661.5 712.18925 688.6657 702.33325 722.1378 702.33325 C 755.6099 702.33325 782.7756 712.18925 782.7756 724.33325 L 782.7756 900.3332 C 782.7756 912.4772 755.6099 922.3332 722.1378 922.3332 C 688.6657 922.3332 661.5 912.4772 661.5 900.3332" fill="#dc322f"/>
+        <path d="M 661.5 900.3332 L 661.5 724.33325 C 661.5 712.18925 688.6657 702.33325 722.1378 702.33325 C 755.6099 702.33325 782.7756 712.18925 782.7756 724.33325 L 782.7756 900.3332 C 782.7756 912.4772 755.6099 922.3332 722.1378 922.3332 C 688.6657 922.3332 661.5 912.4772 661.5 900.3332 M 661.5 724.33325 C 661.5 736.47725 688.6657 746.33325 722.1378 746.33325 C 755.6099 746.33325 782.7756 736.47725 782.7756 724.33325" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(666.5 720.33325)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="27.141796" y="14">Database</tspan>
+        </text>
+      </g>
+      <g id="Graphic_33">
+        <title>Rectangle : Base3 background</title>
+        <rect x="694.2251" y="761.83325" width="56.69291" height="27" fill="#fdf6e3"/>
+        <rect x="694.2251" y="761.83325" width="56.69291" height="27" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(699.2251 767.83325)" fill="#586e75">
+          <tspan font-family="PingFang SC" font-size="10" font-weight="400" fill="#586e75" x="4.1764565" y="11">事件表</tspan>
+          <tspan font-family="Helvetica Neue" font-size="10" font-weight="400" fill="#586e75" y="11"> 0</tspan>
+        </text>
+      </g>
+      <g id="Graphic_34">
+        <title>Rectangle : Base3 background</title>
+        <rect x="694.2251" y="793.5832" width="56.69291" height="27" fill="#fdf6e3"/>
+        <rect x="694.2251" y="793.5832" width="56.69291" height="27" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(699.2251 799.5832)" fill="#586e75">
+          <tspan font-family="PingFang SC" font-size="10" font-weight="400" fill="#586e75" x="4.1764565" y="11">事件表</tspan>
+          <tspan font-family="Helvetica Neue" font-size="10" font-weight="400" fill="#586e75" y="11"> 1</tspan>
+        </text>
+      </g>
+      <g id="Graphic_35">
+        <title>Rectangle : Base3 background</title>
+        <rect x="694.2251" y="825.3332" width="56.69291" height="27" fill="#fdf6e3"/>
+        <rect x="694.2251" y="825.3332" width="56.69291" height="27" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(699.2251 831.3332)" fill="#586e75">
+          <tspan font-family="PingFang SC" font-size="10" font-weight="400" fill="#586e75" x="4.1764565" y="11">事件表</tspan>
+          <tspan font-family="Helvetica Neue" font-size="10" font-weight="400" fill="#586e75" y="11"> 2</tspan>
+        </text>
+      </g>
+      <g id="Graphic_36">
+        <title>Rectangle : Base3 background</title>
+        <rect x="694.2251" y="857.0832" width="56.69291" height="27" fill="#fdf6e3"/>
+        <rect x="694.2251" y="857.0832" width="56.69291" height="27" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(699.2251 863.0832)" fill="#586e75">
+          <tspan font-family="PingFang SC" font-size="10" font-weight="400" fill="#586e75" x="4.1764565" y="11">事件表</tspan>
+          <tspan font-family="Helvetica Neue" font-size="10" font-weight="400" fill="#586e75" y="11"> 3</tspan>
+        </text>
+      </g>
+      <g id="Graphic_37">
+        <title>Rectangle : Blue</title>
+        <path d="M 530 761.83325 L 601 761.83325 C 603.7614 761.83325 606 764.0718 606 766.83325 L 606 798.2188 C 606 800.9802 603.7614 803.2188 601 803.2188 L 530 803.2188 C 527.2386 803.2188 525 800.9802 525 798.2188 L 525 766.83325 C 525 764.0718 527.2386 761.83325 530 761.83325 Z" fill="#268bd2"/>
+        <path d="M 530 761.83325 L 601 761.83325 C 603.7614 761.83325 606 764.0718 606 766.83325 L 606 798.2188 C 606 800.9802 603.7614 803.2188 601 803.2188 L 530 803.2188 C 527.2386 803.2188 525 800.9802 525 798.2188 L 525 766.83325 C 525 764.0718 527.2386 761.83325 530 761.83325 Z" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(530 764.526)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="13.413" y="14">System</tspan>
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="4.2415" y="32">Instance 0</tspan>
+        </text>
+      </g>
+      <g id="Graphic_38">
+        <title>Rectangle : Blue</title>
+        <path d="M 530 842.6977 L 601 842.6977 C 603.7614 842.6977 606 844.9363 606 847.6977 L 606 879.0832 C 606 881.8447 603.7614 884.0832 601 884.0832 L 530 884.0832 C 527.2386 884.0832 525 881.8447 525 879.0832 L 525 847.6977 C 525 844.9363 527.2386 842.6977 530 842.6977 Z" fill="#268bd2"/>
+        <path d="M 530 842.6977 L 601 842.6977 C 603.7614 842.6977 606 844.9363 606 847.6977 L 606 879.0832 C 606 881.8447 603.7614 884.0832 601 884.0832 L 530 884.0832 C 527.2386 884.0832 525 881.8447 525 879.0832 L 525 847.6977 C 525 844.9363 527.2386 842.6977 530 842.6977 Z" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(530 845.3905)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="13.413" y="14">System</tspan>
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="5.535" y="32">Instance 1</tspan>
+        </text>
+      </g>
+      <g id="Graphic_39">
+        <title>Rectangle : Blue</title>
+        <path d="M 843.2756 761.83325 L 914.2756 761.83325 C 917.037 761.83325 919.2756 764.0718 919.2756 766.83325 L 919.2756 798.2188 C 919.2756 800.9802 917.037 803.2188 914.2756 803.2188 L 843.2756 803.2188 C 840.5142 803.2188 838.2756 800.9802 838.2756 798.2188 L 838.2756 766.83325 C 838.2756 764.0718 840.5142 761.83325 843.2756 761.83325 Z" fill="#268bd2"/>
+        <path d="M 843.2756 761.83325 L 914.2756 761.83325 C 917.037 761.83325 919.2756 764.0718 919.2756 766.83325 L 919.2756 798.2188 C 919.2756 800.9802 917.037 803.2188 914.2756 803.2188 L 843.2756 803.2188 C 840.5142 803.2188 838.2756 800.9802 838.2756 798.2188 L 838.2756 766.83325 C 838.2756 764.0718 840.5142 761.83325 843.2756 761.83325 Z" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(843.2756 764.526)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="13.413" y="14">System</tspan>
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="4.2415" y="32">Instance 0</tspan>
+        </text>
+      </g>
+      <g id="Graphic_40">
+        <title>Rectangle : Blue</title>
+        <path d="M 843.2756 842.6977 L 914.2756 842.6977 C 917.037 842.6977 919.2756 844.9363 919.2756 847.6977 L 919.2756 879.0832 C 919.2756 881.8447 917.037 884.0832 914.2756 884.0832 L 843.2756 884.0832 C 840.5142 884.0832 838.2756 881.8447 838.2756 879.0832 L 838.2756 847.6977 C 838.2756 844.9363 840.5142 842.6977 843.2756 842.6977 Z" fill="#268bd2"/>
+        <path d="M 843.2756 842.6977 L 914.2756 842.6977 C 917.037 842.6977 919.2756 844.9363 919.2756 847.6977 L 919.2756 879.0832 C 919.2756 881.8447 917.037 884.0832 914.2756 884.0832 L 843.2756 884.0832 C 840.5142 884.0832 838.2756 881.8447 838.2756 879.0832 L 838.2756 847.6977 C 838.2756 844.9363 840.5142 842.6977 843.2756 842.6977 Z" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(843.2756 845.3905)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="13.413" y="14">System</tspan>
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="5.535" y="32">Instance 1</tspan>
+        </text>
+      </g>
+      <g id="Line_41">
+        <line x1="606" y1="780.6714" x2="684.3355" y2="777.0842" marker-end="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_42">
+        <line x1="606" y1="788.858" x2="684.44396" y2="801.1222" marker-end="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_43">
+        <line x1="606" y1="797.0445" x2="684.90585" y2="825.3308" marker-end="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_44">
+        <line x1="602.1666" y1="803.082" x2="689.8555" y2="852.242" marker-end="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_45">
+        <line x1="606" y1="865.2451" x2="684.3355" y2="868.8323" marker-end="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_46">
+        <line x1="606" y1="857.0585" x2="684.44396" y2="844.7943" marker-end="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_47">
+        <line x1="606" y1="848.872" x2="684.90585" y2="820.5857" marker-end="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_48">
+        <line x1="602.1666" y1="842.8345" x2="689.8555" y2="793.6745" marker-end="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_49">
+        <title>Accent Text : Violet</title>
+        <text transform="translate(613.47825 730.83325)" fill="#6c71c4">
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="12">publish</tspan>
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="28">event </tspan>
+        </text>
+      </g>
+      <g id="Line_50">
+        <line x1="750.91805" y1="776.6385" x2="828.3861" y2="780.2057" marker-end="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_51">
+        <line x1="750.91805" y1="802.6268" x2="828.4957" y2="790.4306" marker-end="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_52">
+        <line x1="750.91805" y1="843.2897" x2="828.4957" y2="855.4858" marker-end="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_53">
+        <line x1="750.91805" y1="869.278" x2="828.3861" y2="865.7108" marker-end="url(#StickArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_54">
+        <title>Accent Text : Violet</title>
+        <text transform="translate(790.2133 730.83325)" fill="#6c71c4">
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="12">read </tspan>
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="28">event</tspan>
+        </text>
+      </g>
+      <g id="Graphic_55">
+        <title>Rectangle : Base3 background</title>
+        <path d="M 974.7756 900.3332 L 974.7756 724.33325 C 974.7756 712.18925 1001.9413 702.33325 1035.4134 702.33325 C 1068.8855 702.33325 1096.0512 712.18925 1096.0512 724.33325 L 1096.0512 900.3332 C 1096.0512 912.4772 1068.8855 922.3332 1035.4134 922.3332 C 1001.9413 922.3332 974.7756 912.4772 974.7756 900.3332" fill="#dc322f"/>
+        <path d="M 974.7756 900.3332 L 974.7756 724.33325 C 974.7756 712.18925 1001.9413 702.33325 1035.4134 702.33325 C 1068.8855 702.33325 1096.0512 712.18925 1096.0512 724.33325 L 1096.0512 900.3332 C 1096.0512 912.4772 1068.8855 922.3332 1035.4134 922.3332 C 1001.9413 922.3332 974.7756 912.4772 974.7756 900.3332 M 974.7756 724.33325 C 974.7756 736.47725 1001.9413 746.33325 1035.4134 746.33325 C 1068.8855 746.33325 1096.0512 736.47725 1096.0512 724.33325" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(979.7756 720.33325)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="36.157296" y="14">Queue</tspan>
+        </text>
+      </g>
+      <g id="Graphic_57">
+        <title>Rectangle : Base3 background</title>
+        <rect x="1006.6331" y="769.026" width="62.362204" height="27" fill="#fdf6e3"/>
+        <rect x="1006.6331" y="769.026" width="62.362204" height="27" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(1011.6331 775.026)" fill="#586e75">
+          <tspan font-family="PingFang SC" font-size="10" font-weight="400" fill="#586e75" x="2.1311022" y="11">partition 0</tspan>
+        </text>
+      </g>
+      <g id="Graphic_56">
+        <title>Rectangle : Base3 background</title>
+        <rect x="1006.6331" y="849.8905" width="62.362204" height="27" fill="#fdf6e3"/>
+        <rect x="1006.6331" y="849.8905" width="62.362204" height="27" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(1011.6331 855.8905)" fill="#586e75">
+          <tspan font-family="PingFang SC" font-size="10" font-weight="400" fill="#586e75" x="3.126102" y="11">partition 1</tspan>
+        </text>
+      </g>
+      <g id="Line_58">
+        <line x1="919.2756" y1="782.526" x2="996.7331" y2="782.526" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_59">
+        <line x1="919.2756" y1="863.3905" x2="996.7331" y2="863.3905" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_60">
+        <title>Accent Text : Violet</title>
+        <text transform="translate(942.8596 761.33325)" fill="#6c71c4">
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="12">push</tspan>
+        </text>
+      </g>
+      <g id="Graphic_61">
+        <title>Accent Text : Violet</title>
+        <text transform="translate(942.8596 842.8332)" fill="#6c71c4">
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="12">push</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

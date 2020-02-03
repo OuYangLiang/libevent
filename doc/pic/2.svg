@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="79 356 587 233" width="587" height="233">
+  <defs>
+    <font-face font-family="PingFang SC" font-size="13" panose-1="2 11 4 0 0 0 0 0 0 0" units-per-em="1000" underline-position="-150" underline-thickness="58" slope="0" x-height="600" cap-height="860" ascent="1060.0021" descent="-340.0007" font-weight="400">
+      <font-face-src>
+        <font-face-name name="PingFangSC-Regular"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Avenir Next" font-size="12" panose-1="2 11 5 3 2 2 2 2 2 4" units-per-em="1000" underline-position="-75" underline-thickness="50" slope="0" x-height="468" cap-height="708" ascent="1e3" descent="-365.9973" font-weight="400">
+      <font-face-src>
+        <font-face-name name="AvenirNext-Regular"/>
+      </font-face-src>
+    </font-face>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <font-face font-family="Avenir Next" font-size="18" panose-1="2 11 8 3 2 2 2 2 2 4" units-per-em="1000" underline-position="-75" underline-thickness="50" slope="0" x-height="498" cap-height="708" ascent="1e3" descent="-365.9973" font-weight="700">
+      <font-face-src>
+        <font-face-name name="AvenirNext-Bold"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Helvetica Neue" font-size="10" panose-1="2 0 5 3 0 0 0 2 0 4" units-per-em="1000" underline-position="-100" underline-thickness="50" slope="0" x-height="517" cap-height="714" ascent="951.9958" descent="-212.99744" font-weight="400">
+      <font-face-src>
+        <font-face-name name="HelveticaNeue"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <metadata> Produced by OmniGraffle 7.10.2 
+    <dc:date>2020-02-01 15:53:24 +0000</dc:date>
+  </metadata>
+  <g id="Canvas_3" stroke-dasharray="none" stroke-opacity="1" fill="none" fill-opacity="1" stroke="none">
+    <title>Canvas 3</title>
+    <rect fill="white" x="79" y="356" width="587" height="233"/>
+    <g id="Canvas_3: Layer 1">
+      <title>Layer 1</title>
+      <g id="Graphic_15">
+        <path d="M 93 437 L 329.5 437 L 329.5 579.5 L 93 579.5 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_11">
+        <title>Rectangle : Base3 background</title>
+        <path d="M 126.408 561.7 L 126.408 487.3 C 126.408 482.1664 166.1886 478 215.204 478 C 264.2194 478 304 482.1664 304 487.3 L 304 561.7 C 304 566.8336 264.2194 571 215.204 571 C 166.1886 571 126.408 566.8336 126.408 561.7" fill="#dc322f"/>
+        <path d="M 126.408 561.7 L 126.408 487.3 C 126.408 482.1664 166.1886 478 215.204 478 C 264.2194 478 304 482.1664 304 487.3 L 304 561.7 C 304 566.8336 264.2194 571 215.204 571 C 166.1886 571 126.408 566.8336 126.408 561.7 M 126.408 487.3 C 126.408 492.4336 166.1886 496.6 215.204 496.6 C 264.2194 496.6 304 492.4336 304 487.3" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(131.408 496)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="55.3" y="14">Database</tspan>
+        </text>
+      </g>
+      <g id="Graphic_10">
+        <title>Rectangle : Blue</title>
+        <path d="M 131.408 366.25 L 299 366.25 C 301.76142 366.25 304 368.48858 304 371.25 L 304 406.25 C 304 409.0114 301.76142 411.25 299 411.25 L 131.408 411.25 C 128.64658 411.25 126.408 409.0114 126.408 406.25 L 126.408 371.25 C 126.408 368.48858 128.64658 366.25 131.408 366.25 Z" fill="#268bd2"/>
+        <path d="M 131.408 366.25 L 299 366.25 C 301.76142 366.25 304 368.48858 304 371.25 L 304 406.25 C 304 409.0114 301.76142 411.25 299 411.25 L 131.408 411.25 C 128.64658 411.25 126.408 409.0114 126.408 406.25 L 126.408 371.25 C 126.408 368.48858 128.64658 366.25 131.408 366.25 Z" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(131.408 379.25)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="61.709" y="14">System</tspan>
+        </text>
+      </g>
+      <g id="Graphic_9">
+        <title>Rectangle : Base3 background</title>
+        <path d="M 546.2 518.5 L 643.8 518.5 C 650.5344 518.5 656 528.58 656 541 C 656 553.42 650.5344 563.5 643.8 563.5 L 546.2 563.5 C 539.4656 563.5 534 553.42 534 541 C 534 528.58 539.4656 518.5 546.2 518.5" fill="#dc322f"/>
+        <path d="M 546.2 518.5 L 643.8 518.5 C 650.5344 518.5 656 528.58 656 541 C 656 553.42 650.5344 563.5 643.8 563.5 L 546.2 563.5 C 539.4656 563.5 534 553.42 534 541 C 534 528.58 539.4656 518.5 546.2 518.5 M 643.8 518.5 C 637.0656 518.5 631.6 528.58 631.6 541 C 631.6 553.42 637.0656 563.5 643.8 563.5" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(572.5 531.5)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="3.0195" y="14">Queue</tspan>
+        </text>
+      </g>
+      <g id="Graphic_8">
+        <title>Accent Text : Violet</title>
+        <text transform="translate(231 441)" fill="#6c71c4">
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="12">publish </tspan>
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="28">event messages</tspan>
+        </text>
+      </g>
+      <g id="Graphic_7">
+        <title>Accent Text : Violet</title>
+        <text transform="translate(135.15846 441)" fill="#6c71c4">
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="12">persist</tspan>
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="28">business logic</tspan>
+        </text>
+      </g>
+      <g id="Line_6">
+        <line x1="173.84646" y1="411.25" x2="173.84646" y2="517.6" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_5">
+        <line x1="471.6929" y1="541" x2="524.1" y2="541" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_3">
+        <title>Heading : Body text</title>
+        <text transform="translate(93 416.25)" fill="#657b83">
+          <tspan font-family="Avenir Next" font-size="18" font-weight="700" fill="#657b83" x="0" y="18">Transactional</tspan>
+        </text>
+      </g>
+      <g id="Graphic_12">
+        <title>Rectangle : Base3 background</title>
+        <rect x="145.5" y="527.5" width="56.69291" height="27" fill="#fdf6e3"/>
+        <rect x="145.5" y="527.5" width="56.69291" height="27" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(150.5 528.72)" fill="#586e75">
+          <tspan font-family="Helvetica Neue" font-size="10" font-weight="400" fill="#586e75" x="3.5264565" y="10">business</tspan>
+          <tspan font-family="Helvetica Neue" font-size="10" font-weight="400" fill="#586e75" x="9.826457" y="22.28">tables</tspan>
+        </text>
+      </g>
+      <g id="Graphic_13">
+        <title>Rectangle : Base3 background</title>
+        <rect x="226" y="527.5" width="56.69291" height="27" fill="#fdf6e3"/>
+        <rect x="226" y="527.5" width="56.69291" height="27" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(231 528.72)" fill="#586e75">
+          <tspan font-family="Helvetica Neue" font-size="10" font-weight="400" fill="#586e75" x="11.121457" y="10">event</tspan>
+          <tspan font-family="Helvetica Neue" font-size="10" font-weight="400" fill="#586e75" x="9.826457" y="22.28">tables</tspan>
+        </text>
+      </g>
+      <g id="Line_14">
+        <line x1="254.34646" y1="411.25" x2="254.34646" y2="517.6" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_16">
+        <title>Rectangle : Green</title>
+        <path d="M 407 520 L 466.6929 520 C 469.45434 520 471.6929 522.2386 471.6929 525 L 471.6929 557 C 471.6929 559.7614 469.45434 562 466.6929 562 L 407 562 C 404.2386 562 402 559.7614 402 557 L 402 525 C 402 522.2386 404.2386 520 407 520 Z" fill="#859901"/>
+        <path d="M 407 520 L 466.6929 520 C 469.45434 520 471.6929 522.2386 471.6929 525 L 471.6929 557 C 471.6929 559.7614 469.45434 562 466.6929 562 L 407 562 C 404.2386 562 402 559.7614 402 557 L 402 525 C 402 522.2386 404.2386 520 407 520 Z" stroke="#657b83" stroke-linecap="round" stroke-linejoin="round" stroke-width=".75"/>
+        <text transform="translate(407 523)" fill="#fdf6e3">
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x="13.024457" y="14">Event</tspan>
+          <tspan font-family="PingFang SC" font-size="13" font-weight="400" fill="#fdf6e3" x=".6029565" y="32">Transport</tspan>
+        </text>
+      </g>
+      <g id="Line_17">
+        <line x1="282.6929" y1="541" x2="392.1" y2="541" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_18">
+        <title>Accent Text : Violet</title>
+        <text transform="translate(311.5 523.5)" fill="#6c71c4">
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="12">read message</tspan>
+        </text>
+      </g>
+      <g id="Graphic_19">
+        <title>Accent Text : Violet</title>
+        <text transform="translate(487.38846 523.5)" fill="#6c71c4">
+          <tspan font-family="Avenir Next" font-size="12" font-weight="400" fill="#6c71c4" x="0" y="12">push</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>
