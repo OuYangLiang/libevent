@@ -79,7 +79,7 @@ public void changePhoneNumber(String newNumber) {
 ### 一、如果定义事件
 
 |属性|字段|类型|说明
-|-|-|-|
+|-|-|-
 |唯一标识|id|string|每个事件都有一个全局唯一ID，UUID。
 |类型|eventType|string|数据发生变化产生事件，不同类型的数据变化产生不同类型的事件。比如会员下单、会员注册、用户修改手机号等等。
 |事件时间|eventTime|datetime|事件发生时间，即数据发生变化的时间。

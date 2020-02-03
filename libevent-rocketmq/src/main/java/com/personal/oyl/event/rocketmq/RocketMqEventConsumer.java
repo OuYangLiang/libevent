@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author OuYang Liang
@@ -37,8 +38,9 @@ public class RocketMqEventConsumer {
         consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_LAST_OFFSET);
         consumer.setInstanceName(RocketMqConfiguration.instance().getInstanceName());
 
-        // TODO foreach
-        consumer.subscribe(RocketMqConfiguration.instance().getConsumeTopic(), RocketMqConfiguration.instance().getConsumeTag());
+        for (Map.Entry<String, String> entry : RocketMqConfiguration.instance().getConsumeTopic().entrySet()) {
+            consumer.subscribe(entry.getKey(), entry.getValue());
+        }
         consumer.registerMessageListener(
             (List<MessageExt> msgs, ConsumeOrderlyContext context) -> {
                 for (MessageExt msg : msgs) {
