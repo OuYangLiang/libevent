@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -66,12 +68,15 @@ public class RocketMqConfiguration {
         return Integer.parseInt(p.getProperty("event.rocketmq.broker.produce.topic.partitions"));
     }
 
-    public String getConsumeTopic() {
-        return p.getProperty("event.rocketmq.broker.consume.topic");
-    }
-
-    public String getConsumeTag() {
-        return p.getProperty("event.rocketmq.broker.consume.topic.tag");
+    public Map<String, String> getConsumeTopic() {
+        String str = p.getProperty("event.rocketmq.broker.consume.topic");
+        Map<String, String> rlt = new HashMap<>();
+        String[] parts = str.trim().split(",");
+        for (String part : parts) {
+            String[] subPart = part.trim().split(":");
+            rlt.put(subPart[0].trim(), subPart[1].trim());
+        }
+        return rlt;
     }
 
     public String getConsumerGroup() {
