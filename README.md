@@ -1,4 +1,3 @@
-
 ## 背景
 
 事件驱动是一种灵活的系统设计方法，在事件驱动的系统中，当数据发生变化时系统会产生、发布一个对应的事件，其它对这个事件感兴趣的部分会接收到通知，并进行相应的处理。事件驱动设计最大的好处在我看来有两点：一是它为系统提供了很好的扩展能力，比如我们可以对某类事件增加一个订阅者来对系统进行扩展，最主要的是我们并不需要修改任何已有的代码，它完全符合开闭原则；二是它实现了模块间的低偶合，系统间各个部分不是强依赖关系，而是通过事件把整个系统串联起来。
@@ -31,14 +30,14 @@ public void changePhoneNumber(String newNumber) {
 
 系统业务数据通常是保存在数据库中，而事件消息大部分情况是通过消息队列同队给下游消费者系统。问题在于我们没有办法保证数据库和消息队列之间的数据强一致性，他们是两个不同的异构系统，如下图所示：
 
-![The Problem](doc/pic/1.svg)
+![The Problem](http://ouyblog.com/pic/kafka-eventdriven/new/1.svg)
 
 
 ## libevent 简介
 
 我们采用简单易懂的方式来解决上面的问题，引入一张DB事件表，在发布事件时将事件信息存入这个事件表，将事件的发布和业务处理包装在同一个本地事务中，再异步轮询事件表将消息写入队列中，如下所示：
 
-![The Principle](doc/pic/2.svg)
+![The Principle](http://ouyblog.com/pic/kafka-eventdriven/new/2.svg)
 
 但是，只有一个事件表，会有一些问题。如果系统的负载很高，单位时间内产生大量的事件，那Event Transport(线程)就会成为瓶颈，系统集群中只有一个实例在发辉作用，无法实现弹性。为了解决这个问题，我们引入多个事件分表，并使用多线程并发处理，这些线程可以分布在不同的集群实例中。
 
@@ -54,15 +53,15 @@ public void changePhoneNumber(String newNumber) {
 
 我们将系统分为两个角色：Master和Worker。Worker负责执行任务（把对应事件分表中的事件信息推送到消息队列）；而Master负责分配任务给Worker，同时监听Worker的存活情况发起负载均衡。为此，我们引入对Zookeeper的依赖，所下所示：
 
-![Zookeeper znode design](doc/pic/3.svg)
+![Zookeeper znode design](http://ouyblog.com/pic/kafka-eventdriven/new/3.svg)
 
 从事件发布的角度来看，整体架构是这样的：
 
-![Arch of publish event](doc/pic/4.svg)
+![Arch of publish event](http://ouyblog.com/pic/kafka-eventdriven/new/4.svg)
 
 事件的消费者既可以是发布者自己，也可以是任意其它服务。比如在CRM任务工作台上，销费人员与客户电话沟通后会填写一个小结单，系统会更新当前任务项的状态、同步ES，并根据填写内容判断是否自动为销售生成一个报单，这样一个场景的数据流图可以这样设计：
 
-![A sample](doc/pic/5.svg)
+![A sample](http://ouyblog.com/pic/kafka-eventdriven/new/5.svg)
 
 ## Features & Important Notes
 
@@ -76,16 +75,35 @@ public void changePhoneNumber(String newNumber) {
 
 ## 核心概念说明
 
-### 一、如果定义事件
+### 一、如何定义事件
 
-|属性|字段|类型|说明
-|-|-|-
-|唯一标识|id|string|每个事件都有一个全局唯一ID，UUID。
-|类型|eventType|string|数据发生变化产生事件，不同类型的数据变化产生不同类型的事件。比如会员下单、会员注册、用户修改手机号等等。
-|事件时间|eventTime|datetime|事件发生时间，即数据发生变化的时间。
-|上下文|context|string|事件发生时的上下文信息。比如会员修改手机号事件，需要原号码和新号码，会员ID等信息。
+在libevent中，事件由Event对象表示：
 
+```java
+public class Event {
+    private String eventId;
+    private String eventType;
+    private Date eventTime;
+    private String context;
+    // setters and getters
+}
+```
 
+* eventId
+
+  每个事件都有一个全局唯一ID，通过UUID自动生成。
+
+* eventType
+
+  事件类型，数据发生变化产生事件，不同类型的数据变化产生不同类型的事件。比如会员下单、会员注册、用户修改手机号等等。
+
+* eventTime
+
+  事件发生时间，即数据发生变化的时间。
+
+* context
+
+  事件发生时的上下文信息。比如会员修改手机号事件，需要原号码和新号码，会员ID等信息。可以是任何格式（如json），消费者必须理解如何解析context获取事件内容。
 
 ## 如何接入 libevent
 
