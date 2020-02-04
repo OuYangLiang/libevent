@@ -26,46 +26,51 @@ public class Instance {
         return eventTransportMgr;
     }
 
-    public void go() throws InterruptedException, IOException, KeeperException {
+    public void go() throws LibeventException {
 
         String instanceId = JupiterConfiguration.instance().uuid();
         log.info("Instance with id [" + instanceId + "] ready to start ......");
 
 
-        zkInstance.initConnection(this);
-
         try {
-            zkInstance.createRoot(JupiterConfiguration.instance().getNameSpace());
-        } catch (KeeperException e) {
-            if (!e.code().equals(KeeperException.Code.NODEEXISTS)) {
-                throw e;
+            zkInstance.initConnection(this);
+        } catch (InterruptedException | IOException e) {
+            throw new LibeventException(e);
+        }
+
+        this.ensureExist(JupiterConfiguration.instance().getNameSpace());
+        this.ensureExist(JupiterConfiguration.instance().getWorkerNode());
+
+        String assignment = null;
+        try {
+            zkInstance.createWorkNode(JupiterConfiguration.instance().getWorkerNode(instanceId));
+            log.info("Worker znode created successfully ......");
+
+            assignment = zkInstance.getContent(JupiterConfiguration.instance().getWorkerNode(instanceId), workWatcher);
+        } catch (KeeperException | InterruptedException e) {
+            if (!(e instanceof KeeperException.NodeExistsException)) {
+                throw new LibeventException(e);
             }
         }
 
-        try {
-            zkInstance.createRoot(JupiterConfiguration.instance().getWorkerNode());
-        } catch (KeeperException e) {
-            if (!e.code().equals(KeeperException.Code.NODEEXISTS)) {
-                throw e;
-            }
-        }
-
-        zkInstance.createWorkNode(JupiterConfiguration.instance().getWorkerNode(instanceId));
-        log.info("Worker znode created successfully ......");
-
-        String assignment = zkInstance.getContent(JupiterConfiguration.instance().getWorkerNode(instanceId), workWatcher);
         if (null != assignment && !assignment.trim().isEmpty()) {
             this.eventTransportMgr.assign(assignment.trim());
         }
 
-        // blocking operation
-        log.info("Start to lock master ....");
-        if (zkInstance.lock(instanceId, JupiterConfiguration.instance().getMasterNode())) {
-            log.info("Now it is the master server...");
-            log.info("perform the first check of the assignment, invoke method onChange()...");
-            InstanceListener instanceListener = new InstanceListener(zkInstance);
-            instanceListener.onChange();
-        }
+        new Thread(() -> {
+            try {
+                // blocking operation
+                log.info("Start to lock master ....");
+                if (zkInstance.lock(instanceId, JupiterConfiguration.instance().getMasterNode())) {
+                    log.info("Now it is the master server...");
+                    log.info("perform the first check of the assignment, invoke method onChange()...");
+                    InstanceListener instanceListener = new InstanceListener(zkInstance);
+                    instanceListener.onChange();
+                }
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
+        }).start();
     }
 
     public void shutdown() {
@@ -90,4 +95,15 @@ public class Instance {
             log.error(e.getMessage(), e);
         }
     };
+
+    private void ensureExist(String znode) throws LibeventException {
+        try {
+            zkInstance.createRoot(znode);
+        } catch (KeeperException | InterruptedException e) {
+            if (!(e instanceof KeeperException.NodeExistsException)) {
+                throw new LibeventException(e);
+            }
+        }
+    }
+
 }
