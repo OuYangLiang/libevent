@@ -191,7 +191,7 @@ event.kafka.broker.consume.topics=event_topic_a,event_topic_b
 
 #### Step 4b: 使用Rocket MQ作为消息媒介
 
-如果使用Kafka作为消息媒介，需要引入libevent-rocketmq依赖：
+如果使用Rocket MQ作为消息媒介，需要引入libevent-rocketmq依赖：
 
 ```xml
 <dependency>
