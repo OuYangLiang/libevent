@@ -2,6 +2,8 @@ package com.personal.oyl.event.jupiter;
 
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.Watcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -9,41 +11,86 @@ import java.util.*;
  * @author OuYang Liang
  */
 public class InstanceListener {
-
+    private static final Logger log = LoggerFactory.getLogger(InstanceListener.class);
     private ZkInstance zkInstance;
 
     public InstanceListener(ZkInstance zkInstance) {
         this.zkInstance = zkInstance;
     }
 
-    public void onChange() throws InterruptedException, KeeperException {
-        List<String> workerList = zkInstance.getChildren(JupiterConfiguration.instance().getWorkerNode(), (event) -> {
-            if (event.getType().equals(Watcher.Event.EventType.NodeChildrenChanged)) {
-                try {
-                    this.onChange();
-                } catch (Exception e) {
-                    // log.error(e.getMessage(), e);
-                }
-            }
-        });
+    public void onChange() throws LibeventException {
+        List<String> workerList = this.getWorkers();
         List<Holder> holders = new LinkedList<>();
         Set<Integer> assigned = new HashSet<>();
+
         for (String worker : workerList) {
             Holder holder = new Holder();
-            String content = zkInstance.getContent(JupiterConfiguration.instance().getWorkerNode() + JupiterConfiguration.SEPARATOR + worker, null);
+            String assignment = this.getAssignment(worker);
             holder.node = worker;
-            holder.setAssigned(content);
+            holder.setAssigned(assignment);
             holders.add(holder);
             assigned.addAll(holder.assigned);
         }
 
-        JupiterConfiguration.instance().getTables().forEach((t) -> {
-            if (!assigned.contains(t)) {
-                holders.sort(Comparator.comparing(Holder::payload));
-                holders.get(0).addAssigned(t);
-            }
-        });
+        JupiterConfiguration.instance()
+                .getTables().stream()
+                .filter(t -> !assigned.contains(t))
+                .forEach(t -> this.assign(t, holders));
 
+        this.balance(holders);
+        for (Holder holder : holders) {
+            if (holder.affected) {
+                this.save(holder);
+            }
+        }
+    }
+
+    private List<String> getWorkers() throws LibeventException {
+        try {
+            return zkInstance.getChildren(JupiterConfiguration.instance().getWorkerNode(), (event) -> {
+                if (event.getType().equals(Watcher.Event.EventType.NodeChildrenChanged)) {
+                    try {
+                        this.onChange();
+                    } catch (Exception e) {
+                        log.error(e.getMessage(), e);
+                    }
+                }
+            });
+        } catch (KeeperException | InterruptedException e) {
+            throw new LibeventException(e);
+        }
+    }
+
+    private String getAssignment(String worker) throws LibeventException {
+        try {
+            return zkInstance.getContent(JupiterConfiguration.instance().getWorkerNode() + JupiterConfiguration.SEPARATOR + worker, null);
+        } catch (KeeperException | InterruptedException e) {
+            throw new LibeventException(e);
+        }
+    }
+
+    private void assign(int tbIdx, List<Holder> holders) {
+        holders.sort(Comparator.comparing(Holder::payload));
+        holders.get(0).addAssigned(tbIdx);
+    }
+
+    private void save(Holder holder) throws LibeventException {
+        try {
+            zkInstance.setContent(JupiterConfiguration.instance().getWorkerNode() + JupiterConfiguration.SEPARATOR + holder.node,
+                    holder.assignedString());
+        } catch (KeeperException e) {
+            if (e instanceof KeeperException.NoNodeException) {
+                // 可能发生NONODE异常，这不是问题。
+                // NONODE意味着某个Worker下线了，Master会收到通知，并重新进行分配。
+                return;
+            }
+            throw new LibeventException(e);
+        } catch (InterruptedException e) {
+            throw new LibeventException(e);
+        }
+    }
+
+    private void balance(List<Holder> holders) {
         int lastIdx = holders.size() - 1;
         while (true) {
             holders.sort(Comparator.comparing(Holder::payload));
@@ -56,22 +103,6 @@ public class InstanceListener {
             }
 
             break;
-        }
-
-        for (Holder holder : holders) {
-            if (holder.affected) {
-                try{
-                    zkInstance.setContent(JupiterConfiguration.instance().getWorkerNode() + JupiterConfiguration.SEPARATOR + holder.node,
-                            holder.assignedString());
-                } catch(KeeperException e){
-                    if (e instanceof KeeperException.NoNodeException) {
-                        // 可能发生NONODE异常，这不是问题。
-                        // NONODE意味着某个Worker下线了，Master会收到通知，并重新进行分配。
-                        return;
-                    }
-                    throw e;
-                }
-            }
         }
     }
 
@@ -94,12 +125,12 @@ public class InstanceListener {
             return this.assigned.remove(0);
         }
 
-        public void setAssigned(String nodeContent) {
-            if (null == nodeContent || nodeContent.trim().isEmpty()) {
+        public void setAssigned(String assignment) {
+            if (null == assignment || assignment.trim().isEmpty()) {
                 return;
             }
 
-            String[] parts = nodeContent.trim().split(JupiterConfiguration.GROUP_SEPARATOR);
+            String[] parts = assignment.trim().split(JupiterConfiguration.GROUP_SEPARATOR);
             for (String part : parts) {
                 assigned.add(Integer.valueOf(part.trim()));
             }

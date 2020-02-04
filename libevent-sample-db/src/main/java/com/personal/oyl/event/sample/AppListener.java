@@ -4,7 +4,7 @@ import com.personal.oyl.event.EventSubscriber;
 import com.personal.oyl.event.SubscriberConfig;
 import com.personal.oyl.event.jupiter.EventTransportMgr;
 import com.personal.oyl.event.jupiter.Instance;
-import org.apache.zookeeper.KeeperException;
+import com.personal.oyl.event.jupiter.LibeventException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
@@ -12,7 +12,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 
 /**
  * @author OuYang Liang
@@ -41,7 +40,7 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
             Instance instance = new Instance(eventTransportMgr);
             try {
                 instance.go();
-            } catch (IOException | KeeperException | InterruptedException e) {
+            } catch (LibeventException e) {
                 log.error(e.getMessage(), e);
             }
 

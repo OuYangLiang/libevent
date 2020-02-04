@@ -1,6 +1,8 @@
 package com.personal.oyl.event.jupiter;
 
 import com.personal.oyl.event.Event;
+import com.personal.oyl.event.EventMapper;
+import com.personal.oyl.event.EventPusher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,12 +17,14 @@ public class EventTransport implements Runnable {
     private static final Logger log = LoggerFactory.getLogger(EventTransport.class);
 
     private int tbNum;
-    private EventTransportMgr manager;
+    private EventMapper mapper;
+    private EventPusher pusher;
 
 
-    public EventTransport(int tbNum, EventTransportMgr manager) {
+    public EventTransport(int tbNum, EventMapper mapper, EventPusher pusher) {
         this.tbNum = tbNum;
-        this.manager = manager;
+        this.mapper = mapper;
+        this.pusher = pusher;
     }
 
     @Override
@@ -29,7 +33,7 @@ public class EventTransport implements Runnable {
         while (!Thread.currentThread().isInterrupted()) {
             List<Event> events = null;
             try {
-                events = this.manager.getMapper().queryTopN(tbNum, 100);
+                events = this.mapper.queryTopN(tbNum, 100);
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
             }
@@ -43,14 +47,14 @@ public class EventTransport implements Runnable {
             } else {
                 List<String> successIds = null;
                 try {
-                    successIds = this.manager.getPusher().push(tbNum, events);
+                    successIds = this.pusher.push(tbNum, events);
                 } catch (Exception e) {
                     log.error(e.getMessage(), e);
                 }
 
                 if (null != successIds && !successIds.isEmpty()) {
                     try {
-                        this.manager.getMapper().batchClean(tbNum, successIds);
+                        this.mapper.batchClean(tbNum, successIds);
                     } catch (Exception e) {
                         log.error(e.getMessage(), e);
                     }

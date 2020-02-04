@@ -35,7 +35,7 @@ public class EventTransportMgr {
         for (String part : parts) {
             int n = Integer.parseInt(part.trim());
             log.info("Starting EventTransport thread for table {} ...", n);
-            Thread submitThread = new Thread(new EventTransport(n, this));
+            Thread submitThread = new Thread(new EventTransport(n, this.mapper, this.pusher));
             submitThread.start();
             currentRunning.put(n, submitThread);
             chargingTables.add(n);
@@ -48,7 +48,7 @@ public class EventTransportMgr {
             log.info("Resuming all EventTransport threads ...");
             for (int n : chargingTables) {
                 log.info("Resuming EventTransport thread for table {} ...", n);
-                Thread submitThread = new Thread(new EventTransport(n, this));
+                Thread submitThread = new Thread(new EventTransport(n, this.mapper, this.pusher));
                 submitThread.start();
                 currentRunning.put(n, submitThread);
             }
