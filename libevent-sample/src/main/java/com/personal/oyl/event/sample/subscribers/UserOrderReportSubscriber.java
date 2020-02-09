@@ -38,29 +38,28 @@ public class UserOrderReportSubscriber implements EventSubscriber {
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     @Override
     public void onEvent(Event e) {
-        
-        try {
-            Order order = Order.fromJson(e.getContext());
+        Order order = Order.fromJson(e.getContext());
+        while (true) {
             UserOrderReport report = orderRepos.selectUserOrderReportByKey(order.getUserId());
-            
+
             if (null == report) {
                 report = new UserOrderReport();
                 report.setUserId(order.getUserId());
+                report.setOrderNum(0L);
+                report.setOrderTotal(0L);
+
+                try {
+                    orderRepos.createUserOrderReport(report);
+                } catch (DuplicateKeyException ex) {
+                    log.warn("Duplicated message " + eventSerde.toJson(e));
+                }
+            } else {
                 report.setOrderNum(1L);
                 report.setOrderTotal(Long.valueOf(order.getOrderAmount()));
 
-                orderRepos.createUserOrderReport(report);
-            } else {
-                report.setOrderNum(report.getOrderNum() + 1);
-                report.setOrderTotal(report.getOrderTotal() + order.getOrderAmount());
-
                 orderRepos.updateUserOrderReport(report);
+                break;
             }
-            
-        } catch (DuplicateKeyException ex) {
-            log.warn("Duplicated message " + eventSerde.toJson(e));
         }
-        
     }
-
 }

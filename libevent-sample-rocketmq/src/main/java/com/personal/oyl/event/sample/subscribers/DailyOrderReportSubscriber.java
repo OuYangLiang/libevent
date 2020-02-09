@@ -38,29 +38,27 @@ public class DailyOrderReportSubscriber implements EventSubscriber {
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
     @Override
     public void onEvent(Event e) {
-        
-        try {
-            Order order = Order.fromJson(e.getContext());
+        Order order = Order.fromJson(e.getContext());
+        while (true) {
             DailyOrderReport report = repos.selectDailyOrderReportByKey(new java.sql.Date(order.getOrderTime().getTime()));
-            
             if (null == report) {
                 report = new DailyOrderReport();
                 report.setDay(new java.sql.Date(order.getOrderTime().getTime()));
+                report.setOrderNum(0L);
+                report.setOrderTotal(0L);
+
+                try {
+                    repos.createDailyOrderReport(report);
+                } catch (DuplicateKeyException ex) {
+                    log.warn("Duplicated message " + eventSerde.toJson(e));
+                }
+            } else {
                 report.setOrderNum(1L);
                 report.setOrderTotal(Long.valueOf(order.getOrderAmount()));
-                
-                repos.createDailyOrderReport(report);
-            } else {
-                report.setOrderNum(report.getOrderNum() + 1);
-                report.setOrderTotal(report.getOrderTotal() + order.getOrderAmount());
-                
-                repos.updateDailyOrderReport(report);
-            }
-            
-        } catch (DuplicateKeyException ex) {
-            log.warn("Duplicated message " + eventSerde.toJson(e));
-        }
-        
-    }
 
+                repos.updateDailyOrderReport(report);
+                break;
+            }
+        }
+    }
 }
