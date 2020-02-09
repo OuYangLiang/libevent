@@ -1,5 +1,6 @@
 package com.personal.oyl.event.sample;
 
+import com.personal.oyl.event.EventReceiver;
 import com.personal.oyl.event.EventSerde;
 import com.personal.oyl.event.EventSubscriber;
 import com.personal.oyl.event.SubscriberConfig;
@@ -34,6 +35,9 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
     @Resource
     private EventSerde eventSerde;
 
+    @Resource
+    private EventReceiver eventReceiver;
+
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -43,7 +47,7 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
             SubscriberConfig.instance().addSubscriber("o_c", dailyOrderReportSubscriber);
             SubscriberConfig.instance().addSubscriber("o_c", userOrderReportSubscriber);
 
-            KafkaEventConsumer kafkaEventConsumer = new KafkaEventConsumer(eventSerde);
+            KafkaEventConsumer kafkaEventConsumer = new KafkaEventConsumer(eventSerde, eventReceiver);
             Thread consumeThread = new Thread(kafkaEventConsumer);
             consumeThread.start();
 

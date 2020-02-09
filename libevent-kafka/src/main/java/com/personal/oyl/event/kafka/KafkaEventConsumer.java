@@ -19,9 +19,11 @@ public class KafkaEventConsumer implements Runnable {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaEventConsumer.class);
     private EventSerde eventSerde;
+    private EventReceiver eventReceiver;
 
-    public KafkaEventConsumer(EventSerde eventSerde) {
+    public KafkaEventConsumer(EventSerde eventSerde, EventReceiver eventReceiver) {
         this.eventSerde = eventSerde;
+        this.eventReceiver = eventReceiver;
     }
 
     private KafkaConsumer<String, String> consumer;
@@ -51,7 +53,7 @@ public class KafkaEventConsumer implements Runnable {
                     }
 
                     if (null != event) {
-                        EventReceiver.instance().onEvent(event);
+                        this.eventReceiver.onEvent(event);
                     }
                 }
 

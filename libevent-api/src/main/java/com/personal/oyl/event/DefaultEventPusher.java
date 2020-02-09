@@ -7,12 +7,19 @@ import java.util.List;
  * @author OuYang Liang
  */
 public class DefaultEventPusher implements EventPusher {
+
+    private EventReceiver eventReceiver;
+
+    public DefaultEventPusher(EventReceiver eventReceiver) {
+        this.eventReceiver = eventReceiver;
+    }
+
     @Override
     public List<String> push(int tbNum, List<Event> events) {
         List<String> eventIds = new LinkedList<>();
 
         for (Event event : events) {
-            EventReceiver.instance().onEvent(event);
+            this.eventReceiver.onEvent(event);
             eventIds.add(event.getEventId());
         }
 

@@ -23,9 +23,11 @@ public class RocketMqEventConsumer {
     private static final Logger log = LoggerFactory.getLogger(RocketMqEventConsumer.class);
     private EventSerde eventSerde;
     private DefaultMQPushConsumer consumer;
+    private EventReceiver eventReceiver;
 
-    public RocketMqEventConsumer(EventSerde eventSerde) {
+    public RocketMqEventConsumer(EventSerde eventSerde, EventReceiver eventReceiver) {
         this.eventSerde = eventSerde;
+        this.eventReceiver = eventReceiver;
     }
 
     public void start() throws MQClientException {
@@ -61,7 +63,7 @@ public class RocketMqEventConsumer {
                     }
 
                     if (null != event) {
-                        EventReceiver.instance().onEvent(event);
+                        this.eventReceiver.onEvent(event);
                     }
                 }
 
