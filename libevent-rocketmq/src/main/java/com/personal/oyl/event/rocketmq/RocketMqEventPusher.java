@@ -69,7 +69,6 @@ public class RocketMqEventPusher implements EventPusher {
                 break;
             }
 
-            eventIds.add(event.getEventId());
         }
 
         return eventIds;
