@@ -28,13 +28,18 @@ public class AppConfiguration {
     }
 
     @Bean
+    public EventReceiver eventReceiver(EventMapper eventMapper) {
+        return new EventReceiver(eventMapper);
+    }
+
+    @Bean
     public EventPublisher eventPublisher(EventMapper eventMapper) {
         return new EventPublisher(eventMapper);
     }
 
     @Bean
-    public EventPusher eventPusher() {
-        return new DefaultEventPusher();
+    public EventPusher eventPusher(EventReceiver eventReceiver) {
+        return new DefaultEventPusher(eventReceiver);
     }
 
     @Bean

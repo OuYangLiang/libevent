@@ -57,16 +57,10 @@ public class DailyOrderReportSubscriber implements EventSubscriber {
                 repos.updateDailyOrderReport(report);
             }
             
-            eventMapper.archive(this.id(), e);
         } catch (DuplicateKeyException ex) {
             log.warn("Duplicated message " + eventSerde.toJson(e));
         }
         
-    }
-
-    @Override
-    public String id() {
-        return "000000000002";
     }
 
 }

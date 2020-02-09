@@ -236,6 +236,10 @@ event.rocketmq.instance=DEFAULT
 
   用于Event的事件消息的持久化；从数据库获取消息并发送给消息媒介，并清理成功处理的消息。
 
+* EventReceiver
+
+  从队列接收到事件消息后，根据事件类型通知各个订阅者，并提供失败重试和故障记录。
+
 * EventPublisher
 
   EventPublisher用于发布事件，如:
@@ -284,6 +288,11 @@ public class AppConfiguration {
     }
 
     @Bean
+    public EventReceiver eventReceiver(EventMapper eventMapper) {
+        return new EventReceiver(eventMapper);
+    }
+
+    @Bean
     public EventPublisher eventPublisher(EventMapper eventMapper) {
         return new EventPublisher(eventMapper);
     }
@@ -321,6 +330,9 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
     @Resource
     private EventSerde eventSerde;
 
+    @Resource
+    private EventReceiver eventReceiver;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (event.getApplicationContext().getParent() == null) {
@@ -329,7 +341,7 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
             SubscriberConfig.instance().addSubscriber("o_c", dailyOrderReportSubscriber);
             SubscriberConfig.instance().addSubscriber("o_c", userOrderReportSubscriber);
 
-            RocketMqEventConsumer eventConsumer = new RocketMqEventConsumer(eventSerde);
+            RocketMqEventConsumer eventConsumer = new RocketMqEventConsumer(eventSerde, eventReceiver);
             try {
                 eventConsumer.start();
             } catch (MQClientException e) {
@@ -356,6 +368,16 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
 
 注意：建议加上shutdown沟子，及时断开与Zookeeper的链接，有利于服务稳定和及时让Master感知和触发rebalance。
 
+## 关于事件的消费
+
+事件订阅需要实现`EventSubscriber`接口，核心逻辑实现在`EventSubscriber#onEvent`方法中。在系统启动时，可以通过`SubscriberConfig#addSubscriber`方法添加订阅者，相关类图结构如下所示：
+
+![EventSubscribers](http://ouyblog.com/pic/kafka-eventdriven/new/6.svg)
+
+通常，我们在实现一个Kafka Consumer或Rocket MQ Consumer时，我们可以在业务处理成功后再提交offset，当业务处理失败了（比如网络超时、第三方接口短时间故障等）可以从队列中重新拉取消息继续尝试。但是libevent是一个基于事件的框架，一个事件（一条消息）可以被多个订阅者同时订阅，因为一个订阅者没有成功处理，让所有订阅者都重新触发或长时间阻塞明显不合理。
+
+为了解决这个问题，当EventSubscriber#onEvent抛出异常，libevent会进行两次重试，如果重试失败了，libevent会记录这次消费失败信息到表XXXX中。通过`EventSubscriber#id`方法为每个订阅者提通一个唯一的标识符，用于事件消费失败后明确是哪个订阅者没有处理成功。
+
 ## Samples
 
-源码中已经提供了基于Kafka、Rocket MQ和本地数据库的完整例子，分配在对应的sample工程中。
+源码中已经提供了基于Kafka、Rocket MQ和本地数据库的完整例子，分别在对应的sample工程中。

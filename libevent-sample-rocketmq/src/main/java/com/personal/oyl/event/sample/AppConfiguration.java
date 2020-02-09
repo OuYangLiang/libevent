@@ -1,9 +1,6 @@
 package com.personal.oyl.event.sample;
 
-import com.personal.oyl.event.EventMapper;
-import com.personal.oyl.event.EventPublisher;
-import com.personal.oyl.event.EventPusher;
-import com.personal.oyl.event.EventSerde;
+import com.personal.oyl.event.*;
 import com.personal.oyl.event.jupiter.EventTransportMgr;
 import com.personal.oyl.event.rocketmq.RocketMqEventPusher;
 import com.personal.oyl.event.sample.order.*;
@@ -29,6 +26,11 @@ public class AppConfiguration {
         factory.setSqlSessionFactory(sqlSessionFactory);
         factory.setMapperInterface(EventMapper.class);
         return factory.getObject();
+    }
+
+    @Bean
+    public EventReceiver eventReceiver(EventMapper eventMapper) {
+        return new EventReceiver(eventMapper);
     }
 
     @Bean

@@ -41,20 +41,22 @@
             #{item}
         </foreach>
     </delete>
-    
-    <insert id="archive">
-        insert into event_history(
+
+    <insert id="fail">
+        insert into event_failed(
             event_id,
             subscriber_id,
             event_type,
             event_time,
-            context
+            context,
+            err_message
         ) values (
             #{param2.eventId,jdbcType=VARCHAR},
             #{param1,jdbcType=VARCHAR},
             #{param2.eventType,jdbcType=VARCHAR},
             #{param2.eventTime,jdbcType=TIMESTAMP},
-            #{param2.context,jdbcType=VARCHAR}
+            #{param2.context,jdbcType=VARCHAR},
+            #{param3,jdbcType=VARCHAR}
         )
     </insert>
     
