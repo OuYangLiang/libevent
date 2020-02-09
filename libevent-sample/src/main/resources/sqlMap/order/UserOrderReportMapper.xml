@@ -32,8 +32,8 @@
     
     <update id="update" parameterType="com.personal.oyl.event.sample.order.UserOrderReport">
         update `user_order_report` set
-        order_num = #{orderNum,jdbcType=DECIMAL},
-        order_total =  #{orderTotal,jdbcType=DECIMAL}
+        order_num = order_num + #{orderNum,jdbcType=DECIMAL},
+        order_total = order_total + #{orderTotal,jdbcType=DECIMAL}
         where user_id = #{userId,jdbcType=DECIMAL}
     </update>
 
