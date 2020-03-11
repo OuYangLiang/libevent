@@ -23,10 +23,19 @@ public final class EventReceiver {
             List<EventSubscriber> subs = SubscriberConfig.instance().getSubscribers(event.getEventType());
             if (null != subs && !subs.isEmpty()) {
                 for (EventSubscriber sub : subs) {
+                    if (eventMapper.isDuplicated(event.getEventId(), sub.id())) {
+                        continue;
+                    }
+
                     int i = 0;
                     while (true) {
                         try {
                             sub.onEvent(event);
+                            try {
+                                eventMapper.markProcessed(event.getEventId(), sub.id());
+                            } catch (Exception e) {
+                                // ignore
+                            }
                             break;
                         } catch (Exception e) {
                             i++;

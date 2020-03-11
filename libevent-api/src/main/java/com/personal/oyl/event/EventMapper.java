@@ -13,4 +13,8 @@ public interface EventMapper {
     void batchClean(int tbNum, List<String> eventIds);
 
     void fail(String subscriberId, Event event, String error);
+
+    boolean isDuplicated(String eventId, String subId);
+
+    void markProcessed(String eventId, String subId);
 }
