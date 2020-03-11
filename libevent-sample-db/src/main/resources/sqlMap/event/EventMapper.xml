@@ -59,5 +59,21 @@
             #{param3,jdbcType=VARCHAR}
         )
     </insert>
-    
+
+    <insert id="markProcessed">
+        insert into event_processed(
+            event_id,
+            subscriber_id
+        ) values (
+            #{param1,jdbcType=VARCHAR},
+            #{param2,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <select id="isDuplicated" resultType="boolean">
+        select count(*)
+        from event_processed
+        where event_id = #{param1,jdbcType=VARCHAR} and subscriber_id = #{param2,jdbcType=VARCHAR}
+    </select>
+
 </mapper>

@@ -90,3 +90,13 @@ create table if not exists `event_failed` (
   primary key (`id`),
   unique key(`event_id`, `subscriber_id`)
 ) engine=innodb default charset=utf8 comment='事件错误表';
+
+create table if not exists `event_processed`
+(
+    `id`            bigint          not null auto_increment comment '主键',
+    `event_id`      char(32)        not null comment '事件id',
+    `subscriber_id` varchar(200)    not null comment '订阅者id',
+    `create_time`   datetime        not null default current_timestamp comment '创建时间',
+    primary key (`id`),
+    unique key (`event_id`, `subscriber_id`)
+) engine = innodb default charset = utf8 comment ='已处理事件表';
