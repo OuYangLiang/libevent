@@ -56,15 +56,15 @@ public final class JupiterConfiguration {
     }
     
     public String getNameSpace() {
-        return p.getProperty("event.zookeeper.namespace");
+        return p.getProperty("event.zookeeper.namespace", "/root");
     }
     
     public String getMasterNode() {
-        return this.getNameSpace() + SEPARATOR + p.getProperty("event.zookeeper.master.node");
+        return this.getNameSpace() + SEPARATOR + p.getProperty("event.zookeeper.master.node", "master");
     }
     
     public String getWorkerNode() {
-        return this.getNameSpace() + SEPARATOR + p.getProperty("event.zookeeper.worker.root.node");
+        return this.getNameSpace() + SEPARATOR + p.getProperty("event.zookeeper.worker.root.node", "workers");
     }
     
     public String getWorkerNode(String clientId) {
@@ -72,15 +72,15 @@ public final class JupiterConfiguration {
     }
     
     public String getZkAddrs() {
-        return p.getProperty("event.zookeeper.address");
+        return p.getProperty("event.zookeeper.address", "localhost:2181");
     }
     
     public int getSessionTimeout() {
-        return Integer.parseInt(p.getProperty("event.zookeeper.session.timeout"));
+        return Integer.parseInt(p.getProperty("event.zookeeper.session.timeout", "15000"));
     }
     
     public int getNumOfEventTables() {
-        return Integer.parseInt(p.getProperty("event.number.event.tables"));
+        return Integer.parseInt(p.getProperty("event.number.event.tables", "8"));
     }
     
     public Set<Integer> getTables() {

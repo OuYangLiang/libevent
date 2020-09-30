@@ -49,27 +49,27 @@ public class RocketMqConfiguration {
     }
 
     public String getNamesrvAddr() {
-        return p.getProperty("event.rocketmq.nameserver.address");
+        return p.getProperty("event.rocketmq.nameserver.address", "localhost:9876");
     }
 
     public String getProduceGroup() {
-        return p.getProperty("event.rocketmq.broker.produce.group");
+        return p.getProperty("event.rocketmq.broker.produce.group", "EventDrivenProducer");
     }
 
     public String getProduceTopic() {
-        return p.getProperty("event.rocketmq.broker.produce.topic");
+        return p.getProperty("event.rocketmq.broker.produce.topic", "event_topic");
     }
 
     public String getProduceTag() {
-        return p.getProperty("event.rocketmq.broker.produce.topic.tag");
+        return p.getProperty("event.rocketmq.broker.produce.topic.tag", "tag");
     }
 
     public int getProduceTopicPartitions() {
-        return Integer.parseInt(p.getProperty("event.rocketmq.broker.produce.topic.partitions"));
+        return Integer.parseInt(p.getProperty("event.rocketmq.broker.produce.topic.partitions", "4"));
     }
 
     public Map<String, String> getConsumeTopic() {
-        String str = p.getProperty("event.rocketmq.broker.consume.topic");
+        String str = p.getProperty("event.rocketmq.broker.consume.topic", "event_topic_1:tag,event_topic_2:tag");
         Map<String, String> rlt = new HashMap<>();
         String[] parts = str.trim().split(",");
         for (String part : parts) {
@@ -80,15 +80,15 @@ public class RocketMqConfiguration {
     }
 
     public String getConsumerGroup() {
-        return p.getProperty("event.rocketmq.consumer.group");
+        return p.getProperty("event.rocketmq.consumer.group", "EventDrivenConsumer");
     }
 
     public int getNumOfThreads() {
-        return Integer.parseInt(p.getProperty("event.rocketmq.consumer.parallelism"));
+        return Integer.parseInt(p.getProperty("event.rocketmq.consumer.parallelism", "4"));
     }
 
     public String getInstanceName() {
-        return p.getProperty("event.rocketmq.instance");
+        return p.getProperty("event.rocketmq.instance", "DEFAULT");
     }
 
 }
