@@ -47,24 +47,24 @@ public class KafkaConfiguration {
     }
 
     public String getKafkaAddrs() {
-        return p.getProperty("event.kafka.broker.address");
+        return p.getProperty("event.kafka.broker.address", "localhost:9092");
     }
 
     public String getProduceTopic() {
-        return p.getProperty("event.kafka.broker.produce.topic");
+        return p.getProperty("event.kafka.broker.produce.topic", "event_topic");
     }
 
     public int getProduceTopicPartitions() {
-        return Integer.parseInt(p.getProperty("event.kafka.broker.produce.topic.partitions"));
+        return Integer.parseInt(p.getProperty("event.kafka.broker.produce.topic.partitions", "4"));
     }
 
     public String[] getConsumeTopics() {
-        String val = p.getProperty("event.kafka.broker.consume.topics");
+        String val = p.getProperty("event.kafka.broker.consume.topics", "event_topic");
         return val.split(",");
     }
 
     public String getKafkaConsumerGroup() {
-        return p.getProperty("event.kafka.consumer.group");
+        return p.getProperty("event.kafka.consumer.group", "EventDrivenConsumer");
     }
 
 }
