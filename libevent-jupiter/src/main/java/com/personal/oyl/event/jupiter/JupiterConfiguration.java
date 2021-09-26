@@ -44,7 +44,9 @@ public final class JupiterConfiguration {
     private static void load() throws IOException {
         try (InputStream is = JupiterConfiguration.class.getClassLoader().getResourceAsStream("libevent-jupiter.properties")) {
             p = new Properties();
-            p.load(is);
+            if (null != is) {
+                p.load(is);
+            }
         }
     }
     
