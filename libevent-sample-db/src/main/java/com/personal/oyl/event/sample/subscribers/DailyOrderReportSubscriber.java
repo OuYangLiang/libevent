@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.personal.oyl.event.EventSubscriber;
 import com.personal.oyl.event.Event;
-import com.personal.oyl.event.EventMapper;
 
 import javax.annotation.Resource;
 
@@ -28,9 +27,6 @@ public class DailyOrderReportSubscriber implements EventSubscriber {
     
     @Resource
     private OrderRepos repos;
-    
-    @Resource
-    private EventMapper eventMapper;
 
     @Resource
     private EventSerde eventSerde;

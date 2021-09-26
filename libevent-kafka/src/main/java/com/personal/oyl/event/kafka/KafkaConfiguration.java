@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.UUID;
 
 /**
  * @author OuYang Liang
@@ -15,7 +14,6 @@ public class KafkaConfiguration {
     private static final Logger log = LoggerFactory.getLogger(KafkaConfiguration.class);
     private static volatile KafkaConfiguration instance;
     private static Properties p;
-    private static final String uuid = UUID.randomUUID().toString();
 
     private KafkaConfiguration () {
 
