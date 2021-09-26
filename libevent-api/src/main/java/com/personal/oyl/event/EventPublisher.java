@@ -7,7 +7,7 @@ import java.util.Date;
  */
 public class EventPublisher {
     
-    private EventMapper mapper;
+    private final EventMapper mapper;
     
     public EventPublisher(EventMapper mapper) {
         this.mapper = mapper;

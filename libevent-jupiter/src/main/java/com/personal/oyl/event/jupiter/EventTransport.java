@@ -16,10 +16,9 @@ public class EventTransport implements Runnable {
 
     private static final Logger log = LoggerFactory.getLogger(EventTransport.class);
 
-    private int tbNum;
-    private EventMapper mapper;
-    private EventPusher pusher;
-
+    private final int tbNum;
+    private final EventMapper mapper;
+    private final EventPusher pusher;
 
     public EventTransport(int tbNum, EventMapper mapper, EventPusher pusher) {
         this.tbNum = tbNum;

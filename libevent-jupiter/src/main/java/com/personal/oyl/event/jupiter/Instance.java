@@ -85,7 +85,7 @@ public class Instance {
         this.eventTransportMgr.restartAll();
     }
 
-    private Watcher workWatcher = (event) -> {
+    private final Watcher workWatcher = (event) -> {
         try {
             if (event.getType().equals(Watcher.Event.EventType.NodeDataChanged)) {
                 String assignment = zkInstance.getContent(event.getPath(), this.workWatcher);

@@ -10,7 +10,7 @@ import java.util.List;
  * @author OuYang Liang
  */
 public final class EventReceiver {
-    private EventMapper eventMapper;
+    private final EventMapper eventMapper;
 
     private static final int TRY_TIMES = 2;
 

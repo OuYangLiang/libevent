@@ -17,10 +17,10 @@ public class EventTransportMgr {
 
     private static final Logger log = LoggerFactory.getLogger(EventTransportMgr.class);
 
-    private Map<Integer, Thread> currentRunning = new HashMap<>();
-    private List<Integer> chargingTables = new LinkedList<>();
-    private EventMapper mapper;
-    private EventPusher pusher;
+    private final Map<Integer, Thread> currentRunning = new HashMap<>();
+    private final List<Integer> chargingTables = new LinkedList<>();
+    private final EventMapper mapper;
+    private final EventPusher pusher;
 
     public EventTransportMgr(EventMapper mapper, EventPusher pusher) {
         this.mapper = mapper;

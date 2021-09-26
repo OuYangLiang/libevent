@@ -24,8 +24,8 @@ public class DatasourceConfig {
         ComboPooledDataSource rlt = new ComboPooledDataSource();
         rlt.setDriverClass("com.mysql.jdbc.Driver");
         rlt.setUser("root");
-        rlt.setPassword("password");
-        rlt.setJdbcUrl("jdbc:mysql://localhost:3306/libevent_sample");
+        rlt.setPassword("pwd123");
+        rlt.setJdbcUrl("jdbc:mysql://localhost:3306/libevent");
         rlt.setInitialPoolSize(DEFAULT_POOL_SIZE);
         rlt.setMaxPoolSize(DEFAULT_POOL_SIZE);
         rlt.setMinPoolSize(DEFAULT_POOL_SIZE);

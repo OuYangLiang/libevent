@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class InstanceListener {
     private static final Logger log = LoggerFactory.getLogger(InstanceListener.class);
-    private ZkInstance zkInstance;
+    private final ZkInstance zkInstance;
 
     public InstanceListener(ZkInstance zkInstance) {
         this.zkInstance = zkInstance;
@@ -108,7 +108,7 @@ public class InstanceListener {
 
     private static class Holder {
         private String node;
-        private List<Integer> assigned = new LinkedList<>();
+        private final List<Integer> assigned = new LinkedList<>();
         private boolean affected = false;
 
         public void addAssigned(Integer i) {
