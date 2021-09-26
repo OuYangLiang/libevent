@@ -30,14 +30,14 @@ public void changePhoneNumber(String newNumber) {
 
 系统业务数据通常是保存在数据库中，而事件消息大部分情况是通过消息队列同队给下游消费者系统。问题在于我们没有办法保证数据库和消息队列之间的数据强一致性，他们是两个不同的异构系统，如下图所示：
 
-![The Problem](http://ouyblog.com/pic/kafka-eventdriven/new/1.svg)
+![The Problem](https://ouyangliang.github.io/pic/kafka-eventdriven/new/1.svg)
 
 
 ## libevent 简介
 
 我们采用简单易懂的方式来解决上面的问题，引入一张DB事件表，在发布事件时将事件信息存入这个事件表，将事件的发布和业务处理包装在同一个本地事务中，再异步轮询事件表将消息写入队列中，如下所示：
 
-![The Principle](http://ouyblog.com/pic/kafka-eventdriven/new/2.svg)
+![The Principle](https://ouyangliang.github.io/pic/kafka-eventdriven/new/2.svg)
 
 但是，只有一个事件表，会有一些问题。如果系统的负载很高，单位时间内产生大量的事件，那Event Transport(线程)就会成为瓶颈，系统集群中只有一个实例在发辉作用，无法实现弹性。为了解决这个问题，我们引入多个事件分表，并使用多线程并发处理，这些线程可以分布在不同的集群实例中。
 
@@ -53,15 +53,15 @@ public void changePhoneNumber(String newNumber) {
 
 我们将系统分为两个角色：Master和Worker。Worker负责执行任务（把对应事件分表中的事件信息推送到消息队列）；而Master负责分配任务给Worker，同时监听Worker的存活情况发起负载均衡。为此，我们引入对Zookeeper的依赖，所下所示：
 
-![Zookeeper znode design](http://ouyblog.com/pic/kafka-eventdriven/new/3.svg)
+![Zookeeper znode design](https://ouyangliang.github.io/pic/kafka-eventdriven/new/3.svg)
 
 从事件发布的角度来看，整体架构是这样的：
 
-![Arch of publish event](http://ouyblog.com/pic/kafka-eventdriven/new/4.svg)
+![Arch of publish event](https://ouyangliang.github.io/pic/kafka-eventdriven/new/4.svg)
 
 事件的消费者既可以是发布者自己，也可以是任意其它服务。比如在CRM任务工作台上，销费人员与客户电话沟通后会填写一个小结单，系统会更新当前任务项的状态、同步ES，并根据填写内容判断是否自动为销售生成一个报单，这样一个场景的数据流图可以这样设计：
 
-![A sample](http://ouyblog.com/pic/kafka-eventdriven/new/5.svg)
+![A sample](https://ouyangliang.github.io/pic/kafka-eventdriven/new/5.svg)
 
 ## Features & Important Notes
 
@@ -372,7 +372,7 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
 
 事件订阅需要实现`EventSubscriber`接口，核心逻辑实现在`EventSubscriber#onEvent`方法中。在系统启动时，可以通过`SubscriberConfig#addSubscriber`方法添加订阅者，相关类图结构如下所示：
 
-![EventSubscribers](http://ouyblog.com/pic/kafka-eventdriven/new/6.svg)
+![EventSubscribers](https://ouyangliang.github.io/pic/kafka-eventdriven/new/6.svg)
 
 通常，我们在实现一个Kafka Consumer或Rocket MQ Consumer时，我们可以在业务处理成功后再提交offset，当业务处理失败了（比如网络超时、第三方接口短时间故障等）可以从队列中重新拉取消息继续尝试。但是libevent是一个基于事件的框架，一个事件（一条消息）可以被多个订阅者同时订阅，因为一个订阅者没有成功处理，让所有订阅者都重新触发或长时间阻塞明显不合理。
 
