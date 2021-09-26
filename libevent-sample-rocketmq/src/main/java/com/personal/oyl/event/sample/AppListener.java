@@ -53,7 +53,6 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
                 eventConsumer.start();
             } catch (MQClientException e) {
                 log.error(e.getMessage(), e);
-                System.exit(1);
             }
 
             Instance instance = new Instance(eventTransportMgr);

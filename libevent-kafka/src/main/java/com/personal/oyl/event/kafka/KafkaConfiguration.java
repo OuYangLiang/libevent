@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * @author OuYang Liang
  */
-public class KafkaConfiguration {
+public final class KafkaConfiguration {
     private static final Logger log = LoggerFactory.getLogger(KafkaConfiguration.class);
     private static volatile KafkaConfiguration instance;
     private static Properties p;

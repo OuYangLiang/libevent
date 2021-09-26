@@ -13,8 +13,8 @@ import java.util.concurrent.TimeUnit;
  * @author OuYang Liang
  */
 public class EventTransport implements Runnable {
-
     private static final Logger log = LoggerFactory.getLogger(EventTransport.class);
+    private static final int LIMIT = 100;
 
     private final int tbNum;
     private final EventMapper mapper;
@@ -32,7 +32,7 @@ public class EventTransport implements Runnable {
         while (!Thread.currentThread().isInterrupted()) {
             List<Event> events = null;
             try {
-                events = this.mapper.queryTopN(tbNum, 100);
+                events = this.mapper.queryTopN(tbNum, LIMIT);
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
             }

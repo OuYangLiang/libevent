@@ -65,7 +65,7 @@ public final class EventReceiver {
                 return writer.toString();
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+            // ignore
         }
 
         return e.getMessage();

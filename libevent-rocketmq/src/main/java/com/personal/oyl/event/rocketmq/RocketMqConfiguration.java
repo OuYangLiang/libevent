@@ -12,7 +12,7 @@ import java.util.Properties;
 /**
  * @author OuYang Liang
  */
-public class RocketMqConfiguration {
+public final class RocketMqConfiguration {
     private static final Logger log = LoggerFactory.getLogger(RocketMqConfiguration.class);
     private static volatile RocketMqConfiguration instance;
     private static Properties p;
