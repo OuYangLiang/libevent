@@ -34,7 +34,6 @@ public class RocketMqEventPusher implements EventPusher {
             this.producer.start();
         } catch (MQClientException e) {
             log.error(e.getMessage(), e);
-            System.exit(1);
         }
     }
 
