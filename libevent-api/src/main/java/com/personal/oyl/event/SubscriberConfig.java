@@ -28,7 +28,7 @@ public final class SubscriberConfig {
         return instance;
     }
     
-    private Map<String, List<EventSubscriber>> cfg = new HashMap<>();
+    private final Map<String, List<EventSubscriber>> cfg = new HashMap<>();
 
     public List<EventSubscriber> getSubscribers(String eventType) {
         if (this.cfg.containsKey(eventType)) {

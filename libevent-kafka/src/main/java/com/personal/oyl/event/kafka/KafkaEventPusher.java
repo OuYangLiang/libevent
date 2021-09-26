@@ -23,8 +23,8 @@ public class KafkaEventPusher implements EventPusher {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaEventPusher.class);
 
-    private EventSerde eventSerde;
-    private KafkaProducer<String, String> producer;
+    private final EventSerde eventSerde;
+    private final KafkaProducer<String, String> producer;
     public KafkaEventPusher(EventSerde eventSerde) {
         this.eventSerde = eventSerde;
 

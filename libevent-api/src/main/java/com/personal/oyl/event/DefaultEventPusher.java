@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class DefaultEventPusher implements EventPusher {
 
-    private EventReceiver eventReceiver;
+    private final EventReceiver eventReceiver;
 
     public DefaultEventPusher(EventReceiver eventReceiver) {
         this.eventReceiver = eventReceiver;

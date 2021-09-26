@@ -1,7 +1,7 @@
 package com.personal.oyl.event.jupiter;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
@@ -56,15 +56,11 @@ public class ZkInstance {
                         } catch (Exception e) {
                             log.error(e.getMessage(), e);
                         }
-                    }
-
-                    if (event.getState().equals(Watcher.Event.KeeperState.Disconnected)) {
+                    } else if (event.getState().equals(Watcher.Event.KeeperState.Disconnected)) {
                         log.warn("Disconnected from zookeeper ...");
                         log.warn("Pause instance ...");
                         instance.pause();
-                    }
-
-                    if (event.getState().equals(Watcher.Event.KeeperState.SyncConnected)) {
+                    } else if (event.getState().equals(Watcher.Event.KeeperState.SyncConnected)) {
                         if (firstTimeToZk) {
                             latch.countDown();
                             firstTimeToZk = false;
@@ -84,7 +80,7 @@ public class ZkInstance {
         Stat stat = new Stat();
         try{
             byte[] source = zk.getData(znode, watcher, stat);
-            return null == source ? null : new String(source, Charset.forName("utf-8"));
+            return null == source ? null : new String(source, StandardCharsets.UTF_8);
         } catch(KeeperException e){
             if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
                 return this.getContent(znode, watcher);
@@ -112,7 +108,7 @@ public class ZkInstance {
     
     public void setContent(String znode, String content) throws KeeperException, InterruptedException {
         try{
-            zk.setData(znode, content.getBytes(Charset.forName("utf-8")), -1);
+            zk.setData(znode, content.getBytes(StandardCharsets.UTF_8), -1);
         } catch(KeeperException e){
             if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
                 this.setContent(znode, content);
@@ -124,7 +120,7 @@ public class ZkInstance {
     
     public void createWorkNode(String znode) throws InterruptedException, KeeperException {
         try{
-            zk.create(znode, "".getBytes(Charset.forName("utf-8")), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+            zk.create(znode, "".getBytes(StandardCharsets.UTF_8), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
         } catch(KeeperException e) {
             if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
                 this.createWorkNode(znode);
@@ -136,7 +132,7 @@ public class ZkInstance {
     
     public void createRoot(String znode) throws InterruptedException, KeeperException {
         try {
-            zk.create(znode,  "".getBytes(Charset.forName("utf-8")), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+            zk.create(znode,  "".getBytes(StandardCharsets.UTF_8), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
         } catch(KeeperException e) {
             if (e.code().equals(KeeperException.Code.CONNECTIONLOSS)) {
                 this.createRoot(znode);
@@ -162,7 +158,7 @@ public class ZkInstance {
     private boolean tryLock(String clientId, String resource)
             throws KeeperException, InterruptedException {
         try{
-            zk.create(resource, clientId.getBytes(Charset.forName("utf-8")),
+            zk.create(resource, clientId.getBytes(StandardCharsets.UTF_8),
                     ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
 
             return true;
@@ -181,7 +177,7 @@ public class ZkInstance {
             throws KeeperException, InterruptedException {
 
         try{
-            zk.create(resource, clientId.getBytes(Charset.forName("utf-8")),
+            zk.create(resource, clientId.getBytes(StandardCharsets.UTF_8),
                     ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
 
             return true;
@@ -200,7 +196,7 @@ public class ZkInstance {
         try {
             Stat stat = new Stat();
             byte[] data = zk.getData(resource, false, stat);
-            return clientId.equals(new String(data, Charset.forName("utf-8")));
+            return clientId.equals(new String(data, StandardCharsets.UTF_8));
         } catch(KeeperException e){
             if (e.code().equals(KeeperException.Code.NONODE)) {
                 return this.tryLock(clientId, resource);

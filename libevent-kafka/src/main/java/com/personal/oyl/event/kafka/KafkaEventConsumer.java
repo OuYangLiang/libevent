@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
 public class KafkaEventConsumer implements Runnable {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaEventConsumer.class);
-    private EventSerde eventSerde;
-    private EventReceiver eventReceiver;
+    private final EventSerde eventSerde;
+    private final EventReceiver eventReceiver;
 
     public KafkaEventConsumer(EventSerde eventSerde, EventReceiver eventReceiver) {
         this.eventSerde = eventSerde;
