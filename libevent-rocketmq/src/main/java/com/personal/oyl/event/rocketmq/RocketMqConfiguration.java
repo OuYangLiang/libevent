@@ -42,7 +42,9 @@ public final class RocketMqConfiguration {
     private static void load() throws IOException {
         try (InputStream is = RocketMqConfiguration.class.getClassLoader().getResourceAsStream("libevent-rocketmq.properties")) {
             p = new Properties();
-            p.load(is);
+            if (null != is) {
+                p.load(is);
+            }
         }
     }
 
