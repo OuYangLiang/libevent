@@ -40,7 +40,9 @@ public final class KafkaConfiguration {
     private static void load() throws IOException {
         try (InputStream is = KafkaConfiguration.class.getClassLoader().getResourceAsStream("libevent-kafka.properties")) {
             p = new Properties();
-            p.load(is);
+            if (null != is) {
+                p.load(is);
+            }
         }
     }
 
