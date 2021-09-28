@@ -44,8 +44,8 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
         if (event.getApplicationContext().getParent() == null) {
             log.info("App started ......");
 
-            SubscriberConfig.instance().addSubscriber("o_c", dailyOrderReportSubscriber);
-            SubscriberConfig.instance().addSubscriber("o_c", userOrderReportSubscriber);
+            SubscriberConfig.instance.addSubscriber("o_c", dailyOrderReportSubscriber);
+            SubscriberConfig.instance.addSubscriber("o_c", userOrderReportSubscriber);
 
             KafkaEventConsumer kafkaEventConsumer = new KafkaEventConsumer(eventSerde, eventReceiver);
             Thread consumeThread = new Thread(kafkaEventConsumer);

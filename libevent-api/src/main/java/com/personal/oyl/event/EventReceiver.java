@@ -20,7 +20,7 @@ public final class EventReceiver {
 
     public void onEvent(Event event) {
         if (null != event.getEventType()) {
-            List<EventSubscriber> subs = SubscriberConfig.instance().getSubscribers(event.getEventType());
+            List<EventSubscriber> subs = SubscriberConfig.instance.getSubscribers(event.getEventType());
             if (null != subs && !subs.isEmpty()) {
                 for (EventSubscriber sub : subs) {
                     if (eventMapper.isDuplicated(event.getEventId(), sub.id())) {

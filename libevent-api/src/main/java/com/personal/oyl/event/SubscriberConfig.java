@@ -9,24 +9,8 @@ import java.util.Map;
 /**
  * @author OuYang Liang
  */
-public final class SubscriberConfig {
-    private static volatile SubscriberConfig instance;
-    
-    private SubscriberConfig () {
-        
-    }
-    
-    public static SubscriberConfig instance() {
-        if (null == instance) {
-            synchronized (SubscriberConfig.class) {
-                if (null == instance) {
-                    instance = new SubscriberConfig();
-                }
-            }
-        }
-        
-        return instance;
-    }
+public enum SubscriberConfig {
+    instance;
     
     private final Map<String, List<EventSubscriber>> cfg = new HashMap<>();
 
