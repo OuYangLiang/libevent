@@ -19,14 +19,19 @@ public final class EventReceiver {
     }
 
     public void onEvent(Event event) {
-        if (null != event.getEventType()) {
-            List<EventSubscriber> subs = SubscriberConfig.instance.getSubscribers(event.getEventType());
-            if (null != subs && !subs.isEmpty()) {
-                for (EventSubscriber sub : subs) {
-                    if (eventMapper.isDuplicated(event.getEventId(), sub.id())) {
-                        continue;
-                    }
+        if (null == event.getEventType()) {
+            return;
+        }
 
+        List<EventSubscriber> subs = SubscriberConfig.instance.getSubscribers(event.getEventType());
+        if (null != subs && !subs.isEmpty()) {
+            for (EventSubscriber sub : subs) {
+                if (eventMapper.isDuplicated(event.getEventId(), sub.id())) {
+                    continue;
+                }
+
+                int numOfFailed = eventMapper.numberOfFailed(sub.id(), event.getRouteKey(), event.getEventType());
+                if (numOfFailed == 0) {
                     int i = 0;
                     while (true) {
                         try {
@@ -49,10 +54,40 @@ public final class EventReceiver {
                             }
                         }
                     }
+                } else {
+                    try {
+                        eventMapper.fail(sub.id(), event, "delayed");
+                    } catch (Exception e) {
+                        // ignore
+                    }
                 }
             }
         }
     }
+
+    public boolean retryEvent(FailedEvent failedEvent) {
+        if (eventMapper.isDuplicated(failedEvent.getEvent().getEventId(), failedEvent.getSubscriberId())) {
+            return true;
+        }
+
+        try {
+            SubscriberConfig.instance.getSubscriber(failedEvent.getSubscriberId()).onEvent(failedEvent.getEvent());
+            try {
+                eventMapper.markProcessed(failedEvent.getEvent().getEventId(), failedEvent.getSubscriberId());
+            } catch (Exception e) {
+                // ignore
+            }
+            try {
+                eventMapper.markReprocessed(failedEvent.getId());
+            } catch (Exception e) {
+                // ignore
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 
     private String toStack(Exception e) {
         try {

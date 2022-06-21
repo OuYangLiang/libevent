@@ -51,7 +51,7 @@ public class ZkInstance {
                         }
 
                         try {
-                            Instance newInst = new Instance(instance.getEventTransportMgr());
+                            Instance newInst = new Instance(instance.getEventTransportMgr(), instance.getEventMapper(), instance.getEventReceiver());
                             newInst.go();
                         } catch (Exception e) {
                             log.error(e.getMessage(), e);

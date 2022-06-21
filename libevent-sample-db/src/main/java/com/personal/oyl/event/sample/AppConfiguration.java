@@ -2,6 +2,7 @@ package com.personal.oyl.event.sample;
 
 import com.personal.oyl.event.*;
 import com.personal.oyl.event.jupiter.EventTransportMgr;
+import com.personal.oyl.event.jupiter.JupiterConfiguration;
 import com.personal.oyl.event.sample.order.*;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.mapper.MapperFactoryBean;
@@ -34,7 +35,7 @@ public class AppConfiguration {
 
     @Bean
     public EventPublisher eventPublisher(EventMapper eventMapper) {
-        return new EventPublisher(eventMapper);
+        return new EventPublisher(eventMapper, JupiterConfiguration.instance().getNumOfEventTables());
     }
 
     @Bean

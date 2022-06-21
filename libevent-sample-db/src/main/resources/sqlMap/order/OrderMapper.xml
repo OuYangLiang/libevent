@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.personal.oyl.event.sample.order.OrderDao">
 	<resultMap id="BaseResultMap" type="com.personal.oyl.event.sample.order.Order">
-        <id column="order_id" property="order_id" jdbcType="DECIMAL" />
+        <id column="order_id" property="id" jdbcType="DECIMAL" />
         <result column="user_id" property="userId" jdbcType="DECIMAL" />
         <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
         <result column="order_amount" property="orderAmount" jdbcType="INTEGER" />

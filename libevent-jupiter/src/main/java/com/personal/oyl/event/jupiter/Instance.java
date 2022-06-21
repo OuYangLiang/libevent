@@ -1,5 +1,7 @@
 package com.personal.oyl.event.jupiter;
 
+import com.personal.oyl.event.EventMapper;
+import com.personal.oyl.event.EventReceiver;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.Watcher;
 import org.slf4j.Logger;
@@ -14,16 +16,29 @@ public class Instance {
     private static final Logger log = LoggerFactory.getLogger(Instance.class);
 
     private EventTransportMgr eventTransportMgr;
+    private Thread compensateThread;
+    private EventMapper eventMapper;
+    private EventReceiver eventReceiver;
 
     private ZkInstance zkInstance;
 
-    public Instance(EventTransportMgr eventTransportMgr) {
+    public Instance(EventTransportMgr eventTransportMgr, EventMapper eventMapper, EventReceiver eventReceiver) {
         this.eventTransportMgr = eventTransportMgr;
+        this.eventReceiver = eventReceiver;
+        this.eventMapper = eventMapper;
         zkInstance = new ZkInstance();
     }
 
     EventTransportMgr getEventTransportMgr() {
         return eventTransportMgr;
+    }
+
+    public EventMapper getEventMapper() {
+        return eventMapper;
+    }
+
+    public EventReceiver getEventReceiver() {
+        return eventReceiver;
     }
 
     public void go() throws LibeventException {
@@ -63,9 +78,7 @@ public class Instance {
                 log.info("Start to lock master ....");
                 if (zkInstance.lock(instanceId, JupiterConfiguration.instance().getMasterNode())) {
                     log.info("Now it is the master server...");
-                    log.info("perform the first check of the assignment, invoke method onChange()...");
-                    InstanceListener instanceListener = new InstanceListener(zkInstance);
-                    instanceListener.onChange();
+                    this.start();
                 }
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
@@ -73,16 +86,33 @@ public class Instance {
         }).start();
     }
 
+    public void start() {
+        log.info("perform the first check of the assignment, invoke method onChange()...");
+        InstanceListener instanceListener = new InstanceListener(zkInstance);
+        try {
+            instanceListener.onChange();
+
+            compensateThread = new Thread(new EventCompensator(eventMapper, eventReceiver));
+            compensateThread.start();
+        } catch (LibeventException e) {
+            log.error(e.getMessage(), e);
+        }
+    }
+
     public void shutdown() {
         this.eventTransportMgr.stopAll();
+        compensateThread.interrupt();
     }
 
     void pause() {
         this.eventTransportMgr.stopAll();
+        compensateThread.interrupt();
     }
 
     void resume() {
         this.eventTransportMgr.restartAll();
+        compensateThread = new Thread(new EventCompensator(eventMapper, eventReceiver));
+        compensateThread.start();
     }
 
     private final Watcher workWatcher = (event) -> {

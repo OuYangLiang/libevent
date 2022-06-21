@@ -1,9 +1,6 @@
 package com.personal.oyl.event.sample;
 
-import com.personal.oyl.event.EventReceiver;
-import com.personal.oyl.event.EventSerde;
-import com.personal.oyl.event.EventSubscriber;
-import com.personal.oyl.event.SubscriberConfig;
+import com.personal.oyl.event.*;
 import com.personal.oyl.event.jupiter.EventTransportMgr;
 import com.personal.oyl.event.jupiter.Instance;
 import com.personal.oyl.event.jupiter.LibeventException;
@@ -39,6 +36,9 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
     @Resource
     private EventReceiver eventReceiver;
 
+    @Resource
+    private EventMapper eventMapper;
+
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -55,7 +55,7 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
                 log.error(e.getMessage(), e);
             }
 
-            Instance instance = new Instance(eventTransportMgr);
+            Instance instance = new Instance(eventTransportMgr, eventMapper, eventReceiver);
             try {
                 instance.go();
             } catch (LibeventException e) {

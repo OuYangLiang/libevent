@@ -11,17 +11,19 @@ public class Event {
     private String eventType;
     private Date eventTime;
     private String context;
+    private long routeKey;
 
     public Event() {
         super();
     }
 
-    public Event(String eventType, Date eventTime, String context) {
+    public Event(String eventType, Date eventTime, String context, long routeKey) {
         super();
         this.eventType = eventType;
         this.eventTime = new Date(eventTime.getTime());
         this.context = context;
         this.eventId = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+        this.routeKey = routeKey;
     }
 
     public String getEventId() {
@@ -56,4 +58,11 @@ public class Event {
         this.context = context;
     }
 
+    public long getRouteKey() {
+        return routeKey;
+    }
+
+    public void setRouteKey(long routeKey) {
+        this.routeKey = routeKey;
+    }
 }

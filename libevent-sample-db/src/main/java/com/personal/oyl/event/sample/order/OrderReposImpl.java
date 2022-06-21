@@ -3,7 +3,7 @@ package com.personal.oyl.event.sample.order;
 import java.util.Date;
 import java.util.List;
 
-import com.personal.oyl.event.jupiter.JupiterConfiguration;
+import com.personal.oyl.event.Event;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -35,7 +35,7 @@ public class OrderReposImpl implements OrderRepos {
     @Override
     public void createOrder(Order order) {
         dao.insert(order);
-        publisher.publish("o_c", new Date(), order.json(), order.getUserId().intValue() % JupiterConfiguration.instance().getNumOfEventTables());
+        publisher.publish(new Event("o_c", new Date(), order.json(), order.getUserId().intValue() ));
     }
 
     @Override

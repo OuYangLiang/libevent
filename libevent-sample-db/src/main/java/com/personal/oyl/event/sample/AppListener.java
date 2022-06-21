@@ -1,5 +1,7 @@
 package com.personal.oyl.event.sample;
 
+import com.personal.oyl.event.EventMapper;
+import com.personal.oyl.event.EventReceiver;
 import com.personal.oyl.event.EventSubscriber;
 import com.personal.oyl.event.SubscriberConfig;
 import com.personal.oyl.event.jupiter.EventTransportMgr;
@@ -29,6 +31,12 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
     @Resource
     private EventTransportMgr eventTransportMgr;
 
+    @Resource
+    private EventReceiver eventReceiver;
+
+    @Resource
+    private EventMapper eventMapper;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (event.getApplicationContext().getParent() == null) {
@@ -37,7 +45,7 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
             SubscriberConfig.instance.addSubscriber("o_c", dailyOrderReportSubscriber);
             SubscriberConfig.instance.addSubscriber("o_c", userOrderReportSubscriber);
 
-            Instance instance = new Instance(eventTransportMgr);
+            Instance instance = new Instance(eventTransportMgr, eventMapper, eventReceiver);
             try {
                 instance.go();
             } catch (LibeventException e) {

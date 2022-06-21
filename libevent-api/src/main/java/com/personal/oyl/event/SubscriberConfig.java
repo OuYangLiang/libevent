@@ -13,6 +13,7 @@ public enum SubscriberConfig {
     instance;
     
     private final Map<String, List<EventSubscriber>> cfg = new HashMap<>();
+    private final Map<String, EventSubscriber> idCfg = new HashMap<>();
 
     public List<EventSubscriber> getSubscribers(String eventType) {
         if (this.cfg.containsKey(eventType)) {
@@ -30,5 +31,11 @@ public enum SubscriberConfig {
             list.add(sub);
             this.cfg.put(eventType, list);
         }
+
+        idCfg.put(sub.id(), sub);
+    }
+
+    public EventSubscriber getSubscriber(String id) {
+        return idCfg.get(id);
     }
 }
